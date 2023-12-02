@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 function Head(){
     return(
         <>
@@ -24,7 +25,8 @@ function Head(){
 								<li><i class="ti-location-pin"></i> Store location</li>
 								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
 								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="#">ĐĂNG NHẬP</a>/<a href="#">ĐĂNG KÝ</a></li>
+								<li><i class="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active"><a>ĐĂNG NHẬP</a></NavLink>/
+								<NavLink to="DANGKY" className="Nav-Link active"><a>ĐĂNG KÝ</a></NavLink></li>
 							</ul>
 						</div>
 		

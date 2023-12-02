@@ -43,6 +43,7 @@ function App() {
         <Route path='/DANGNHAP' element={<DangNhap/>}/>;
         <Route path='/DANGKY' element={<DangKy/>}/>;
         <Route path='/Trang-chinh-cac-loai-san-pham' element={<Trangchinhcacloaisanpham/>}/>;
+        
       </Routes>
     </>
   );

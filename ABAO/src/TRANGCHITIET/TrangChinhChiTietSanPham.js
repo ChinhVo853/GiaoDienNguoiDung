@@ -2,7 +2,40 @@ import Footer from "../TRANGCHU/Footer";
 import Head from "../TRANGCHU/Head";
 import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 function TrangChinhChiTietSanPham(){
+    //kiem tra tai khoan----------------------------------
+
+    // Kiểm tra xem token có tồn tại hay không
+
+
+
+    //lay san pham---------------------------------------
+    const [sanPham, setSanPham] = useState([]);
+
+    let {spID} = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
+            
+            setSanPham(response.data.data);
+          } catch (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+          }
+        };
+    
+        fetchData();
+        
+      }, []);
+
+      console.log(sanPham);
+     
+
+      //------------------------------------------------
     return(
     <>
     <Head/>
@@ -13,15 +46,15 @@ function TrangChinhChiTietSanPham(){
 
             <div class="col-lg-5 mt-5">
             <div class="row">
-                <Hinhnhotrangchitiet/>
+                <Hinhnhotrangchitiet hinh={sanPham}/>
             </div>
             </div>
 
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="h2">Active Wear</h1>
-                            <p class="h3 py-2">$25.00</p>
+                            <h1 class="h2">{sanPham.ten}</h1>
+                            <p class="h3 py-2">{sanPham.gia_ban} VNĐ</p>
                             <p class="py-2">
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>
@@ -40,7 +73,7 @@ function TrangChinhChiTietSanPham(){
                             </ul>
 
                             <h6>Description:</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
+                            <p>{sanPham.thong_tin}</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Avaliable Color :</h6>

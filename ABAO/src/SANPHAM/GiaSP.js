@@ -3,7 +3,7 @@ function GiaSP(item)
     
     return(
         <>
-        <div class="product-price">
+        <div className="product-price">
             <span>{ item.gia } VNĐ</span>
         </div>
         </>

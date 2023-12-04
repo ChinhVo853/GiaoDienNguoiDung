@@ -12,7 +12,7 @@ function TrangChu() {
     useEffect(() => {
         // Kiểm tra xem token có tồn tại hay không
         const storedToken = localStorage.getItem('token');
-        console.log(storedToken);
+       
         if (storedToken !== null) {
             axios.post('http://127.0.0.1:8000/api/me', {
                 Authorization: 'bearer ' + storedToken,
@@ -20,7 +20,7 @@ function TrangChu() {
               })
               .then(function (response) {
                 
-               console.log(response);
+              
               })
               .catch(function (error) {
                 console.error('Error during login request:', error);

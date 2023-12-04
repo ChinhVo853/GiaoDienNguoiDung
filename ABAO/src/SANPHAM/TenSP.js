@@ -3,7 +3,7 @@ function TenSP(item)
     
     return(
         <>
-        <h3><a href="#">{item.ten}</a></h3>
+        {item.ten}
                         
         </>
     );

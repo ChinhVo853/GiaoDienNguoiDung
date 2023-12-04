@@ -18,18 +18,17 @@ function Danhsach() {
     }, []);
    
 
-    const ListSP = dsSanPham.map(function(item){
-        
-        return(
-           
-            <Sanpham data={item}/>
+    const ListSP = dsSanPham.map(function(item, index) {
+        return (
+          <Sanpham key={index} data={item} />
         );
-    });
+      });
+      
     return (
         <>
-            <div class="tab-pane fade show active" id="man" role="tabpanel">
-                <div class="tab-single">
-                    <div class="row">
+            <div className="tab-pane fade show active" id="man" role="tabpanel">
+                <div className="tab-single">
+                    <div className="row">
                     {ListSP}
                     </div>
                 </div>

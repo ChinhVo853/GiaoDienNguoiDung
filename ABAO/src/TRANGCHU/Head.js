@@ -3,30 +3,30 @@ function Head(){
     return(
         <>
 
-	<header class="header shop">
+	<header className="header shop">
 
-		<div class="topbar">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-4 col-md-12 col-12">
+		<div className="topbar">
+			<div className="container">
+				<div className="row">
+					<div className="col-lg-4 col-md-12 col-12">
 				
-						<div class="top-left">
-							<ul class="list-main">
-								<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-								<li><i class="ti-email"></i> support@shophub.com</li>
+						<div className="top-left">
+							<ul className="list-main">
+								<li><i className="ti-headphone-alt"></i> +060 (800) 801-582</li>
+								<li><i className="ti-email"></i> support@shophub.com</li>
 							</ul>
 						</div>
 					
 					</div>
-					<div class="col-lg-8 col-md-12 col-12">
+					<div className="col-lg-8 col-md-12 col-12">
 			
-						<div class="right-content">
-							<ul class="list-main">
-								<li><i class="ti-location-pin"></i> Store location</li>
-								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active"><a>ĐĂNG NHẬP</a></NavLink>/
-								<NavLink to="DANGKY" className="Nav-Link active"><a>ĐĂNG KÝ</a></NavLink></li>
+						<div className="right-content">
+							<ul className="list-main">
+								<li><i className="ti-location-pin"></i> Store location</li>
+								<li><i className="ti-alarm-clock"></i> Daily deal</li>
+								<li><i className="ti-user"></i>My account</li>
+								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+								<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
 							</ul>
 						</div>
 		
@@ -35,76 +35,76 @@ function Head(){
 			</div>
 		</div>
 
-		<div class="middle-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
+		<div className="middle-inner">
+			<div className="container">
+				<div className="row">
+					<div className="col-lg-2 col-md-2 col-12">
 					
-						<div class="logo">
-							<a href="#"><img src="LOGOHACHIBA03.png" alt="logo"/></a>
+						<div className="logo">
+							<a ><img src="LOGOHACHIBA03.png" alt="logo"/></a>
 						</div>
 					
-						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+						<div className="search-top">
+							<div className="top-search"><a href="#0"><i className="ti-search"></i></a></div>
 						
-							<div class="search-top">
-								<form class="search-form">
+							<div className="search-top">
+								<form className="search-form">
 									<input type="text" placeholder="Search here..." name="search"/>
-									<button value="search" type="submit"><i class="ti-search"></i></button>
+									<button value="search" type="submit"><i className="ti-search"></i></button>
 								</form>
 							</div>
 						
 						</div>
 			
-						<div class="mobile-nav"></div>
+						<div className="mobile-nav"></div>
 					</div>
-					<div class="col-lg-8 col-md-7 col-12">
-						<div class="search-bar-top">
-							<div class="search-bar">
+					<div className="col-lg-8 col-md-7 col-12">
+						<div className="search-bar-top">
+							<div className="search-bar">
 								<form>
 									<input name="search" placeholder="Search Products Here....." type="search"/>
-									<button class="btnn"><i class="ti-search"></i></button>
+									<button className="btnn"><i className="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-2 col-md-3 col-12">
-						<div class="right-bar">
+					<div className="col-lg-2 col-md-3 col-12">
+						<div className="right-bar">
 				
-							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+							<div className="sinlge-bar">
+								<a  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
-							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+							<div className="sinlge-bar">
+								<a  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
-							<div class="sinlge-bar shopping">
-								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+							<div className="sinlge-bar shopping">
+								<a  className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></a>
 					
-								<div class="shopping-item">
-									<div class="dropdown-cart-header">
+								<div className="shopping-item">
+									<div className="dropdown-cart-header">
 										<span>2 Items</span>
-										<a href="#">View Cart</a>
+										<a >View Cart</a>
 									</div>
-									<ul class="shopping-list">
+									<ul className="shopping-list">
 										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"/></a>
-											<h4><a href="#">Woman Ring</a></h4>
-											<p class="quantity">1x - <span class="amount">$99.00</span></p>
+											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
+											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
+											<h4><a >Woman Ring</a></h4>
+											<p className="quantity">1x - <span className="amount">$99.00</span></p>
 										</li>
 										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"/></a>
-											<h4><a href="#">Woman Necklace</a></h4>
-											<p class="quantity">1x - <span class="amount">$35.00</span></p>
+											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
+											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
+											<h4><a >Woman Necklace</a></h4>
+											<p className="quantity">1x - <span className="amount">$35.00</span></p>
 										</li>
 									</ul>
-									<div class="bottom">
-										<div class="total">
+									<div className="bottom">
+										<div className="total">
 											<span>Total</span>
-											<span class="total-amount">$134.00</span>
+											<span className="total-amount">$134.00</span>
 										</div>
-										<a href="checkout.html" class="btn animate">Checkout</a>
+										<a href="checkout.html" className="btn animate">Checkout</a>
 									</div>
 								</div>
 

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+
+
+import React, { useState, useEffect } from 'react';
+
 import {
   Carousel,
   CarouselItem,
@@ -7,31 +10,21 @@ import {
   CarouselCaption,
 } from 'reactstrap';
 
-const items = [
-  {
-    src: 'LOGOHACHIBA.png',
-    altText: '',
-    caption: '',
-    key: 1,
-  },
-  {
-    src: 'LOGOHACHIBA.png',
-    altText: '',
-    caption: '',
-    key: 2,
-  },
-  {
-    src: 'https://img.kemono.su/thumbnail/data/9c/5b/9c5b2af19074270a0ef67cfec2630777baf2477dd82929cd0cdb1d146afdec9d.jpg',
-    altText: '',
-    caption: '',
-    key: 3,
-  },
-];
+
+
+
+const items = [];
 
 function Hinhnhotrangchitiet(args) {
 
+ 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+
+
+
+ const items = args.hinh.hinh_anh ? args.hinh.hinh_anh.map(image => image.url) : [];
+
 
   const next = () => {
     if (animating) return;
@@ -57,7 +50,7 @@ function Hinhnhotrangchitiet(args) {
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={item.src} alt={item.altText} />
+        <img src={`http://localhost:8000/` + item} alt={item.altText} />
         <CarouselCaption
           captionText={item.caption}
           captionHeader={item.caption}

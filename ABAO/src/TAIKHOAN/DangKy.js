@@ -1,18 +1,82 @@
 import '../vendor/css/dangnhap.css';
+import axios from 'axios';
+import { useState } from 'react';
 function DangKy()
 {
+  const [hoTen, setHoTen] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [diaChi, setDiaChi] = useState('');
+  const [soDienThoai, setSoDienThoai] = useState('');
+
+  const Regester = (event) => {
+    event.preventDefault();
+
+    axios.post('http://127.0.0.1:8000/api/regester', {
+      hoTen: hoTen,
+      email: email,
+      password: password,
+      soDienThoai: soDienThoai,
+      diaChi: diaChi
+    })
+    .then(function (response) {
+      
+      console.log(response);
+      window.location.href = '/DANGNHAP';//được dùng để tahy đổi url
+    })
+    .catch(function (error) {
+      console.error('Error during login request:', error);
+     
+    });
+  }
+
     return(
         <>
         <body>
 <div class="container1">
     <div class="heading">ĐĂNG KÝ</div>
-    <form action="" class="form">
-      <input required="" class="input" type="name" name="name" id="name" placeholder="Họ tên"/>
+    <form onSubmit={Regester} class="form">
+      <input
+      onChange={(e) => setHoTen(e.target.value)}
+      required="" 
+      class="input" 
+      type="name" 
+      name="name" 
+      id="name" 
+      placeholder="Họ tên"/>
       
-      <input required="" class="input" type="email" name="email" id="email" placeholder="Email"/>
-      <input required="" class="input" type="password" name="password" id="password" placeholder="Mật khẩu"/>
-      <input required="" class="input" type="phone" name="phone" id="phone" placeholder="Số điện thoại"/>
-      <input required="" class="input" type="dia_chi" name="dia_chi" id="dia_chi" placeholder="Địa chỉ"/>
+      <input
+      onChange={(e) => setEmail(e.target.value)} 
+      required="" 
+      class="input" 
+      type="email" 
+      name="email" 
+      id="email" 
+      placeholder="Email"/>
+
+      <input
+      onChange={(e) => setPassword(e.target.value)} 
+      required="" 
+      class="input" 
+      type="password"
+      name="password" 
+      id="password" placeholder="Mật khẩu"/>
+
+      <input
+      onChange={(e) => setSoDienThoai(e.target.value)} 
+      required="" 
+      class="input" 
+      type="phone" 
+      name="phone" 
+      id="phone" 
+      placeholder="Số điện thoại"/>
+
+      <input
+      onChange={(e) => setDiaChi(e.target.value)} 
+      required="" 
+      class="input" 
+      type="dia_chi" name="dia_chi" 
+      id="dia_chi" placeholder="Địa chỉ"/>
 
       
       <input class="login-button" type="submit" value="Sign In"/>

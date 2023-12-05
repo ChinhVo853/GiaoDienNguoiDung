@@ -4,20 +4,19 @@ import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< Updated upstream
 import { useParams } from 'react-router-dom';
+=======
+import { NavLink, useParams } from 'react-router-dom';
+import BinhLuan from "./BinhLuan";
+import GioHang from "./GioHang";
+>>>>>>> Stashed changes
 function TrangChinhChiTietSanPham(){
-    //kiem tra tai khoan----------------------------------
-
-    // Kiểm tra xem token có tồn tại hay không
-
-
-
-    //lay san pham---------------------------------------
     const [sanPham, setSanPham] = useState([]);
-
-    let {spID} = useParams();
-
+    let { spID } = useParams();
+  
     useEffect(() => {
+<<<<<<< Updated upstream
         const fetchData = async () => {
           try {
             const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
@@ -33,6 +32,36 @@ function TrangChinhChiTietSanPham(){
       }, []);
 
     
+=======
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
+          setSanPham(response.data.data);
+        } catch (error) {
+          console.error('Lỗi khi tải dữ liệu:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  
+    const ChonMua = () => {
+      const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const existingItem = existingCartItems.find((item) => item.id === sanPham.id);
+  
+      if (existingItem) {
+        // Product is already in the cart, increase the quantity
+        existingItem.so_luong += 1;
+      } else {
+        // Product is not in the cart, add it
+        const newCartItem = { id: sanPham.id, ten: sanPham.ten, gia: sanPham.gia_ban, so_luong: 1 };
+        existingCartItems.push(newCartItem);
+      }
+  
+      localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
+      alert('Thêm sản phẩm vào giỏ hàng thành công');
+    };
+>>>>>>> Stashed changes
      
 
       //------------------------------------------------
@@ -67,8 +96,13 @@ function TrangChinhChiTietSanPham(){
                                 <li className="list-inline-item">
                                     <h6>Brand:</h6>
                                 </li>
+<<<<<<< Updated upstream
                                 <li className="list-inline-item">
                                     <p className="text-muted"><strong>Easy Wear</strong></p>
+=======
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
+>>>>>>> Stashed changes
                                 </li>
                             </ul>
 
@@ -142,12 +176,23 @@ function TrangChinhChiTietSanPham(){
                                         </ul>
                                     
                                 </div>
+<<<<<<< Updated upstream
                                 <div className="row pb-3">
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
                                     </div>
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+=======
+                                <div class="col-12">
+                                    <div class="row pb-3">
+                                        <div class="col d-grid">
+                                            <button type="submit" class="btn " name="submit" >Buy</button>
+                                        </div>
+                                        <div class="col d-grid">
+                                            <button onClick={ChonMua}  class="btn " >Add To Cart</button>
+                                        </div>
+>>>>>>> Stashed changes
                                     </div>
                                 </div>
                             </form>

@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
+
 import BinhLuan from "./BinhLuan";
 import GioHang from "./GioHang";
 
@@ -15,16 +16,21 @@ import { NavLink, useParams } from 'react-router-dom';
 import BinhLuan from "./BinhLuan";
 import GioHang from "./GioHang";
 
+
 function TrangChinhChiTietSanPham(){
     const [sanPham, setSanPham] = useState([]);
     let { spID } = useParams();
   
     useEffect(() => {
 
+
+
+
         
         
 
     
+
       const fetchData = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
@@ -185,12 +191,14 @@ function TrangChinhChiTietSanPham(){
 
                                     
                                 </div>
+
                                 <div className="row pb-3">
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
                                     </div>
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+
 
                                 <div class="col-12">
                                     <div class="row pb-3">

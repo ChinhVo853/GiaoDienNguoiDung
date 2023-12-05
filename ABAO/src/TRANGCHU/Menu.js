@@ -1,4 +1,5 @@
 
+
 function Menu()
 {
     return(
@@ -16,6 +17,7 @@ function Menu()
 										<div class="navbar-collapse">	
 											<div class="nav-inner">	
 												<ul class="nav main-menu menu navbar-nav">
+
 													<li class="active"><a>Home</a></li>
 													<li><a >Product</a></li>												
 													<li><a >Service</a></li>
@@ -33,6 +35,7 @@ function Menu()
 														</ul>
 													</li>
 													<li><a >Contact Us</a></li>
+
 												</ul>
 											</div>
 										</div>
@@ -46,6 +49,7 @@ function Menu()
 		</header>
         </>
     );
+
 }
 
 export default Menu;

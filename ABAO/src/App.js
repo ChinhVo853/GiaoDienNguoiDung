@@ -35,6 +35,8 @@ import Trangchinhcacloaisanpham from './LOAISANPHAM/Trangchinhcacloaisanpham';
 //--------------------CHITIET-----------------------
 import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 
+import GioHang from './TRANGCHITIET/GioHang';
+
 function App() {
 
   return (
@@ -47,6 +49,8 @@ function App() {
         <Route path='/DANGKY' element={<DangKy/>}/>;
         <Route path='/Trang-chinh-cac-loai-san-pham' element={<Trangchinhcacloaisanpham/>}/>;
         <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
+        <Route path='/GioHang' element={<GioHang/>}/>;
+
       </Routes>
     </>
   );

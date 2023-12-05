@@ -4,35 +4,15 @@ import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< Updated upstream
+
 import { useParams } from 'react-router-dom';
-=======
-import { NavLink, useParams } from 'react-router-dom';
-import BinhLuan from "./BinhLuan";
-import GioHang from "./GioHang";
->>>>>>> Stashed changes
+
 function TrangChinhChiTietSanPham(){
     const [sanPham, setSanPham] = useState([]);
     let { spID } = useParams();
   
     useEffect(() => {
-<<<<<<< Updated upstream
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
-            
-            setSanPham(response.data.data);
-          } catch (error) {
-            console.error('Lỗi khi tải dữ liệu:', error);
-          }
-        };
-    
-        fetchData();
-        
-      }, []);
 
-    
-=======
       const fetchData = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
@@ -61,7 +41,7 @@ function TrangChinhChiTietSanPham(){
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       alert('Thêm sản phẩm vào giỏ hàng thành công');
     };
->>>>>>> Stashed changes
+
      
 
       //------------------------------------------------
@@ -96,13 +76,10 @@ function TrangChinhChiTietSanPham(){
                                 <li className="list-inline-item">
                                     <h6>Brand:</h6>
                                 </li>
-<<<<<<< Updated upstream
-                                <li className="list-inline-item">
-                                    <p className="text-muted"><strong>Easy Wear</strong></p>
-=======
+
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
->>>>>>> Stashed changes
+
                                 </li>
                             </ul>
 
@@ -176,14 +153,6 @@ function TrangChinhChiTietSanPham(){
                                         </ul>
                                     
                                 </div>
-<<<<<<< Updated upstream
-                                <div className="row pb-3">
-                                    <div className="col d-grid">
-                                        <button type="submit" className="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                                    </div>
-                                    <div className="col d-grid">
-                                        <button type="submit" className="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
-=======
                                 <div class="col-12">
                                     <div class="row pb-3">
                                         <div class="col d-grid">
@@ -192,7 +161,7 @@ function TrangChinhChiTietSanPham(){
                                         <div class="col d-grid">
                                             <button onClick={ChonMua}  class="btn " >Add To Cart</button>
                                         </div>
->>>>>>> Stashed changes
+
                                     </div>
                                 </div>
                             </form>

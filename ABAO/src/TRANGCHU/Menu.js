@@ -1,25 +1,23 @@
-function Menu()
-{
-    return(
-        <>
-        <nav class="main-nav">
-    <ul class="nav-list">
-      <li class="nav-item"><a href="#" class="nav-link">TRANG CHỦ</a></li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">SẢN PHẨM</a>
-        <div class="dropdown-content">
-          <a href="#">ÁO THUN</a>
-          <a href="#">ÁO KHOÁC</a>
-          <a href="#">HOODIE</a>
-          <a href="#">QUẦN</a>
-        </div>
-      </li>
-      <li class="nav-item"><a href="#" class="nav-link">GIỚI THIỆU</a></li>
-
-      
-    </ul>
-  </nav>
-        </>
-    );
+function Menu() {
+  return (
+    <>
+      <nav className="main-nav">
+        <ul className="nav-list">
+          <li className="nav-item"><a className="nav-link" href="/">TRANG CHỦ</a></li>
+          <li className="nav-item">
+            <a className="nav-link">SẢN PHẨM</a>
+            <div className="dropdown-content">
+              <a>ÁO THUN</a>
+              <a>ÁO KHOÁC</a>
+              <a>HOODIE</a>
+              <a>QUẦN</a>
+            </div>
+          </li>
+          <li className="nav-item"><a className="nav-link" href="/">GIỚI THIỆU</a></li>
+        </ul>
+      </nav>
+    </>
+  );
 }
+
 export default Menu;

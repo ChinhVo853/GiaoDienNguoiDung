@@ -23,10 +23,13 @@ function Head(){
 						<div className="right-content">
 							<ul className="list-main">
 								<li><i className="ti-location-pin"></i> Store location</li>
-								<li><i className="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-								<li><i className="ti-user"></i> <a href="#">My account</a></li>
-								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" classNameName="Nav-Link active"><a>ĐĂNG NHẬP</a></NavLink>/
-								<NavLink to="DANGKY" classNameName="Nav-Link active"><a>ĐĂNG KÝ</a></NavLink></li>
+
+		
+								<li><i className="ti-alarm-clock"></i> Daily deal</li>
+								<li><i className="ti-user"></i>My account</li>
+								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+								<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
+
 							</ul>
 						</div>
 		
@@ -41,7 +44,9 @@ function Head(){
 					<div className="col-lg-2 col-md-2 col-12">
 					
 						<div className="logo">
+
 							<a href="#"><img src="LOGOHACHIBA03.png" alt="logo"/></a>
+
 						</div>
 					
 						<div className="search-top">
@@ -72,30 +77,34 @@ function Head(){
 						<div className="right-bar">
 				
 							<div className="sinlge-bar">
-								<a href="#" className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></a>
+
+								<a  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div className="sinlge-bar">
-								<a href="#" className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<div className="sinlge-bar shopping">
-								<a href="#" className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></a>
+								<a  className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></a>
+
 					
 								<div className="shopping-item">
 									<div className="dropdown-cart-header">
 										<span>2 Items</span>
-										<a href="#">View Cart</a>
+										<a >View Cart</a>
 									</div>
 									<ul className="shopping-list">
 										<li>
-											<a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
-											<a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"/></a>
-											<h4><a href="#">Woman Ring</a></h4>
+
+											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
+											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
+											<h4><a >Woman Ring</a></h4>
 											<p className="quantity">1x - <span className="amount">$99.00</span></p>
 										</li>
 										<li>
-											<a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
-											<a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"/></a>
-											<h4><a href="#">Woman Necklace</a></h4>
+											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
+											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
+											<h4><a >Woman Necklace</a></h4>
+
 											<p className="quantity">1x - <span className="amount">$35.00</span></p>
 										</li>
 									</ul>

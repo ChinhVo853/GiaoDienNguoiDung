@@ -1,3 +1,5 @@
+
+
 function Menu()
 {
     return(
@@ -15,23 +17,25 @@ function Menu()
 										<div class="navbar-collapse">	
 											<div class="nav-inner">	
 												<ul class="nav main-menu menu navbar-nav">
-													<li class="active"><a href="#">Home</a></li>
-													<li><a href="#">Product</a></li>												
-													<li><a href="#">Service</a></li>
-													<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+
+													<li class="active"><a>Home</a></li>
+													<li><a >Product</a></li>												
+													<li><a >Service</a></li>
+													<li><a >Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
 														<ul class="dropdown">
-															<li><a href="shop-grid.html">Shop Grid</a></li>
-															<li><a href="cart.html">Cart</a></li>
-															<li><a href="checkout.html">Checkout</a></li>
+															<li><a >Shop Grid</a></li>
+															<li><a >Cart</a></li>
+															<li><a >Checkout</a></li>
 														</ul>
 													</li>
-													<li><a href="#">Pages</a></li>									
-													<li><a href="#">Blog<i class="ti-angle-down"></i></a>
+													<li><a >Pages</a></li>									
+													<li><a>Blog<i class="ti-angle-down"></i></a>
 														<ul class="dropdown">
-															<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
+															<li><a >Blog Single Sidebar</a></li>
 														</ul>
 													</li>
-													<li><a href="contact.html">Contact Us</a></li>
+													<li><a >Contact Us</a></li>
+
 												</ul>
 											</div>
 										</div>
@@ -45,5 +49,7 @@ function Menu()
 		</header>
         </>
     );
+
 }
+
 export default Menu;

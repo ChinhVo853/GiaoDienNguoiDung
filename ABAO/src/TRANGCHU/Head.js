@@ -23,10 +23,13 @@ function Head(){
 						<div className="right-content">
 							<ul className="list-main">
 								<li><i className="ti-location-pin"></i> Store location</li>
+
+		
 								<li><i className="ti-alarm-clock"></i> Daily deal</li>
 								<li><i className="ti-user"></i>My account</li>
 								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
 								<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
+
 							</ul>
 						</div>
 		
@@ -41,7 +44,9 @@ function Head(){
 					<div className="col-lg-2 col-md-2 col-12">
 					
 						<div className="logo">
-							<a ><img src="LOGOHACHIBA03.png" alt="logo"/></a>
+
+							<a href="#"><img src="LOGOHACHIBA03.png" alt="logo"/></a>
+
 						</div>
 					
 						<div className="search-top">
@@ -72,6 +77,7 @@ function Head(){
 						<div className="right-bar">
 				
 							<div className="sinlge-bar">
+
 								<a  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div className="sinlge-bar">
@@ -79,6 +85,7 @@ function Head(){
 							</div>
 							<div className="sinlge-bar shopping">
 								<a  className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></a>
+
 					
 								<div className="shopping-item">
 									<div className="dropdown-cart-header">
@@ -87,6 +94,7 @@ function Head(){
 									</div>
 									<ul className="shopping-list">
 										<li>
+
 											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
 											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
 											<h4><a >Woman Ring</a></h4>
@@ -96,6 +104,7 @@ function Head(){
 											<a  className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
 											<a className="cart-img" ><img src="https://via.placeholder.com/70x70" alt="#"/></a>
 											<h4><a >Woman Necklace</a></h4>
+
 											<p className="quantity">1x - <span className="amount">$35.00</span></p>
 										</li>
 									</ul>

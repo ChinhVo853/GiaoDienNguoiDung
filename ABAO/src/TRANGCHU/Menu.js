@@ -1,25 +1,5 @@
-<<<<<<< Updated upstream
-function Menu() {
-  return (
-    <>
-      <nav className="main-nav">
-        <ul className="nav-list">
-          <li className="nav-item"><a className="nav-link" href="/">TRANG CHỦ</a></li>
-          <li className="nav-item">
-            <a className="nav-link">SẢN PHẨM</a>
-            <div className="dropdown-content">
-              <a>ÁO THUN</a>
-              <a>ÁO KHOÁC</a>
-              <a>HOODIE</a>
-              <a>QUẦN</a>
-            </div>
-          </li>
-          <li className="nav-item"><a className="nav-link" href="/">GIỚI THIỆU</a></li>
-        </ul>
-      </nav>
-    </>
-  );
-=======
+
+
 function Menu()
 {
     return(
@@ -37,6 +17,7 @@ function Menu()
 										<div class="navbar-collapse">	
 											<div class="nav-inner">	
 												<ul class="nav main-menu menu navbar-nav">
+
 													<li class="active"><a>Home</a></li>
 													<li><a >Product</a></li>												
 													<li><a >Service</a></li>
@@ -54,6 +35,7 @@ function Menu()
 														</ul>
 													</li>
 													<li><a >Contact Us</a></li>
+
 												</ul>
 											</div>
 										</div>
@@ -67,7 +49,7 @@ function Menu()
 		</header>
         </>
     );
->>>>>>> Stashed changes
+
 }
 
 export default Menu;

@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function ClickSP() {
     return (
         <>
@@ -8,7 +10,7 @@ function ClickSP() {
                     <a title="Compare" href="$"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                 </div>
                 <div class="product-action-2">
-                    <a title="Add to cart" href="#">Add to cart</a>
+                <NavLink to="GioHang" className="Nav-Link active"><a>Add to cart</a></NavLink>
                 </div>
             </div>
         </>

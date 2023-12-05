@@ -5,6 +5,8 @@ import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import BinhLuan from "./BinhLuan";
+import GioHang from "./GioHang";
 function TrangChinhChiTietSanPham(){
     //kiem tra tai khoan----------------------------------
 
@@ -65,14 +67,14 @@ function TrangChinhChiTietSanPham(){
                             </p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <h6>Brand:</h6>
+                                    <h6>Thương hiệu:</h6>
                                 </li>
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>Easy Wear</strong></p>
                                 </li>
                             </ul>
 
-                            <h6>Description:</h6>
+                            <h6>Mô tả:</h6>
                             <p>{sanPham.thong_tin}</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
@@ -83,16 +85,7 @@ function TrangChinhChiTietSanPham(){
                                 </li>
                             </ul>
 
-                            <h6>Specification:</h6>
-                            <ul class="list-unstyled pb-3">
-                                <li>Lorem ipsum dolor sit</li>
-                                <li>Amet, consectetur</li>
-                                <li>Adipiscing elit,set</li>
-                                <li>Duis aute irure</li>
-                                <li>Ut enim ad minim</li>
-                                <li>Dolore magna aliqua</li>
-                                <li>Excepteur sint</li>
-                            </ul>
+                            
 
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear"/>
@@ -131,15 +124,20 @@ function TrangChinhChiTietSanPham(){
                                         </div>
                                     </div>
                                     
-                                        <ul class="list-inline pb-3">
+                                        {/* <ul class="list-inline pb-3">
                                             <li class="list-inline-item text-right">
                                                 Quantity
-                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1"/>
+                                               
                                             </li>
-                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                                        </ul>
+                                             <input class="quantity fw-bold text-black" min="1" name="quantity" type="number"/>
+                           
+
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                                            
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+
+                                            
+                                        </ul> */}
                                     
                                 </div>
                                 <div class="row pb-3">
@@ -151,13 +149,17 @@ function TrangChinhChiTietSanPham(){
                                     </div>
                                 </div>
                             </form>
-
+                            
                         </div>
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>
+        
     </section>
+    <BinhLuan/>
     <Footer/>
     </>
     );

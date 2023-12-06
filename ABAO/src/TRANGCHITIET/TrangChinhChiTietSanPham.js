@@ -77,8 +77,8 @@ function TrangChinhChiTietSanPham(){
                                     <h6>Brand:</h6>
                                 </li>
 
-                                <li class="list-inline-item">
-<p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
+                                <li className="list-inline-item">
+<p className="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
 
                                 </li>
                             </ul>
@@ -153,13 +153,13 @@ function TrangChinhChiTietSanPham(){
                                         </ul>
                                     
                                 </div>
-                                <div class="col-12">
-                                    <div class="row pb-3">
-                                        <div class="col d-grid">
-                                            <button type="submit" class="btn " name="submit" >Buy</button>
+                                <div className="col-12">
+                                    <div className="row pb-3">
+                                        <div className="col d-grid">
+                                            <button type="submit" className="btn " name="submit" >Buy</button>
                                         </div>
-                                        <div class="col d-grid">
-                                            <button onClick={ChonMua}  class="btn " >Add To Cart</button>
+                                        <div className="col d-grid">
+                                            <button onClick={ChonMua}  className="btn " >Add To Cart</button>
                                         </div>
 
                                     </div>

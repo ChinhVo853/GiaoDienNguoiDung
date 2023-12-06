@@ -4,33 +4,33 @@ function Menu()
 {
     return(
         <>
-       <header class="header shop">
+       <header className="header shop">
 			
 			
-			<div class="header-inner">
-				<div class="container">
-					<div class="cat-nav-head">
-						<div class="row">
-							<div class="col-12">
-								<div class="menu-area">
-									<nav class="navbar navbar-expand-lg">
-										<div class="navbar-collapse">	
-											<div class="nav-inner">	
-												<ul class="nav main-menu menu navbar-nav">
+			<div className="header-inner">
+				<div className="container">
+					<div className="cat-nav-head">
+						<div className="row">
+							<div className="col-12">
+								<div className="menu-area">
+									<nav className="navbar navbar-expand-lg">
+										<div className="navbar-collapse">	
+											<div className="nav-inner">	
+												<ul className="nav main-menu menu navbar-nav">
 
-													<li class="active"><a>Home</a></li>
+													<li className="active"><a>Home</a></li>
 													<li><a >Product</a></li>												
 													<li><a >Service</a></li>
-													<li><a >Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
-														<ul class="dropdown">
+													<li><a >Shop<i className="ti-angle-down"></i><span className="new">New</span></a>
+														<ul className="dropdown">
 															<li><a >Shop Grid</a></li>
 															<li><a >Cart</a></li>
 															<li><a >Checkout</a></li>
 														</ul>
 													</li>
 													<li><a >Pages</a></li>									
-													<li><a>Blog<i class="ti-angle-down"></i></a>
-														<ul class="dropdown">
+													<li><a>Blog<i className="ti-angle-down"></i></a>
+														<ul className="dropdown">
 															<li><a >Blog Single Sidebar</a></li>
 														</ul>
 													</li>

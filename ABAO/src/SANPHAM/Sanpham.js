@@ -14,9 +14,8 @@ function Sanpham(item) {
                     <div className="product-img">
                     <NavLink to={`/ChiTiet/${item.data.id}`} className="Nav-Link active">
                         <HinhSP anh = {item.data?.hinh_anh[0]?.url}/>
-                       
-                        <ClickSP />
                     </NavLink>
+                    <ClickSP />
                     </div>
                     <div className="product-content">
                         <TenSP ten = { item.data.ten}/>

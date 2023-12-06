@@ -2,7 +2,7 @@ function Nutxemthem()
 {
     return(
         <>
-        <div class="section-title">
+        <div className="section-title">
                         <button className="button">
                             XEM THÊM...
                         </button>

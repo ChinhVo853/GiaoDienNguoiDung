@@ -6,19 +6,19 @@ function Cacsanphambanchay() {
     return (
         <>
 
-            <div class="single-list">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="list-image overlay">
+            <div className="single-list">
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-12">
+                        <div className="list-image overlay">
                             {/* <img src="https://via.placeholder.com/115x140" alt="#"/> */}
                             <HinhSP />
-                            <a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+                            <a  className="buy"><i className="fa fa-shopping-bag"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-12 no-padding">
-                        <div class="content">
-                            <h4 class="title"><a href="#"><TenSP /></a></h4>
-                            <p class="price with-discount"><GiaSP /></p>
+                    <div className="col-lg-6 col-md-6 col-12 no-padding">
+                        <div className="content">
+                            <h4 className="title"><TenSP /></h4>
+                            <div className="price with-discount"><GiaSP /></div>
                         </div>
                     </div>
                 </div>

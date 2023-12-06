@@ -29,7 +29,7 @@ function DangNhap() {
 
   return (
     <>
-      <body>
+     
         <div className="container1">
           <div className="heading">ĐĂNG NHẬP</div>
           <form onSubmit={postLogin} className="form">
@@ -54,7 +54,7 @@ function DangNhap() {
             <input className="login-button" type="submit" value="Sign In" />
           </form>
         </div>
-      </body>
+     
     </>
   );
 }

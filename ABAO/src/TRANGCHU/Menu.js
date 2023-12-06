@@ -1,25 +1,55 @@
+
+
 function Menu()
 {
     return(
         <>
-        <nav class="main-nav">
-    <ul class="nav-list">
-      <li class="nav-item"><a href="#" class="nav-link">TRANG CHỦ</a></li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">SẢN PHẨM</a>
-        <div class="dropdown-content">
-          <a href="#">ÁO THUN</a>
-          <a href="#">ÁO KHOÁC</a>
-          <a href="#">HOODIE</a>
-          <a href="#">QUẦN</a>
-        </div>
-      </li>
-      <li class="nav-item"><a href="#" class="nav-link">GIỚI THIỆU</a></li>
+       <header class="header shop">
+			
+			
+			<div class="header-inner">
+				<div class="container">
+					<div class="cat-nav-head">
+						<div class="row">
+							<div class="col-12">
+								<div class="menu-area">
+									<nav class="navbar navbar-expand-lg">
+										<div class="navbar-collapse">	
+											<div class="nav-inner">	
+												<ul class="nav main-menu menu navbar-nav">
 
-      
-    </ul>
-  </nav>
+													<li class="active"><a>Home</a></li>
+													<li><a >Product</a></li>												
+													<li><a >Service</a></li>
+													<li><a >Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+														<ul class="dropdown">
+															<li><a >Shop Grid</a></li>
+															<li><a >Cart</a></li>
+															<li><a >Checkout</a></li>
+														</ul>
+													</li>
+													<li><a >Pages</a></li>									
+													<li><a>Blog<i class="ti-angle-down"></i></a>
+														<ul class="dropdown">
+															<li><a >Blog Single Sidebar</a></li>
+														</ul>
+													</li>
+													<li><a >Contact Us</a></li>
+
+												</ul>
+											</div>
+										</div>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
         </>
     );
+
 }
+
 export default Menu;

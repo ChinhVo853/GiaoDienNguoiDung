@@ -9,7 +9,6 @@ function BinhLuan(){
 					<div class="col-lg-8 col-12">
 						<div class="blog-single-main">
 							<div class="row">
-
 							<div class="col-12">
 									<div class="comments">
 										<h3 class="comment-title">Comments (3)</h3>
@@ -47,7 +46,6 @@ function BinhLuan(){
 										</div>
 									</div>									
 								</div>										
-
 								<div class="col-12">			
                                 <div class="reply">
 										<div class="reply-head">

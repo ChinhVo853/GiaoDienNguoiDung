@@ -7,11 +7,14 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
+<<<<<<< Updated upstream
 
 import BinhLuan from "./BinhLuan";
 import GioHang from "./GioHang";
 
 
+=======
+>>>>>>> Stashed changes
 import { NavLink, useParams } from 'react-router-dom';
 import BinhLuan from "./BinhLuan";
 import GioHang from "./GioHang";
@@ -22,15 +25,35 @@ function TrangChinhChiTietSanPham(){
     let { spID } = useParams();
   
     useEffect(() => {
+<<<<<<< Updated upstream
 
 
 
 
         
+=======
+<<<<<<< Updated upstream
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
+            
+            setSanPham(response.data.data);
+          } catch (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+          }
+        };
+    
+        fetchData();
+>>>>>>> Stashed changes
         
+      }, []);
 
     
+<<<<<<< Updated upstream
 
+=======
+=======
+>>>>>>> Stashed changes
       const fetchData = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
@@ -59,7 +82,7 @@ function TrangChinhChiTietSanPham(){
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       alert('Thêm sản phẩm vào giỏ hàng thành công');
     };
-
+>>>>>>> Stashed changes
      
 
       //------------------------------------------------
@@ -90,20 +113,21 @@ function TrangChinhChiTietSanPham(){
                                 <i className="fa fa-star text-secondary"></i>
                                 <span className="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
                             </p>
-
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6>Thương hiệu:</h6>
-
+                            <ul className="list-inline">
+                                <li className="list-inline-item">
+                                    <h6>Brand:</h6>
                                 </li>
-
+<<<<<<< Updated upstream
+                                <li className="list-inline-item">
+                                    <p className="text-muted"><strong>Easy Wear</strong></p>
+=======
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
-
+>>>>>>> Stashed changes
                                 </li>
                             </ul>
 
-                            <h6>Mô tả:</h6>
+                            <h6>Description:</h6>
                             <p>{sanPham.thong_tin}</p>
                             <ul className="list-inline">
                                 <li className="list-inline-item">
@@ -113,7 +137,6 @@ function TrangChinhChiTietSanPham(){
                                     <p className="text-muted"><strong>White / Black</strong></p>
                                 </li>
                             </ul>
-
 
                             <h6>Specification:</h6>
                             <ul className="list-unstyled pb-3">
@@ -163,43 +186,34 @@ function TrangChinhChiTietSanPham(){
                                         </div>
                                     </div>
                                     
-
-                                        {/* <ul class="list-inline pb-3">
-                                            <li class="list-inline-item text-right">
-
                                         <ul className="list-inline pb-3">
                                             <li className="list-inline-item text-right">
-
                                                 Quantity
-                                               
+                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1"/>
                                             </li>
-
-                                             <input class="quantity fw-bold text-black" min="1" name="quantity" type="number"/>
-                           
-
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                                            
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-
-                                            
-                                        </ul> */}
-
                                             <li className="list-inline-item"><span className="btn btn-success" id="btn-minus">-</span></li>
                                             <li className="list-inline-item"><span className="badge bg-secondary" id="var-value">1</span></li>
                                             <li className="list-inline-item"><span className="btn btn-success" id="btn-plus">+</span></li>
                                         </ul>
-
                                     
                                 </div>
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
                                 <div className="row pb-3">
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
                                     </div>
                                     <div className="col d-grid">
                                         <button type="submit" className="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+<<<<<<< Updated upstream
 
 
+=======
+=======
+>>>>>>> Stashed changes
                                 <div class="col-12">
                                     <div class="row pb-3">
                                         <div class="col d-grid">
@@ -208,21 +222,17 @@ function TrangChinhChiTietSanPham(){
                                         <div class="col d-grid">
                                             <button onClick={ChonMua}  class="btn " >Add To Cart</button>
                                         </div>
-
+>>>>>>> Stashed changes
                                     </div>
                                 </div>
                             </form>
-                            
+
                         </div>
-                        
                     </div>
-                    
                 </div>
             </div>
         </div>
-        
     </section>
-    <BinhLuan/>
     <Footer/>
     </>
     );

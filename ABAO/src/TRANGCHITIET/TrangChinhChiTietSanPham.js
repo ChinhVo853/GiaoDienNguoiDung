@@ -7,53 +7,12 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
-<<<<<<< Updated upstream
-
-import BinhLuan from "./BinhLuan";
-import GioHang from "./GioHang";
-
-
-=======
->>>>>>> Stashed changes
-import { NavLink, useParams } from 'react-router-dom';
-import BinhLuan from "./BinhLuan";
-import GioHang from "./GioHang";
-
-
 function TrangChinhChiTietSanPham(){
     const [sanPham, setSanPham] = useState([]);
     let { spID } = useParams();
   
     useEffect(() => {
-<<<<<<< Updated upstream
 
-
-
-
-        
-=======
-<<<<<<< Updated upstream
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
-            
-            setSanPham(response.data.data);
-          } catch (error) {
-            console.error('Lỗi khi tải dữ liệu:', error);
-          }
-        };
-    
-        fetchData();
->>>>>>> Stashed changes
-        
-      }, []);
-
-    
-<<<<<<< Updated upstream
-
-=======
-=======
->>>>>>> Stashed changes
       const fetchData = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
@@ -82,7 +41,7 @@ function TrangChinhChiTietSanPham(){
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       alert('Thêm sản phẩm vào giỏ hàng thành công');
     };
->>>>>>> Stashed changes
+
      
 
       //------------------------------------------------
@@ -117,13 +76,10 @@ function TrangChinhChiTietSanPham(){
                                 <li className="list-inline-item">
                                     <h6>Brand:</h6>
                                 </li>
-<<<<<<< Updated upstream
-                                <li className="list-inline-item">
-                                    <p className="text-muted"><strong>Easy Wear</strong></p>
-=======
+
                                 <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
->>>>>>> Stashed changes
+<p class="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
+
                                 </li>
                             </ul>
 
@@ -171,7 +127,7 @@ function TrangChinhChiTietSanPham(){
                                                 
                                             <div><a>Color :</a>
                                                 <input data-image="red" type="radio" id="red" name="color" value="red" />
-                                                <label htmlFor="red"><span></span></label>
+<label htmlFor="red"><span></span></label>
                                             </div>
                                             <div>
                                                 <input data-image="blue" type="radio" id="blue" name="color" value="blue"/>
@@ -197,23 +153,6 @@ function TrangChinhChiTietSanPham(){
                                         </ul>
                                     
                                 </div>
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-                                <div className="row pb-3">
-                                    <div className="col d-grid">
-                                        <button type="submit" className="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
-                                    </div>
-                                    <div className="col d-grid">
-                                        <button type="submit" className="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
-<<<<<<< Updated upstream
-
-
-=======
-=======
->>>>>>> Stashed changes
                                 <div class="col-12">
                                     <div class="row pb-3">
                                         <div class="col d-grid">
@@ -222,7 +161,7 @@ function TrangChinhChiTietSanPham(){
                                         <div class="col d-grid">
                                             <button onClick={ChonMua}  class="btn " >Add To Cart</button>
                                         </div>
->>>>>>> Stashed changes
+
                                     </div>
                                 </div>
                             </form>

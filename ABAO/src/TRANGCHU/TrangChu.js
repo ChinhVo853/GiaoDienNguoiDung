@@ -20,7 +20,7 @@ function TrangChu() {
               })
               .then(function (response) {
                 
-              
+              console.log(response);
               })
               .catch(function (error) {
                 console.error('Error during login request:', error);

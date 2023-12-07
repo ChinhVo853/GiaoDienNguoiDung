@@ -14,9 +14,11 @@ function TrangChu() {
         const storedToken = localStorage.getItem('token');
        
         if (storedToken !== null) {
-            axios.post('http://127.0.0.1:8000/api/me', {
-                Authorization: 'bearer ' + storedToken,
-                
+            axios.post('http://127.0.0.1:8000/api/me',null, {
+                headers: {
+                    Authorization: 'bearer ' + storedToken,
+                },
+              
               })
               .then(function (response) {
                 

@@ -8,9 +8,36 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 function TrangChinhChiTietSanPham(){
+    //tao bien luu du lieu vao axios
     const [sanPham, setSanPham] = useState([]);
+    const [khachHang, setKhachHang]=useState('');
+    const[danhSachBinhLuan, setDanhSachBinhLuan]=useState([]);
+    //-------------------------------
     let { spID } = useParams();
-  
+    
+    const [binhLuan,setBinhLuan]=useState('');
+    const luuBinhLuan = (event) => {
+        event.preventDefault();
+        //-------------------goi ham luu bình luận-------------
+        axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+            san_pham_id:sanPham.id,
+            khach_hang_id:khachHang,
+            noi_dung:binhLuan,
+        })
+        //------------------kết quả trả về từ api--------------
+        .then(function (response) {
+          
+          const token = response.data.access_token;
+          localStorage.setItem('token', token);
+          window.location.href = '/';
+        })
+        .catch(function (error) {
+          console.error('Error during login request:', error);
+         
+        });
+      }
+    
+      //---------------------hàm hiện thông tin------------------
     useEffect(() => {
 
       const fetchData = async () => {
@@ -24,7 +51,25 @@ function TrangChinhChiTietSanPham(){
   
       fetchData();
     }, []);
-  
+    
+      //---------------------hàm hiện thông tin------------------
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
+            setDanhSachBinhLuan(response.data.data);
+          } catch (error) {
+            console.error('Lỗi khi tải dữ liệu:', error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+
+
+
     const ChonMua = () => {
       const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       const existingItem = existingCartItems.find((item) => item.id === sanPham.id);
@@ -41,49 +86,22 @@ function TrangChinhChiTietSanPham(){
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       alert('Thêm sản phẩm vào giỏ hàng thành công');
     };
-<<<<<<< Updated upstream
-//-----------------------
-useEffect(() => {
-    // Kiểm tra xem token có tồn tại hay không
-    const storedToken = localStorage.getItem('token');
-   
-    if (storedToken !== null) {
-        axios.post('http://127.0.0.1:8000/api/me', {
-            Authorization: 'bearer ' + storedToken,
-            
-          })
-          .then(function (response) {
-            
-          console.log(response);
-          })
-          .catch(function (error) {
-            console.error('Error during login request:', error);
-           
-          });
-    
-    } 
-    else {
-      // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
-      console.log('Token không tồn tại');
-      // Ví dụ: Chuyển hướng về trang đăng nhập
-      // window.location.href = '/dang-nhap';
-    }
-  }, []); 
 
-=======
 
     useEffect(() => {
         // Kiểm tra xem token có tồn tại hay không
         const storedToken = localStorage.getItem('token');
        
         if (storedToken !== null) {
-            axios.post('http://127.0.0.1:8000/api/me', {
-                Authorization: 'bearer ' + storedToken,
-                
+            axios.post('http://127.0.0.1:8000/api/me',null, {
+                headers: {
+                    Authorization: 'bearer ' + storedToken,
+                },
+              
               })
               .then(function (response) {
-                
-                console.log(response);
+              setKhachHang(response.data.id);
+              
               })
               .catch(function (error) {
                 console.error('Error during login request:', error);
@@ -99,8 +117,17 @@ useEffect(() => {
         }
       }, []); 
     
->>>>>>> Stashed changes
+
       //------------------------------------------------
+      const dsBinhLuan = danhSachBinhLuan.map(function(item, index) {
+        return (
+            <>
+            {item.noi_dung}
+
+            </>
+        );
+      });
+      
     return(
     <>
     <Head/>
@@ -134,7 +161,7 @@ useEffect(() => {
                                 </li>
 
                                 <li className="list-inline-item">
-<p className="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
+                                <p className="text-muted"><strong>{sanPham.nha_cung_cap_id}</strong></p>
 
                                 </li>
                             </ul>
@@ -183,7 +210,7 @@ useEffect(() => {
                                                 
                                             <div><a>Color :</a>
                                                 <input data-image="red" type="radio" id="red" name="color" value="red" />
-<label htmlFor="red"><span></span></label>
+                                                <label htmlFor="red"><span></span></label>
                                             </div>
                                             <div>
                                                 <input data-image="blue" type="radio" id="blue" name="color" value="blue"/>
@@ -227,6 +254,20 @@ useEffect(() => {
                 </div>
             </div>
         </div>
+        {dsBinhLuan}
+        <form onSubmit={luuBinhLuan} className="form">
+            <input
+              onChange={(e) => setBinhLuan(e.target.value)}
+              required
+              className="input"
+              type="text"
+              name="noi_dung"
+              id="noi_dung"
+              placeholder="Bình luận..."
+            />
+                        <input className="login-button" type="submit" value="GỬI" />
+
+        </form>
     </section>
     <Footer/>
     </>

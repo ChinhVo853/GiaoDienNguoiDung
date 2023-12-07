@@ -41,6 +41,7 @@ function TrangChinhChiTietSanPham(){
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       alert('Thêm sản phẩm vào giỏ hàng thành công');
     };
+<<<<<<< Updated upstream
 //-----------------------
 useEffect(() => {
     // Kiểm tra xem token có tồn tại hay không
@@ -69,6 +70,36 @@ useEffect(() => {
     }
   }, []); 
 
+=======
+
+    useEffect(() => {
+        // Kiểm tra xem token có tồn tại hay không
+        const storedToken = localStorage.getItem('token');
+       
+        if (storedToken !== null) {
+            axios.post('http://127.0.0.1:8000/api/me', {
+                Authorization: 'bearer ' + storedToken,
+                
+              })
+              .then(function (response) {
+                
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.error('Error during login request:', error);
+               
+              });
+        
+        } 
+        else {
+          // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
+          console.log('Token không tồn tại');
+          // Ví dụ: Chuyển hướng về trang đăng nhập
+          // window.location.href = '/dang-nhap';
+        }
+      }, []); 
+    
+>>>>>>> Stashed changes
       //------------------------------------------------
     return(
     <>

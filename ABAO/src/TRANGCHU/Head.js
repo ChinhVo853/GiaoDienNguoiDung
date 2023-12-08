@@ -27,8 +27,8 @@ function Head(){
 		
 								<li><i className="ti-alarm-clock"></i> Daily deal</li>
 								<li><i className="ti-user"></i>My account</li>
-								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
-								<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
+								<li><i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+								<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
 
 							</ul>
 						</div>
@@ -82,8 +82,7 @@ function Head(){
 								<div  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></div>
 							</div>
 							<div className="sinlge-bar shopping">
-								<div  className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></div>
-
+								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>
 					
 								
 

@@ -37,6 +37,8 @@ import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 
 import GioHang from './TRANGCHITIET/GioHang';
 
+import ThanhToan from './THANHTOAN/ThanhToan';
+
 function App() {
 
   return (
@@ -50,6 +52,7 @@ function App() {
         <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
         <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
         <Route path='/GioHang' element={<GioHang/>}/>;
+        <Route path='/ThanhToan' element={<ThanhToan/>}/>;
 
       </Routes>
     </>

@@ -1,7 +1,26 @@
 import Danhsach from "./Danhsach";
 import Nutxemthem from "./Nutxemthem";
+import { useState,useEffect } from "react";
+import axios from "axios";
+
 function Danhmuc()
 {
+	const [dsSanPham,setdsSanPham]= useState([]);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get('http://127.0.0.1:8000/api/danh-sach-san-pham');
+				setdsSanPham(response.data.data);
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		};
+	
+		fetchData();
+	}, []); // Thêm dispatch vào dependency array
+	
+	
+
     return(
         <>
         <div className="product-area section">
@@ -28,7 +47,7 @@ function Danhmuc()
 									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#prices" role="tab">Prices</a></li> */}
 								</ul>
 								<div className="tab-content" id="myTabContent">
-								<Danhsach/>
+								<Danhsach data={dsSanPham}/>
 								</div>
 								
 							</div>

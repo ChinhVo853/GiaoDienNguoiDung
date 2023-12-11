@@ -37,7 +37,6 @@ import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 
 import GioHang from './TRANGCHITIET/GioHang';
 import { Provider } from 'react-redux';
-import Store from './Store'
 
 //-----------------TIMKIEM------------------------
 import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';

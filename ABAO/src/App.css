@@ -1,40 +1,3 @@
-.color-choose div {
-	display: inline-block;
-  }
-   
-  .color-choose input[type="radio"] {
-	display: none;
-  }
-   
-  .color-choose input[type="radio"] + label span {
-	display: inline-block;
-	width: 40px;
-	height: 40px;
-	margin: -1px 4px 0 0;
-	vertical-align: middle;
-	cursor: pointer;
-	border-radius: 50%;
-	border: 2px solid #FFFFFF;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,0.33);
-  }
-   
-  .color-choose input[type="radio"]#red + label span {
-	background-color: #C91524;
-  }
-  .color-choose input[type="radio"]#blue + label span {
-	background-color: #314780;
-  }
-  .color-choose input[type="radio"]#black + label span {
-	background-color: #323232;
-  }
-  
-   
-  
-   
-  .product-color .color-choose div {
-    display: inline-block;
-    margin-right: 10px; /* Adjust the spacing between color options */
-}
 
 
 
@@ -66,7 +29,7 @@
 }
 
 .col-12 button:hover {
-    background-color: orange;
+    background-color: #0193f5;
     color: white;
 }
 
@@ -74,7 +37,7 @@
     border: none;
     font-weight: 600;
     color: #fff;
-    background: orange;
+    background: #0193f5;
     text-align: center;
 }
 .shopping-cart .total-amount .right .button5 .btn {
@@ -88,10 +51,9 @@
     color: #fff;
 	background-color: black;
 	padding: 13px 20px;
-    cursor: pointer;
 }
 .shopping-cart .total-amount .right .button5 .btn:hover{
-	background-color: orange;
+	background-color: #0193f5;
 }
 /*-----------------------------------------------------------------------------*/
 .color-plate {
@@ -237,23 +199,12 @@
 /* End Preloader */
 
 .btn {
-	position: relative;
-	font-weight: 500;
-	font-size:14px;
-	color: #fff;
+	
 	background: #333;
 	display: inline-block;
-	-webkit-transition: all 0.4s ease;
-	-moz-transition: all 0.4s ease;
-	transition: all 0.4s ease;
-	z-index: 5;
-	display: inline-block;
-	padding: 13px 32px;
-	border-radius: 0px;
-	text-transform:uppercase;
+	
 }
 .btn:hover{
-	color:#fff;
 	background:#0088CC;
 }
 #scrollUp {

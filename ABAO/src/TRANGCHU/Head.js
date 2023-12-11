@@ -1,5 +1,41 @@
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import Timkiemsanpham from "../REDUCER/Timkiemsanpham";
 function Head(){
+	const [thanhTimKiem,setThanhTimKiem] = useState(''); 
+
+
+	// Kiểm tra xem token có tồn tại hay không
+	const storedToken = localStorage.getItem('token');
+	
+	const logoutHandler = () => {
+		localStorage.removeItem('token'); //lệnh để xoá localStorage
+		window.location.href = '/';
+	}
+
+
+	const dangNhap =  () => {
+	if(storedToken==null)
+	{
+			return (
+				<>
+				<i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+				<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink>
+				</>
+			);
+		
+	}
+	return (<>
+	<i className="ti-power-off"><NavLink onClick={logoutHandler} className="Nav-Link active">ĐĂNG XUẤT</NavLink></i>
+	</>);
+}
+
+
+
+
+
+
+
     return(
         <>
 
@@ -27,8 +63,10 @@ function Head(){
 		
 								<li><i className="ti-alarm-clock"></i> Daily deal</li>
 								<li><i className="ti-user"></i>My account</li>
-								<li><i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
-								<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
+								<li><i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+								<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
+
+								<li>{dangNhap()}</li>
 
 							</ul>
 						</div>
@@ -65,8 +103,10 @@ function Head(){
 						<div className="search-bar-top">
 							<div className="search-bar">
 								<form>
-									<input name="search" placeholder="Search Products Here....." type="search"/>
-									<button className="btnn"><i className="ti-search"></i></button>
+									<input onChange={(e) => setThanhTimKiem(e.target.value)} name="search" placeholder="Search Products Here....." type="search"/>
+
+									<NavLink to={`/TimKiem/${thanhTimKiem}`}><button className="btnn"><i className="ti-search"></i></button></NavLink>
+									
 								</form>
 							</div>
 						</div>
@@ -82,8 +122,7 @@ function Head(){
 								<div  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></div>
 							</div>
 							<div className="sinlge-bar shopping">
-								<div  className="single-icon"><i className="ti-bag"></i> <span className="total-count">2</span></div>
-
+								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>
 					
 								
 

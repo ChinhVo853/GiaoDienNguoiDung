@@ -36,6 +36,13 @@ import Trangchinhcacloaisanpham from './LOAISANPHAM/Trangchinhcacloaisanpham';
 import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 
 import GioHang from './TRANGCHITIET/GioHang';
+import { Provider } from 'react-redux';
+import Store from './Store'
+
+//-----------------TIMKIEM------------------------
+import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
+
+
 
 import ThanhToan from './THANHTOAN/ThanhToan';
 
@@ -44,17 +51,19 @@ function App() {
   return (
 
     <>
+   
+        <Routes>
+          <Route path='/' element={<TrangChu/>}/>;
+          <Route path='/DANGNHAP' element={<DangNhap/>}/>;
+          <Route path='/DANGKY' element={<DangKy/>}/>;
+          <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
+          <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
+          <Route path='/GioHang' element={<GioHang/>}/>;
+          <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
+        </Routes>
       
-      <Routes>
-        <Route path='/' element={<TrangChu/>}/>;
-        <Route path='/DANGNHAP' element={<DangNhap/>}/>;
-        <Route path='/DANGKY' element={<DangKy/>}/>;
-        <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
-        <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
-        <Route path='/GioHang' element={<GioHang/>}/>;
-        <Route path='/ThanhToan' element={<ThanhToan/>}/>;
 
-      </Routes>
+
     </>
   );
 }

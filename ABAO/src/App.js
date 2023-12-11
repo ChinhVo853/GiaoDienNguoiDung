@@ -44,6 +44,8 @@ import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
 
 
 
+import ThanhToan from './THANHTOAN/ThanhToan';
+
 function App() {
 
   return (
@@ -60,6 +62,8 @@ function App() {
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
         </Routes>
       
+
+
     </>
   );
 }

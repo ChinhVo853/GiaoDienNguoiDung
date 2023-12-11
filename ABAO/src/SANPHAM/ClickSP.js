@@ -13,7 +13,7 @@ function ClickSP() {
           <NavLink to="" title="Wishlist"><i className="ti-heart"></i><span>Add to Wishlist</span></NavLink>
         </div>
         <div className="product-action-2">
-          <NavLink to="" title="Add to cart">Add to cart</NavLink>
+          <NavLink to="/GioHang" title="Add to cart">Add to cart</NavLink>
         </div>
       </div>
     </>

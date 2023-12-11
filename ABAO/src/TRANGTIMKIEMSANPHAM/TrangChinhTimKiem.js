@@ -5,7 +5,7 @@ import Footer from "../TRANGCHU/Footer";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import { useState,useEffect } from "react";
-
+import LocGia from "./LocGia";
 
 function TrangChinhTimKiem()
 {
@@ -34,7 +34,32 @@ function TrangChinhTimKiem()
     <>
         <Head/>
         <Menu/>
-       {ListSP}
+        <div>
+        <hr></hr>
+            <div className="row">
+                <div className="khunggia col-sm-3">
+                    <h5 className="khoang_gia">KHOẢN GIÁ</h5>
+                </div>
+                <div className="col-sm-9"></div>
+            </div>
+        <input type="text" autocomplete="off" name="text" className="nhap_gia" placeholder=""/>
+        <label>
+            <p>----</p>
+        </label>
+        <input type="text" autocomplete="off" name="text" className="nhap_gia" placeholder=""/>
+        <button className="nutgia">
+            Click
+        </button>
+        <hr></hr>
+        </div>
+        <div className="tab-pane fade show active" id="man" role="tabpanel">
+                <div className="tab-single">
+                    <div className="row">
+                    {ListSP}
+                    </div>
+                </div>
+            </div>
+       
         <Footer/>
     </>
     )

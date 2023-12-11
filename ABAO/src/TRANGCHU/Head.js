@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import Timkiemsanpham from "../REDUCER/Timkiemsanpham";
+
 function Head(){
 	const [thanhTimKiem,setThanhTimKiem] = useState(''); 
 

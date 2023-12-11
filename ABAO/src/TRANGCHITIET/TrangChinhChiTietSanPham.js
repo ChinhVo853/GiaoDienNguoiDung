@@ -51,7 +51,6 @@ function TrangChinhChiTietSanPham(){
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
           setSanPham(response.data.data);
-         
           setSizeMauSP(response.data.data2);
          
         } catch (error) {
@@ -151,7 +150,6 @@ function TrangChinhChiTietSanPham(){
 
   const listMau = () => {
     const uniqueColors = new Set();
-
     return sizeMauSP.map((item, index) => {
       const color = item.mau.ten;
 
@@ -302,6 +300,19 @@ function TrangChinhChiTietSanPham(){
         </div>
         <BinhLuan/>
       </section>
+      {dsBinhLuan}
+        <form onSubmit={luuBinhLuan} className="form">
+            <input
+              onChange={(e) => setBinhLuan(e.target.value)}
+              required
+              className="input"
+              type="text"
+              name="noi_dung"
+              id="noi_dung"
+              placeholder="Bình luận..."
+            />
+                        <input className="login-button" type="submit" value="GỬI" />
+        </form>
       <Footer />
     </>
   );

@@ -8,6 +8,7 @@ import Dichvu from './DichVu';
 import Cacsanphambanchay from '../Hot/Cacsanphambanchay';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
+import LocGia from '../TRANGTIMKIEMSANPHAM/LocGia';
 function TrangChu() {
     useEffect(() => {
         // Kiểm tra xem token có tồn tại hay không
@@ -47,7 +48,7 @@ function TrangChu() {
             <div className='SmallBanner'>
                 <SmallBanner />
             </div>
-
+            
             <Danhmuc />
             <div className='Cacsanphambanchay'>
                 <Cacsanphambanchay />

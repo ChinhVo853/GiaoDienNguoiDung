@@ -5,7 +5,14 @@ import axios from "axios";
 
 function Danhmuc()
 {
+	//---------các state ---------------------
+
+	//lưu danh sách các sản phẩm
 	const [dsSanPham,setdsSanPham]= useState([]);
+
+
+	//-------------------------đây là gọi API dsSanPham sẽ được thay đổi ở đây--------------------------
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {

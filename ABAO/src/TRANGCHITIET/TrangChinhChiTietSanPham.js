@@ -11,8 +11,16 @@ import BinhLuan from "./BinhLuan";
 
 
 function TrangChinhChiTietSanPham(){
+
+  //---------các state ---------------------
+
+  //đây là giá trị lấy được trên thanh url
   let { spID } = useParams();
+
+  //sản phẩm trong trang chi tiết này
   const [sanPham, setSanPham] = useState([]);
+
+  //màu và size của sản phẩm
   const [sizeMauSP, setSizeMauSP] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
@@ -23,6 +31,9 @@ function TrangChinhChiTietSanPham(){
     //-------------------------------
 
     const [binhLuan,setBinhLuan]=useState('');
+
+
+    //-----------------------API-----------------------------------
     const luuBinhLuan = (event) => {
         event.preventDefault();
         //-------------------goi ham luu bình luận-------------

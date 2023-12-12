@@ -17,7 +17,6 @@ function TrangChinhChiTietSanPham(){
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
     //tao bien luu du lieu vao axios
-    const [sanPhamb, setSanPhamb] = useState([]);
     const [khachHang, setKhachHang]=useState('');
     const[danhSachBinhLuan, setDanhSachBinhLuan]=useState([]);
     //-------------------------------
@@ -27,7 +26,7 @@ function TrangChinhChiTietSanPham(){
         event.preventDefault();
         //-------------------goi ham luu bình luận-------------
         axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-            san_pham_id:sanPhamb.id,
+            san_pham_id:sanPham.id,
             khach_hang_id:khachHang,
             noi_dung:binhLuan,
         })
@@ -311,7 +310,7 @@ function TrangChinhChiTietSanPham(){
               id="noi_dung"
               placeholder="Bình luận..."
             />
-                        <input className="login-button" type="submit" value="GỬI" />
+            <input className="login-button" type="submit" value="GỬI" />
         </form>
       <Footer />
     </>

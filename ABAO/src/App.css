@@ -4519,6 +4519,8 @@
 }
 .blog-single .comments .single-comment.left{
 	margin-left:110px;
+	margin-top: 30px;
+
 }
 .blog-single .comments .single-comment img {
 	height: 70px;

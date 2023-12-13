@@ -59,6 +59,8 @@ function App() {
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
+          <Route path='/loai/:loaiID' element={<Trangchinhcacloaisanpham/>}/>
+
         </Routes>
       
 

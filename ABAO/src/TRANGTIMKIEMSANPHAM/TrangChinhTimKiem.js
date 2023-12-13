@@ -58,6 +58,16 @@ function TrangChinhTimKiem()
         
         });
     };
+
+    const GiaTang = async () => {
+        const response = await axios.get(`http://127.0.0.1:8000/api/tim-kiem-gia-tang/${tenSanPham}`);
+        setdsSanPham(response.data.data);
+    }
+
+    const GiaGiam = async () => {
+        const response = await axios.get(`http://127.0.0.1:8000/api/tim-kiem-gia-giam/${tenSanPham}`);
+        setdsSanPham(response.data.data);
+    }
     //-------------------------các biến được tạo để phân trang---------------------
 
     //Tính toán số lượng trang cần hiển thị dựa trên tổng số sản phẩm và số sản phẩm trên mỗi trang.
@@ -87,29 +97,42 @@ function TrangChinhTimKiem()
         setPageNumber(selected);
     };
      
+    
 
     return(
     <>
         <Head/>
         <Menu/>
         <div>
-        <hr></hr>
-            <div className="row">
-                <div className="khunggia col-sm-3">
-                    <h5 className="khoang_gia">KHOẢN GIÁ</h5>
-                </div>
-                <div className="col-sm-9"></div>
+                <hr></hr>
+                    <div className="row">
+                        <div className="khunggia col-sm-3">
+                            <h5 className="khoang_gia">KHOẢN GIÁ</h5>
+                        </div>
+                        <div className="col-sm-9">
+                            <input onChange={(e) => setGiaTu(e.target.value)} autoComplete="off" type="text" name="text" className="nhap_gia" placeholder=""/>
+                                <label>
+                                    <p>----</p>
+                                </label>
+                                <input  onChange={(e) => setGiaDen(e.target.value)} autoComplete="off" type="text"  name="text" className="nhap_gia" placeholder=""/>
+                                <button onClick={locGia} className="nutgia">
+                                    Click
+                                </button>
+                        </div>
+                        
+                        <div className="col-sm-3">
+                        <div className="">
+                            <h5 className="khoang_gia">XẾP GIÁ</h5>
+                        </div>
+                            <button onClick={GiaTang} className="nutgia">CAO </button>
+
+                            <button onClick={GiaGiam} className="nutgia">THẤP</button>
+                        </div>
+                    </div>
+                                
+                        
+                        <hr></hr>
             </div>
-        <input onChange={(e) => setGiaTu(e.target.value)} autoComplete="off" type="text" name="text" className="nhap_gia" placeholder=""/>
-        <label>
-            <p>----</p>
-        </label>
-        <input  onChange={(e) => setGiaDen(e.target.value)} autoComplete="off" type="text"  name="text" className="nhap_gia" placeholder=""/>
-        <button onClick={locGia} className="nutgia">
-            Click
-        </button>
-        <hr></hr>
-        </div>
         <div className="tab-pane fade show active" id="man" role="tabpanel">
                 <div className="tab-single">
                     <div className="row">

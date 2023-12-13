@@ -6,9 +6,11 @@ import { NavLink } from "react-router-dom";
 
 function Sanpham(item) {
      
+    //Dấu ? được sử dụng để kiểm tra nếu giá trị ở bên phải của nó là undefined hoặc null
+    //giúp tránh lỗi TypeError khi bạn cố gắng truy cập một thuộc tính của một đối tượng không xác định.
+
     return (
         <>
-
             <div className="col-xl-3 col-lg-4 col-md-4 col-12">
                 <div className="single-product">
                     <div className="product-img">

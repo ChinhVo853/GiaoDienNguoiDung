@@ -23,10 +23,7 @@ function TrangChu() {
             </div>
             
             <Danhmuc />
-            <div className='Cacsanphambanchay'>
-                <Cacsanphambanchay />
-
-            </div>
+            
             <Dichvu />
             <Footer />
         </>

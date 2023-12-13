@@ -130,14 +130,10 @@ function Head(){
 								<div  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></div>
 							</div>
 							<div className="sinlge-bar">
-								<div  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></div>
+								<NavLink to="/THONGTINTAIKHOAN" className="single-icon" ><i className="fa fa-user-circle-o" aria-hidden="true"></i></NavLink>
 							</div>
 							<div className="sinlge-bar shopping">
-								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>
-					
-								
-
-							</div>
+								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>							</div>
 						</div>
 					</div>
 				</div>

@@ -27,6 +27,8 @@ function TrangChinhChiTietSanPham(){
     //tao bien luu du lieu vao axios
     const [khachHang, setKhachHang]=useState('');
     const[danhSachBinhLuan, setDanhSachBinhLuan]=useState([]);
+    const storedToken = localStorage.getItem('token');
+    
     //-------------------------------
 
     const [binhLuan,setBinhLuan]=useState('');
@@ -43,10 +45,7 @@ function TrangChinhChiTietSanPham(){
         })
         //------------------kết quả trả về từ api--------------
         .then(function (response) {
-          
-          const token = response.data.access_token;
-          localStorage.setItem('token', token);
-          window.location.href = '/';
+         
         })
         .catch(function (error) {
           console.error('Error during login request:', error);
@@ -189,7 +188,7 @@ function TrangChinhChiTietSanPham(){
  
     useEffect(() => {
         // Kiểm tra xem token có tồn tại hay không
-        const storedToken = localStorage.getItem('token');
+        
        
         if (storedToken !== null) {
             axios.post('http://127.0.0.1:8000/api/me',null, {
@@ -226,6 +225,7 @@ function TrangChinhChiTietSanPham(){
             </>
         );
       });
+
       
       return (
         <>
@@ -310,7 +310,7 @@ function TrangChinhChiTietSanPham(){
         </div>
         <BinhLuan/>
       </section>
-      {dsBinhLuan}
+      
         <form onSubmit={luuBinhLuan} className="form">
             <input
               onChange={(e) => setBinhLuan(e.target.value)}

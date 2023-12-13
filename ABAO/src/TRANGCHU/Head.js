@@ -32,8 +32,8 @@ function Head(){
 		{
 			return (
 				<>
-				<i className="ti-power-off"></i><NavLink to="DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
-				<NavLink to="DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink>
+				<i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
+				<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink>
 				</>
 			);
 			

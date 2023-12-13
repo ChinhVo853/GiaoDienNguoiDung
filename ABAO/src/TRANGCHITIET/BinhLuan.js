@@ -4,19 +4,70 @@ import { useParams } from 'react-router-dom';
 
 
 function BinhLuan() {
-	//tao bien luu du lieu vao axios
-	const [sanPhamb, setSanPhamb] = useState([]);
+	//--------------các state---------------------
+
+	//được dùng để lưu khách hàng bình luận
 	const [khachHang, setKhachHang] = useState('');
+
+	//được dùng để lúu danh sách các bình luận của bình luận cấp 1 
 	const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
+
+	//đucowj dùng để lưu nội dung khách hàng bình luận
+	const [noiDungBinhLuan,setNoiDungBinhLuan] =useState('');
+
+	//được dùng để lúu danh sách các bình luận của bình luận cấp 2
 	const [danhSachBinhLuanCapHai, setDanhSachBinhLuanCapHai] = useState([]);
+
+	//được dùng để lưu id của bình luận cấp 1
 	const [traLoiBinhLuan, setTraLoiBinhLuan] = useState('');
 
+	//được dùng để lưu id nằm trên url
 	let { spID } = useParams();
+
+	//được dùng để lưu localsotege
+	const storedToken = localStorage.getItem('token');
+
 
 
 	//-----------------------------------------------------------------
 
 	//---------------------------------------------------------------
+
+
+	//-----------------------API---------------------------
+
+
+	//lấy thông tin khách hàng
+	useEffect(() => {
+        // Kiểm tra xem token có tồn tại hay không
+        
+       
+        if (storedToken !== null) {
+            axios.post('http://127.0.0.1:8000/api/me',null, {
+                headers: {
+                    Authorization: 'bearer ' + storedToken,
+                },
+              
+              })
+              .then(function (response) {
+              setKhachHang(response.data.id);
+              
+              })
+              .catch(function (error) {
+                console.error('Error during login request:', error);
+               
+              });
+        
+        } 
+        else {
+          // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
+          console.log('Token không tồn tại');
+          // Ví dụ: Chuyển hướng về trang đăng nhập
+          // window.location.href = '/dang-nhap';
+        }
+      }, []); 
+
+
 
 
 	//---------------------hàm hiện thông tin blc1------------------
@@ -37,12 +88,27 @@ function BinhLuan() {
 		fetchData();
 	}, []);
 
+
+	const luuBinhLuanCapHai = () => {
+		axios.post('http://127.0.0.1:8000/api/luu-binh-luan-cap-hai',{
+			binh_luan_cap_mot_id: traLoiBinhLuan,
+			san_pham_id: spID,
+			khach_hang_id: khachHang,
+			noi_dung: noiDungBinhLuan,
+		}).then(function(response){
+			alert('bạn đã gửi bình luận')
+		})
+	}
+	
+
 	//-------------------------------
 	
 
-	console.log(traLoiBinhLuan);
-	//--------------------------------------
+	//----------------------ham xu ly----------------
+
 	const listBinhLuan = danhSachBinhLuan.map(function (item) {
+		
+
 		const listBinhLuanCapHai = item.binh_luan_cap_hai.map(function (item2) {
 			return (
 				<>
@@ -58,24 +124,39 @@ function BinhLuan() {
 			);
 
 		})
-		const xuLyBinhLuan = (item) => {
-			setTraLoiBinhLuan(item);
 
-			document.querySelector('.traloibinhluan').innerHTML=`<form class="form" action="#">
+
+		//hàm update lại TraLoiBinhLuan
+		const xuLyBinhLuan = (item) => {
+			
+			setTraLoiBinhLuan(item);
+			
+		
+		};
+
+		//hiện form trả lời bình luận
+		const hienTraLoiBinhLuan = (id) => {
+		
+			return traLoiBinhLuan === id ? (<>
+			 <form class="form" action="#">
 			<div class="row">
 
 				<div class="col-12">
 					<div class="form-group">
 						<label>Viết câu trả lời của bạn<span>*</span></label>
-						<textarea name="message" placeholder=""></textarea>
+						<textarea onChange={(e) => setNoiDungBinhLuan(e.target.value)} name="message" placeholder=""></textarea>
 					</div>
 				</div>
 				<div class="col-12">
-					<button type="submit" class="btn">Trả lời</button>
+					<button onClick={luuBinhLuanCapHai}type="butotn" class="btn">Trả lời</button>
 				</div>
 			</div>
-		</form>`;
-		};
+		</form>
+
+				</>
+			) : null;
+		  };
+		  
 		return (
 			<>
 				<div class="single-comment">
@@ -84,9 +165,9 @@ function BinhLuan() {
 						<h4>{item.khach_hang.ho_ten} </h4>
 						<p>{item.noi_dung}</p>
 						<div class="button">
-							<a onClick={() => xuLyBinhLuan(item.khach_hang.id)} class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Trả lời</a>
-							
+							<a onClick={() => xuLyBinhLuan(item.id)} class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Trả lời</a>
 						</div>
+						{hienTraLoiBinhLuan(item.id)}
 					</div>
 				</div>
 				<div className="traloibinhluan">
@@ -108,6 +189,7 @@ function BinhLuan() {
 											<div class="comments">
 												<h3 class="comment-title">Comments (3)</h3>
 												{/* ------------------------------- */}
+												
 												{listBinhLuan}
 												{/* ------------------------------- */}
 												{/* <div class="single-comment">
@@ -150,7 +232,9 @@ function BinhLuan() {
 						</div>
 					</div>
 				</div>
+				
 			</section>
+			
 		</>
 	);
 }

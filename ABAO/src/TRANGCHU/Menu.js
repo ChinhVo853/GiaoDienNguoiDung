@@ -1,6 +1,36 @@
 import { NavLink } from "react-router-dom";
+import { useState,useEffect } from "react";
+import axios from "axios";
 
 function Menu() {
+  //--------các State-------------------
+
+  //được dùng để lưu danh sách loại
+  const [dsLoai, setDSLoai] = useState([]);
+
+  //----------API-----------------------
+  useEffect(  () =>  {
+    const fetchData = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/api/danh-sach-loai');
+    setDSLoai(response.data.data);
+    }
+    fetchData();
+  },[]);
+
+  //---------hàm xử lý-----------------
+
+  //được dùng để hiển thị tất cả loại lênt rang web
+
+  const danhSachLoai = dsLoai.map((item) => {
+    return(
+      <li key={item.id}>
+        <NavLink to={`/loai/${item.id}`}>{item.ten}</NavLink>
+      </li>
+    )
+  })
+
+
+
   return (
     <>
       <header className="header shop">
@@ -15,35 +45,20 @@ function Menu() {
                         <div className="nav-inner">
                           <ul className="nav main-menu menu navbar-nav">
                             <li className="active">
-                              <NavLink to="/">Home</NavLink>
-                            </li>
-                            <li>
-                              <a>Product</a>
-                            </li>
-                            <li>
-                              <a>Service</a>
+                              <NavLink to="/">TRANG CHỦ</NavLink>
                             </li>
                             <li>
                               <a>
-                                Shop<i className="ti-angle-down"></i>
-                                <span className="new">New</span>
+                                SẢN PHẨM
+                                <i className="ti-angle-down"></i>
                               </a>
+
                               <ul className="dropdown">
-                                <li>
-                                  <a>Shop Grid</a>
-                                </li>
-                                <li>
-                                  <a>Cart</a>
-                                </li>
-                                <li>
-                                  <a>Checkout</a>
-                                </li>
+                               {danhSachLoai}
                               </ul>
                             </li>
-                            <li>
-                              <a>Pages</a>
-                            </li>
-                            <li>
+                            
+                            {/* <li>
                               <a>
                                 Blog<i className="ti-angle-down"></i>
                               </a>
@@ -52,9 +67,10 @@ function Menu() {
                                   <a>Blog Single Sidebar</a>
                                 </li>
                               </ul>
-                            </li>
+                            </li> */}
+                            
                             <li>
-                              <a>Contact Us</a>
+                              <a>GIỚI THIỆU</a>
                             </li>
                           </ul>
                         </div>

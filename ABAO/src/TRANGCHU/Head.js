@@ -71,14 +71,12 @@ function Head(){
 			
 						<div className="right-content">
 							<ul className="list-main">
-								<li><i className="ti-location-pin"></i> Store location</li>
+								{/* <li><i className="ti-location-pin"></i> Store location</li>
 
 		
 								<li><i className="ti-alarm-clock"></i> Daily deal</li>
-								<li><i className="ti-user"></i>My account</li>
-								<li><i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
-								<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
-
+								<li><i className="ti-user"></i>My account</li> */}
+								
 								<li>{dangNhap()}</li>
 
 							</ul>

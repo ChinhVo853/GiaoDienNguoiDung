@@ -3,12 +3,25 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function DangNhap() {
+  //---------các state ---------------------
+
+  //lưu value nhập vào của email ở input
   const [email, setEmail] = useState('');
+  
+  //lưu value nhập vào của password ở input
   const [password, setPassword] = useState('');
 
+
+  //------------ gọi API--------------------
+
+
   const postLogin = (event) => {
+    // Ngăn chặn hành vi mặc định của sự kiện, trong trường hợp này là gửi biểu mẫu
     event.preventDefault();
 
+
+    //ở đây kiểm tra thông tin đăng nhập
+    //nếu thông tin đăng nhập là hợp lệ thì sẽ tạo ra 1 localStorage sẽ thay đổi đường dẫn thành /
     axios.post('http://127.0.0.1:8000/api/login', {
       email: email,
       password: password,

@@ -7,8 +7,18 @@ import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import BinhLuan from "./BinhLuan";
 
-function TrangChinhChiTietSanPham() {
+
+function TrangChinhChiTietSanPham(){
+
+  //---------các state ---------------------
+
+  //đây là giá trị lấy được trên thanh url
+  let { spID } = useParams();
+
+  //sản phẩm trong trang chi tiết này
   const [sanPham, setSanPham] = useState([]);
+
+  //màu và size của sản phẩm
   const [sizeMauSP, setSizeMauSP] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
@@ -16,6 +26,41 @@ function TrangChinhChiTietSanPham() {
   const [khachHang, setKhachHang] = useState('');
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
+    //tao bien luu du lieu vao axios
+    const [khachHang, setKhachHang]=useState('');
+    const[danhSachBinhLuan, setDanhSachBinhLuan]=useState([]);
+    const storedToken = localStorage.getItem('token');
+    
+    //-------------------------------
+
+    const [binhLuan,setBinhLuan]=useState('');
+
+
+    //-----------------------API-----------------------------------
+    const luuBinhLuan = (event) => {
+        event.preventDefault();
+        //-------------------goi ham luu bình luận-------------
+        axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+            san_pham_id:sanPham.id,
+            khach_hang_id:khachHang,
+            noi_dung:binhLuan,
+        })
+        //------------------kết quả trả về từ api--------------
+        .then(function (response) {
+         
+        })
+        .catch(function (error) {
+          console.error('Error during login request:', error);
+         
+        });
+      }
+    
+      
+
+    
+      //---------------------hàm hiện thông tin------------------
+
+    useEffect(() => {
 
   let { spID } = useParams();
 
@@ -158,12 +203,12 @@ function TrangChinhChiTietSanPham() {
     });
   };
 
-  const dsBinhLuan = danhSachBinhLuan.map((item, index) => (
+ /* const dsBinhLuan = danhSachBinhLuan.map((item, index) => (
     <React.Fragment key={index}>
       {item.noi_dung}
     </React.Fragment>
   ));
-
+*/
   const luuBinhLuan = (event) => {
     event.preventDefault();
 
@@ -190,6 +235,54 @@ function TrangChinhChiTietSanPham() {
         <div className="container pb-5">
           <div className="row">
             <div className="col-lg-5 mt-5">
+ 
+    useEffect(() => {
+        // Kiểm tra xem token có tồn tại hay không
+        
+       
+        if (storedToken !== null) {
+            axios.post('http://127.0.0.1:8000/api/me',null, {
+                headers: {
+                    Authorization: 'bearer ' + storedToken,
+                },
+              
+              })
+              .then(function (response) {
+              setKhachHang(response.data.id);
+              
+              })
+              .catch(function (error) {
+                console.error('Error during login request:', error);
+               
+              });
+        
+        } 
+        else {
+          // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
+          console.log('Token không tồn tại');
+          // Ví dụ: Chuyển hướng về trang đăng nhập
+          // window.location.href = '/dang-nhap';
+        }
+      }, []); 
+
+
+      //------------------------------------------------
+      const dsBinhLuan = danhSachBinhLuan.map(function(item, index) {
+        return (
+            <>
+            {item.noi_dung}
+
+            </>
+        );
+      });
+
+      
+      return (
+        <>
+          <Head />
+          <Menu />
+          <section className="bg-light">
+            <div className="container pb-5">
               <div className="row">
                 <Hinhnhotrangchitiet hinh={sanPham} />
               </div>
@@ -268,19 +361,20 @@ function TrangChinhChiTietSanPham() {
 
       {dsBinhLuan}
 
-      <form onSubmit={luuBinhLuan} className="form">
-        <input
-          onChange={(e) => setBinhLuan(e.target.value)}
-          required
-          className="input"
-          type="text"
-          name="noi_dung"
-          id="noi_dung"
-          placeholder="Bình luận..."
-        />
-        <input className="login-button" type="submit" value="GỬI" />
-      </form>
 
+      
+        <form onSubmit={luuBinhLuan} className="form">
+            <input
+              onChange={(e) => setBinhLuan(e.target.value)}
+              required
+              className="input"
+              type="text"
+              name="noi_dung"
+              id="noi_dung"
+              placeholder="Bình luận..."
+            />
+            <input className="login-button" type="submit" value="GỬI" />
+        </form>
       <Footer />
     </>
   );

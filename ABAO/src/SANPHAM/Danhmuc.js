@@ -5,7 +5,14 @@ import axios from "axios";
 
 function Danhmuc()
 {
+	//---------các state ---------------------
+
+	//lưu danh sách các sản phẩm
 	const [dsSanPham,setdsSanPham]= useState([]);
+
+
+	//-------------------------đây là gọi API dsSanPham sẽ được thay đổi ở đây--------------------------
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -28,7 +35,7 @@ function Danhmuc()
 				<div className="row">
 					<div className="col-12">
 						<div className="section-title">
-							<h2>Trending Item</h2>
+							<h2>Các Sản Phẩm Mới</h2>
 						</div>
 					</div>
 				</div>
@@ -36,16 +43,16 @@ function Danhmuc()
 					<div className="col-12">
 						<div className="product-info">
 							<div className="nav-main">
-								
+								{/*
 								<ul className="nav nav-tabs" id="myTab" role="tablist">
 									<li className="nav-item"><a className="nav-link active" data-toggle="tab" href="#aothun" role="tab">ÁO THUN</a></li>
 									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#aokhoac" role="tab">ÁO KHOÁC</a></li>
 									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#hoodie" role="tab">HOODIE</a></li>
 									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#quan" role="tab">QUẦN</a></li>
-									{/* <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#accessories" role="tab">Accessories</a></li>
+									 <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#accessories" role="tab">Accessories</a></li>
 									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#essential" role="tab">Essential</a></li>
-									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#prices" role="tab">Prices</a></li> */}
-								</ul>
+									<li className="nav-item"><a className="nav-link" data-toggle="tab" href="#prices" role="tab">Prices</a></li> 
+								</ul>*/}
 								<div className="tab-content" id="myTabContent">
 								<Danhsach data={dsSanPham}/>
 								</div>
@@ -55,7 +62,7 @@ function Danhmuc()
                     </div>
                 </div>
             </div>
-			<Nutxemthem/>
+			
         </div>
 
         </>

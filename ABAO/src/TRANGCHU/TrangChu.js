@@ -10,34 +10,7 @@ import axios from 'axios';
 import { useEffect,useState } from 'react';
 import LocGia from '../TRANGTIMKIEMSANPHAM/LocGia';
 function TrangChu() {
-    useEffect(() => {
-        // Kiểm tra xem token có tồn tại hay không
-        const storedToken = localStorage.getItem('token');
-       
-        if (storedToken !== null) {
-            axios.post('http://127.0.0.1:8000/api/me',null, {
-                headers: {
-                    Authorization: 'bearer ' + storedToken,
-                },
-              
-              })
-              .then(function (response) {
-                
-              
-              })
-              .catch(function (error) {
-                console.error('Error during login request:', error);
-               
-              });
-        
-        } 
-        else {
-          // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
-          console.log('Token không tồn tại');
-          // Ví dụ: Chuyển hướng về trang đăng nhập
-          // window.location.href = '/dang-nhap';
-        }
-      }, []); 
+
     return (
         <>
             <Head />
@@ -50,10 +23,7 @@ function TrangChu() {
             </div>
             
             <Danhmuc />
-            <div className='Cacsanphambanchay'>
-                <Cacsanphambanchay />
-
-            </div>
+            
             <Dichvu />
             <Footer />
         </>

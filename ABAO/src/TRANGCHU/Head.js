@@ -3,32 +3,44 @@ import { useState } from "react";
 import Timkiemsanpham from "../REDUCER/Timkiemsanpham";
 
 function Head(){
-	const [thanhTimKiem,setThanhTimKiem] = useState(''); 
+	//---------các state và biến ---------------------
 
+	//state này lưu value trong input tìm kiếm
+	const [thanhTimKiem,setThanhTimKiem] = useState(''); 
 
 	// Kiểm tra xem token có tồn tại hay không
 	const storedToken = localStorage.getItem('token');
+
+
+
+
+	//--------------------------các hàm sử lý-----------------------
 	
+	//hàm đăng xuất
 	const logoutHandler = () => {
 		localStorage.removeItem('token'); //lệnh để xoá localStorage
 		window.location.href = '/';
 	}
 
-
+	//hàm hiện đăng nhập hoặc đăng xuất
+	//nếu đã đăng nhập thì trang web sẽ hiện ĐĂNG XUẤT
+	//nếu chưa đăng nhập trang web sẽ hiện đăng nhập/đăng ký
 	const dangNhap =  () => {
-	if(storedToken==null)
-	{
+		//kiểm trang xem localStorage đã tồn tại chưa
+		//localStorage nếu tồn tại thì đã đăng nhập
+		if(storedToken==null)
+		{
 			return (
 				<>
 				<i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
 				<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink>
 				</>
 			);
-		
-	}
-	return (<>
-	<i className="ti-power-off"><NavLink onClick={logoutHandler} className="Nav-Link active">ĐĂNG XUẤT</NavLink></i>
-	</>);
+			
+		}
+		return (<>
+		<i className="ti-power-off"><NavLink onClick={logoutHandler} className="Nav-Link active">ĐĂNG XUẤT</NavLink></i>
+		</>);
 }
 
 
@@ -59,14 +71,12 @@ function Head(){
 			
 						<div className="right-content">
 							<ul className="list-main">
-								<li><i className="ti-location-pin"></i> Store location</li>
+								{/* <li><i className="ti-location-pin"></i> Store location</li>
 
 		
 								<li><i className="ti-alarm-clock"></i> Daily deal</li>
-								<li><i className="ti-user"></i>My account</li>
-								<li><i className="ti-power-off"></i><NavLink to="/DANGNHAP" className="Nav-Link active">ĐĂNG NHẬP</NavLink>/
-								<NavLink to="/DANGKY" className="Nav-Link active">ĐĂNG KÝ</NavLink></li>
-
+								<li><i className="ti-user"></i>My account</li> */}
+								
 								<li>{dangNhap()}</li>
 
 							</ul>
@@ -120,14 +130,10 @@ function Head(){
 								<div  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></div>
 							</div>
 							<div className="sinlge-bar">
-								<div  className="single-icon"><i className="fa fa-user-circle-o" aria-hidden="true"></i></div>
+								<NavLink to="/THONGTINTAIKHOAN" className="single-icon" ><i className="fa fa-user-circle-o" aria-hidden="true"></i></NavLink>
 							</div>
 							<div className="sinlge-bar shopping">
-								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>
-					
-								
-
-							</div>
+								<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>							</div>
 						</div>
 					</div>
 				</div>

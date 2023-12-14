@@ -197,8 +197,7 @@ function TrangChinhChiTietSanPham() {
         noi_dung: binhLuan,
       })
         .then(function (response) {
-          const token = response.data.access_token;
-          localStorage.setItem('token', token);
+          alert('đã bình luận sản phẩm này');
         })
         .catch(function (error) {
           console.error('Error during login request:', error);

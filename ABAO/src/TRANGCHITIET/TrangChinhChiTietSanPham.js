@@ -1,85 +1,70 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import Footer from "../TRANGCHU/Footer";
 import Head from "../TRANGCHU/Head";
 import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-import { useParams } from 'react-router-dom';
 import BinhLuan from "./BinhLuan";
-  
 
-
-function TrangChinhChiTietSanPham(){
-  let { spID } = useParams();
+function TrangChinhChiTietSanPham() {
   const [sanPham, setSanPham] = useState([]);
   const [sizeMauSP, setSizeMauSP] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-    //tao bien luu du lieu vao axios
-    const [sanPhamb, setSanPhamb] = useState([]);
-    const [khachHang, setKhachHang]=useState('');
-    const[danhSachBinhLuan, setDanhSachBinhLuan]=useState([]);
-    //-------------------------------
+  const [sanPhamb, setSanPhamb] = useState([]);
+  const [khachHang, setKhachHang] = useState('');
+  const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
+  const [binhLuan, setBinhLuan] = useState('');
 
-    const [binhLuan,setBinhLuan]=useState('');
-    const luuBinhLuan = (event) => {
-        event.preventDefault();
-        //-------------------goi ham luu bình luận-------------
-        axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-            san_pham_id:sanPhamb.id,
-            khach_hang_id:khachHang,
-            noi_dung:binhLuan,
-        })
-        //------------------kết quả trả về từ api--------------
-        .then(function (response) {
-          
-          const token = response.data.access_token;
-          localStorage.setItem('token', token);
-          window.location.href = '/';
-        })
-        .catch(function (error) {
-          console.error('Error during login request:', error);
-         
-        });
+  let { spID } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
+        setSanPham(response.data.data);
+        setSizeMauSP(response.data.data2);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu:', error);
       }
-    
-      //---------------------hàm hiện thông tin------------------
-    useEffect(() => {
+    };
 
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
-          setSanPham(response.data.data);
-          setSizeMauSP(response.data.data2);
-         
-        } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+    fetchData();
+  }, [spID]);
 
-    
-      //---------------------hàm hiện thông tin------------------
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
+        setDanhSachBinhLuan(response.data.data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu:', error);
+      }
+    };
 
-    useEffect(() => {
+    fetchData();
+  }, [spID]);
 
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
-            setDanhSachBinhLuan(response.data.data);
-          } catch (error) {
-            console.error('Lỗi khi tải dữ liệu:', error);
-          }
-        };
-    
-        fetchData();
-      }, []);
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
 
-  
-
+    if (storedToken !== null) {
+      axios.post('http://127.0.0.1:8000/api/me', null, {
+        headers: {
+          Authorization: 'bearer ' + storedToken,
+        },
+      })
+      .then(function (response) {
+        setKhachHang(response.data.id);
+      })
+      .catch(function (error) {
+        console.error('Error during login request:', error);
+      });
+    } else {
+      console.log('Token không tồn tại');
+    }
+  }, []);
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -88,7 +73,6 @@ function TrangChinhChiTietSanPham(){
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
-
 
   const ChonMua = () => {
     if (!selectedSize || !selectedColor) {
@@ -100,10 +84,8 @@ function TrangChinhChiTietSanPham(){
     const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
 
     if (existingItem) {
-      // Product is already in the cart, increase the quantity
       existingItem.so_luong += 1;
     } else {
-      // Product is not in the cart, add it with size and color
       const newCartItem = {
         id: sanPham.id,
         ten: sanPham.ten,
@@ -176,103 +158,86 @@ function TrangChinhChiTietSanPham(){
     });
   };
 
- 
-    useEffect(() => {
-        // Kiểm tra xem token có tồn tại hay không
-        const storedToken = localStorage.getItem('token');
-       
-        if (storedToken !== null) {
-            axios.post('http://127.0.0.1:8000/api/me',null, {
-                headers: {
-                    Authorization: 'bearer ' + storedToken,
-                },
-              
-              })
-              .then(function (response) {
-              setKhachHang(response.data.id);
-              
-              })
-              .catch(function (error) {
-                console.error('Error during login request:', error);
-               
-              });
-        
-        } 
-        else {
-          // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
-          console.log('Token không tồn tại');
-          // Ví dụ: Chuyển hướng về trang đăng nhập
-          // window.location.href = '/dang-nhap';
-        }
-      }, []); 
+  const dsBinhLuan = danhSachBinhLuan.map((item, index) => (
+    <React.Fragment key={index}>
+      {item.noi_dung}
+    </React.Fragment>
+  ));
 
+  const luuBinhLuan = (event) => {
+    event.preventDefault();
 
-      //------------------------------------------------
-      const dsBinhLuan = danhSachBinhLuan.map(function(item, index) {
-        return (
-            <>
-            {item.noi_dung}
+    axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+      san_pham_id: sanPhamb.id,
+      khach_hang_id: khachHang,
+      noi_dung: binhLuan,
+    })
+    .then(function (response) {
+      const token = response.data.access_token;
+      localStorage.setItem('token', token);
+      window.location.href = '/';
+    })
+    .catch(function (error) {
+      console.error('Error during login request:', error);
+    });
+  };
 
-            </>
-        );
-      });
-      
-      return (
-        <>
-          <Head />
-          <Menu />
-          <section className="bg-light">
-            <div className="container pb-5">
+  return (
+    <>
+      <Head />
+      <Menu />
+      <section className="bg-light">
+        <div className="container pb-5">
+          <div className="row">
+            <div className="col-lg-5 mt-5">
               <div className="row">
-                <div className="col-lg-5 mt-5">
-                  <div className="row">
-                    <Hinhnhotrangchitiet hinh={sanPham} />
-                  </div>
-                </div>
-    
-                <div className="col-lg-7 mt-5">
-                  <div className="card">
-                    <div className="card-body">
-                      <h1 className="h2">{sanPham.ten}</h1>
-                      <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
-                      <p className="py-2">
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-secondary"></i>
-                        <span className="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                      </p>
-                      <ul className="list-inline">
-                        <li className="list-inline-item">
-                          <h6>Brand:</h6>
-                        </li>
-                        <li className="list-inline-item">
-                          <p className="text-muted"><strong>{sanPham.nha_cung_cap?.ten}</strong></p>
-                        </li>
-                      </ul>
-    
-                      <h6>Description:</h6>
-                      <p>{sanPham.thong_tin}</p>
-                      <ul className="list-inline">
-                        <li className="list-inline-item">
-                          <h6>Avaliable Color :</h6>
-                        </li>
-                        <li className="list-inline-item">
-                          <p className="text-muted"><strong>White / Black</strong></p>
-                        </li>
-                      </ul>
-    
-                      <form>
-                        <div className="row">
-                          <div className="col-auto">
-                            <ul className="list-inline pb-3">
-                              <li className="list-inline-item">Size :</li>
-                              <p className="text-muted">{listSize()}</p>
-                            </ul>
-                          </div>
-                          <div className="col-auto">
-                          <div className="product-color">
+                <Hinhnhotrangchitiet hinh={sanPham} />
+              </div>
+            </div>
+
+            <div className="col-lg-7 mt-5">
+              <div className="card">
+                <div className="card-body">
+                  <h1 className="h2">{sanPham.ten}</h1>
+                  <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
+                  <p className="py-2">
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-secondary"></i>
+                    <span className="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
+                  </p>
+                  <ul className="list-inline">
+                    <li className="list-inline-item">
+                      <h6>Brand:</h6>
+                    </li>
+                    <li className="list-inline-item">
+                      <p className="text-muted"><strong>{sanPham.nha_cung_cap?.ten}</strong></p>
+                    </li>
+                  </ul>
+
+                  <h6>Description:</h6>
+                  <p>{sanPham.thong_tin}</p>
+                  <ul className="list-inline">
+                    <li className="list-inline-item">
+                      <h6>Avaliable Color :</h6>
+                    </li>
+                    <li className="list-inline-item">
+                      <p className="text-muted"><strong>White / Black</strong></p>
+                    </li>
+                  </ul>
+
+                  <form>
+                    <div className="row">
+                      <div className="col-auto">
+                        <ul className="list-inline pb-3">
+                          <li className="list-inline-item">Size :</li>
+                          <p className="text-muted">{listSize()}</p>
+                        </ul>
+                      </div>
+                      <div className="col-auto">
+                        <div className="product-color">
                           <div className="color-choose">
                             <ul className="list-inline pb-3">
                               <li className="list-inline-item">Mau :</li>
@@ -298,27 +263,27 @@ function TrangChinhChiTietSanPham(){
             </div>
           </div>
         </div>
-        <BinhLuan/>
+        <BinhLuan />
       </section>
+
       {dsBinhLuan}
-        <form onSubmit={luuBinhLuan} className="form">
-            <input
-              onChange={(e) => setBinhLuan(e.target.value)}
-              required
-              className="input"
-              type="text"
-              name="noi_dung"
-              id="noi_dung"
-              placeholder="Bình luận..."
-            />
-                        <input className="login-button" type="submit" value="GỬI" />
-        </form>
+
+      <form onSubmit={luuBinhLuan} className="form">
+        <input
+          onChange={(e) => setBinhLuan(e.target.value)}
+          required
+          className="input"
+          type="text"
+          name="noi_dung"
+          id="noi_dung"
+          placeholder="Bình luận..."
+        />
+        <input className="login-button" type="submit" value="GỬI" />
+      </form>
+
       <Footer />
     </>
   );
-
 }
-      
-    
 
 export default TrangChinhChiTietSanPham;

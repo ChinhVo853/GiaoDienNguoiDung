@@ -42,8 +42,9 @@ import { Provider } from 'react-redux';
 import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
 
 
-
+// thanhtoan
 import ThanhToan from './THANHTOAN/ThanhToan';
+import KTDonHang from './THANHTOAN/KTDonHang';
 
 function App() {
 
@@ -58,6 +59,9 @@ function App() {
           <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;
+          <Route path='/ThanhToan' element={<ThanhToan/>}/>;
+          <Route path='/KTDonHang' element={<KTDonHang/>}/>;
+
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
         </Routes>
       

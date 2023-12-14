@@ -44,6 +44,7 @@ import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
 
 
 import ThanhToan from './THANHTOAN/ThanhToan';
+import DoiMatKhau from './TAIKHOAN/DoiMatKhau';
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
           <Route path='/' element={<TrangChu/>}/>;
           <Route path='/DANGNHAP' element={<DangNhap/>}/>;
           <Route path='/DANGKY' element={<DangKy/>}/>;
+          <Route path='/DoiMatKhau' element={<DoiMatKhau/>}/>;
           <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;

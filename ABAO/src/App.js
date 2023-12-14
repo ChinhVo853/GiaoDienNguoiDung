@@ -42,8 +42,10 @@ import { Provider } from 'react-redux';
 import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
 
 
-
+// thanhtoan
 import ThanhToan from './THANHTOAN/ThanhToan';
+import DoiMatKhau from './TAIKHOAN/DoiMatKhau';
+import KTDonHang from './THANHTOAN/KTDonHang';
 
 function App() {
 
@@ -55,11 +57,15 @@ function App() {
           <Route path='/' element={<TrangChu/>}/>;
           <Route path='/DANGNHAP' element={<DangNhap/>}/>;
           <Route path='/DANGKY' element={<DangKy/>}/>;
+          <Route path='/DoiMatKhau' element={<DoiMatKhau/>}/>;
           <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;
+          <Route path='/ThanhToan' element={<ThanhToan/>}/>;
+          <Route path='/KTDonHang' element={<KTDonHang/>}/>;
+
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
-          <Route path='/loai/:loaiID' element={<Trangchinhcacloaisanpham/>}/>
+          <Route path='/loai/:loaiID' element={<Trangchinhcacloaisanpham/>}/>;
           <Route path='/THONGTINTAIKHOAN' element={<ThongTin/>}/>;
         </Routes>
       

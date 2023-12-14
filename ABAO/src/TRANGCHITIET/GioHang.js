@@ -7,6 +7,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 
 function GioHang() {
   const [cartItems, setCartItems] = useState([]);
+  
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -33,12 +34,11 @@ function GioHang() {
 
   const calculateTotal = () => {
     const total = cartItems.reduce((acc, item) => {
-      return acc + item.gia * item.so_luong;
+      return acc + item.gia * Number(item.so_luong);
     }, 0);
-
+  
     return total;
   };
-
   return (
     <>
       <Head />
@@ -51,13 +51,13 @@ function GioHang() {
               <Table className="table shopping-summery">
                 <thead>
                   <tr className="main-hading">
-                    <th>PRODUCT</th>
-                    <th>NAME</th>
-                    <th className="text-center">COLOR</th>
-                    <th className="text-center">SIZE</th>
-                    <th className="text-center">PRICE</th>
-                    <th className="text-center">QUANTITY</th>
-                    <th className="text-center">TOTAL</th>
+                    <th>Sản phẩm</th>
+                    <th>Tên</th>
+                    <th className="text-center">Màu</th>
+                    <th className="text-center">Size</th>
+                    <th className="text-center">Giá</th>
+                    <th className="text-center">Số lượng</th>
+                    <th className="text-center">Tổng</th>
                     <th className="text-center">
                       <i className="ti-trash remove-icon"></i>
                     </th>
@@ -120,18 +120,16 @@ function GioHang() {
                     <div className="right">
                       <ul>
                         <li>
-                          Cart Subtotal<span>{calculateTotal()} VNĐ</span>
+                          Thành tiền<span>{calculateTotal()} VNĐ</span>
                         </li>
-                        <li>
-                          Shipping<span>Free</span>
-                        </li>
+                      
                       </ul>
                       <div className="button5">
-                        <NavLink to="/ThanhToan" className="btn">
-                          Checkout
+                        <NavLink to={{ pathname: "/ThanhToan", state: { cartItems, total: calculateTotal() } }} className="btn">
+                          Đặt hàng
                         </NavLink>
                         <NavLink to="/" className="btn">
-                          Continue shopping
+                          Tiếp tục mua hàng
                         </NavLink>
                       </div>
                     </div>

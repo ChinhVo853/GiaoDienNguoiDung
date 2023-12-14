@@ -192,14 +192,13 @@ function TrangChinhChiTietSanPham() {
       event.preventDefault();
 
       axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-        san_pham_id: sanPhamb.id,
+        san_pham_id: sanPham.id,
         khach_hang_id: khachHang,
         noi_dung: binhLuan,
       })
         .then(function (response) {
           const token = response.data.access_token;
           localStorage.setItem('token', token);
-          window.location.href = '/';
         })
         .catch(function (error) {
           console.error('Error during login request:', error);

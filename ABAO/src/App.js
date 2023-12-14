@@ -30,7 +30,7 @@ import DangNhap from './TAIKHOAN/DangNhap';
 import TrangChu from './TRANGCHU/TrangChu';
 import DangKy from './TAIKHOAN/DangKy';
 import Trangchinhcacloaisanpham from './LOAISANPHAM/Trangchinhcacloaisanpham';
-
+import ThongTin from './TAIKHOAN/ThongTin';
 
 //--------------------CHITIET-----------------------
 import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
@@ -60,7 +60,7 @@ function App() {
           <Route path='/GioHang' element={<GioHang/>}/>;
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
           <Route path='/loai/:loaiID' element={<Trangchinhcacloaisanpham/>}/>
-
+          <Route path='/THONGTINTAIKHOAN' element={<ThongTin/>}/>;
         </Routes>
       
 

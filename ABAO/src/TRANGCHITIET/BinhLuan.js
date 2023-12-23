@@ -109,21 +109,16 @@ function BinhLuan() {
 	const listBinhLuan = danhSachBinhLuan.map(function (item) {
 		
 
-		const listBinhLuanCapHai = item.binh_luan_cap_hai.map(function (item2) {
-			return (
-				<>
-					<div class="single-comment left">
-						<img src="https://via.placeholder.com/80x80" alt="#" />
-						<div class="content">
-							<h4>{item2.khach_hang.ho_ten}</h4>
-							<p>{item2.noi_dung}</p>
-
-						</div>
-					</div>
-				</>
-			);
-
-		})
+		const listBinhLuanCapHai = item.binh_luan_cap_hai.map((item2, index) => (
+			<div key={index} className="single-comment left">
+			  <img src="https://via.placeholder.com/80x80" alt="#" />
+			  <div className="content">
+				<h4>{item2.khach_hang?.ho_ten}</h4>
+				<p>{item2.noi_dung}</p>
+			  </div>
+			</div>
+		  ));
+		  
 
 
 		//hàm update lại TraLoiBinhLuan
@@ -138,17 +133,17 @@ function BinhLuan() {
 		const hienTraLoiBinhLuan = (id) => {
 		
 			return traLoiBinhLuan === id ? (<>
-			 <form class="form" action="#">
-			<div class="row">
+			 <form className="form" action="#">
+			<div className="row">
 
-				<div class="col-12">
-					<div class="form-group">
+				<div className="col-12">
+					<div className="form-group">
 						<label>Viết câu trả lời của bạn<span>*</span></label>
 						<textarea onChange={(e) => setNoiDungBinhLuan(e.target.value)} name="message" placeholder=""></textarea>
 					</div>
 				</div>
-				<div class="col-12">
-					<button onClick={luuBinhLuanCapHai}type="butotn" class="btn">Trả lời</button>
+				<div className="col-12">
+					<button onClick={luuBinhLuanCapHai}type="butotn" className="btn">Trả lời</button>
 				</div>
 			</div>
 		</form>
@@ -159,13 +154,13 @@ function BinhLuan() {
 		  
 		return (
 			<>
-				<div class="single-comment">
+				<div className="single-comment">
 					<img src="https://via.placeholder.com/80x80" alt="#" />
-					<div class="content">
+					<div className="content">
 						<h4>{item.khach_hang.ho_ten} </h4>
 						<p>{item.noi_dung}</p>
-						<div class="button">
-							<a onClick={() => xuLyBinhLuan(item.id)} class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Trả lời</a>
+						<div className="button">
+							<a onClick={() => xuLyBinhLuan(item.id)} className="btn"><i className="fa fa-reply" aria-hidden="true"></i>Trả lời</a>
 						</div>
 						{hienTraLoiBinhLuan(item.id)}
 					</div>
@@ -178,47 +173,47 @@ function BinhLuan() {
 	});
 	return (
 		<>
-			<section class="blog-single section">
-				<div class="header-inner">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-8 col-12">
-								<div class="blog-single-main">
-									<div class="row">
-										<div class="col-12">
-											<div class="comments">
-												<h3 class="comment-title">Comments (3)</h3>
+			<section className="blog-single section">
+				<div className="header-inner">
+					<div className="container">
+						<div className="row">
+							<div className="col-lg-8 col-12">
+								<div className="blog-single-main">
+									<div className="row">
+										<div className="col-12">
+											<div className="comments">
+												<h3 className="comment-title">Comments (3)</h3>
 												{/* ------------------------------- */}
 												
 												{listBinhLuan}
 												{/* ------------------------------- */}
-												{/* <div class="single-comment">
+												{/* <div className="single-comment">
 													<img src="https://via.placeholder.com/80x80" alt="#" />
-													<div class="content">
+													<div className="content">
 														<h4>megan mart <span>Feb 28, 2018 at 8:59 pm</span></h4>
 														<p>Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration Phosfluorescently leverage others enterprisee  Phosfluorescently leverage.</p>
-														<div class="button">
-															<a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
+														<div className="button">
+															<a href="#" className="btn"><i className="fa fa-reply" aria-hidden="true"></i>Reply</a>
 														</div>
 													</div>
 												</div> */}
 											</div>
 										</div>
-										<div class="col-12">
-											{/* <div class="reply">
-												<div class="reply-head">
-													<h2 class="reply-title">Leave a Comment</h2> 
-													<form class="form" action="#">
-														<div class="row">
+										<div className="col-12">
+											{/* <div className="reply">
+												<div className="reply-head">
+													<h2 className="reply-title">Leave a Comment</h2> 
+													<form className="form" action="#">
+														<div className="row">
 
-															<div class="col-12">
-																<div class="form-group">
+															<div className="col-12">
+																<div className="form-group">
 																	<label>Your Message<span>*</span></label>
 																	<textarea name="message" placeholder=""></textarea>
 																</div>
 															</div>
-															<div class="col-12">
-																<button type="submit" class="btn">Post comment</button>
+															<div className="col-12">
+																<button type="submit" className="btn">Post comment</button>
 															</div>
 														</div>
 													</form>

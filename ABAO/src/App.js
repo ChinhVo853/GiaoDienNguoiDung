@@ -62,7 +62,7 @@ function App() {
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;
           <Route path='/ThanhToan' element={<ThanhToan/>}/>;
-          <Route path='/KTDonHang' element={<KTDonHang/>}/>;
+          <Route path='/KTDonHang/:hdID' element={<KTDonHang/>}/>;
 
           <Route path='/TimKiem/:tenSanPham' element={<TrangChinhTimKiem/>}/>;
           <Route path='/loai/:loaiID' element={<Trangchinhcacloaisanpham/>}/>;

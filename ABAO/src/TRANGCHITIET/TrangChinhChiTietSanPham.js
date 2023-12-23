@@ -26,6 +26,7 @@ function TrangChinhChiTietSanPham() {
   const [khachHang, setKhachHang] = useState('');
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
+  
   //tao bien luu du lieu vao axios
 
   const storedToken = localStorage.getItem('token');
@@ -135,18 +136,13 @@ function TrangChinhChiTietSanPham() {
           uniqueSizes.add(size);
 
           return (
-            <li key={index} className="list-inline-item">
-              <label>
-                <input
-                  type="radio"
-                  name="size"
-                  value={size}
-                  checked={selectedSize === size}
-                  onChange={() => handleSizeChange(size)}
-                />
-                {size}
-              </label>
-            </li>
+            <div
+            key={index}
+            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+            onClick={() => handleSizeChange(size)}
+          >
+            {size}
+          </div>
           );
         }
 
@@ -163,18 +159,13 @@ function TrangChinhChiTietSanPham() {
           uniqueColors.add(color);
 
           return (
-            <li key={index} className="list-inline-item">
-              <label>
-                <input
-                  type="radio"
-                  name="color"
-                  value={color}
-                  checked={selectedColor === color}
-                  onChange={() => handleColorChange(color)}
-                />
-                {color}
-              </label>
-            </li>
+            <div
+            key={index}
+            className={`color-option ${selectedColor === color ? 'selected' : ''}`}
+            onClick={() => handleColorChange(color)}
+          >
+            {color}
+          </div>
           );
         }
 
@@ -192,12 +183,14 @@ function TrangChinhChiTietSanPham() {
       event.preventDefault();
 
       axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-        san_pham_id: sanPham.id,
+        san_pham_id: sanPhamb.id,
         khach_hang_id: khachHang,
         noi_dung: binhLuan,
       })
         .then(function (response) {
-          alert('đã bình luận sản phẩm này');
+          const token = response.data.access_token;
+          localStorage.setItem('token', token);
+          window.location.href = '/';
         })
         .catch(function (error) {
           console.error('Error during login request:', error);
@@ -246,7 +239,27 @@ function TrangChinhChiTietSanPham() {
       );
     });
 
-
+    const YeuThich = () => {
+      const yeuThichItem = {
+        id: sanPham.id,
+        ten: sanPham.ten,
+        gia: sanPham.gia_ban,
+        hinh: sanPham.hinh, 
+      };
+    
+      const yeuThich = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+      const daThemYeuThich = yeuThich.some(item => item.id === yeuThichItem.id);
+    
+      if (!daThemYeuThich) {
+        yeuThich.push(yeuThichItem);
+        localStorage.setItem('favorites', JSON.stringify(yeuThich));
+        alert('Đã thêm vào danh sách yêu thích');
+      } else {
+        alert('Sản phẩm đã có trong danh sách yêu thích');
+      }
+    };
+    
     return (
       <>
         <Head />
@@ -284,41 +297,38 @@ function TrangChinhChiTietSanPham() {
     
                       <h6>Description:</h6>
                       <p>{sanPham.thong_tin}</p>
-                      <ul className="list-inline">
-                        <li className="list-inline-item">
-                          <h6>Avaliable Color :</h6>
-                        </li>
-                        <li className="list-inline-item">
-                          <p className="text-muted"><strong>White / Black</strong></p>
-                        </li>
-                      </ul>
+                      
     
                       <form>
+                      
                         <div className="row">
                           <div className="col-auto">
+
                             <ul className="list-inline pb-3">
-                              <li className="list-inline-item">Size :</li>
-                              <p className="text-muted">{listSize()}</p>
+                              <li className="list-inline-item">Size:</li>
+                              <div className="text-muted">
+                                {listSize()}
+                              </div>
                             </ul>
+
                           </div>
                           <div className="col-auto">
-                          <div className="product-color">
-                          <div className="color-choose">
                             <ul className="list-inline pb-3">
-                              <li className="list-inline-item">Mau :</li>
-                              <p className="text-muted">{listMau()}</p>
+                              <li className="list-inline-item">Màu :</li>
+                              <div className="text-muted">
+                                {listMau()}
+                              </div>
                             </ul>
-                          </div>
-                        </div>
-                      </div>
+
+                           </div>
                     </div>
                     <div className="col-12">
-<div className="row pb-3">
+                        <div className="row pb-3">
                         <div className="col d-grid">
-                          <button type="button" className="btn" name="submit">Buy</button>
-                        </div>
+        <button type="button" className="btn" onClick={YeuThich}>Yêu Thích</button>
+      </div>
                         <div className="col d-grid">
-                          <button type="button" onClick={ChonMua} className="btn">Add To Cart</button>
+                          <button type="button" onClick={ChonMua} className="btn">Thêm vào giỏ hàng</button>
                         </div>
                       </div>
                     </div>

@@ -37,6 +37,10 @@ console.log(mauArr);
             gia: gia,
             ten: tenSanPhamArr,
         }).then(function(response){
+
+            alert('đã đặt hàng thành công');
+            
+            window.location.href = `/KTDonHang/${response.data.data}`;
             console.log(response);
         })
     }

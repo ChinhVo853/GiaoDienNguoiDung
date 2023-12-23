@@ -114,7 +114,7 @@ const KiemTraDangNhap =() =>
 					<div className="col-lg-2 col-md-2 col-12">
 					
 						<div className="logo">
-							<NavLink to="/"><img src="LOGOHACHIBA03.png" alt="logo"/></NavLink>
+							<NavLink to="/"><img src={'/LOGOHACHIBA03.png'} alt="logo"/></NavLink>
 						</div>
 					
 						<div className="search-top">

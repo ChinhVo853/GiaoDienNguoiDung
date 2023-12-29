@@ -10,11 +10,9 @@ function ClickSP() {
     <>
       <div className="button-head">
         <div className="product-action">
-          <NavLink to="" title="Wishlist"><i className="ti-heart"></i><span>Add to Wishlist</span></NavLink>
+          <NavLink  title="Wishlist"><i className="ti-heart"></i><span>Thêm yêu thích</span></NavLink>
         </div>
-        <div className="product-action-2">
-          <NavLink to="/GioHang" title="Add to cart">Add to cart</NavLink>
-        </div>
+        
       </div>
     </>
   );

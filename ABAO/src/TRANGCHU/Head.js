@@ -60,11 +60,15 @@ const KiemTraDangNhap =() =>
 	}
 	return (<>
 	<div className="sinlge-bar">
+		<NavLink  to="/YeuThich"  className="single-icon" ><i className="fa fa-heart-o" ></i> </NavLink>
+	</div>
+	<div className="sinlge-bar">
 		<NavLink to="/THONGTINTAIKHOAN" className="single-icon" ><i className="fa fa-user-circle-o" aria-hidden="true"></i></NavLink>
 	</div>
 	<div className="sinlge-bar shopping">
-		<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag"></i> </NavLink>
+		<NavLink  to="/GioHang"  className="single-icon" ><i className="ti-bag" aria-hidden="true"></i> </NavLink>
 	</div>
+	
 	</>)
 }
 
@@ -146,10 +150,7 @@ const KiemTraDangNhap =() =>
 					<div className="col-lg-2 col-md-3 col-12">
 						<div className="right-bar">
 				
-							<div className="sinlge-bar">
-
-								<div  className="single-icon"><i className="fa fa-heart-o" aria-hidden="true"></i></div>
-							</div>
+							
 							
 
 

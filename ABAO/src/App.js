@@ -29,6 +29,7 @@ import './vendor/css/font-awesome.min.css';
 import DangNhap from './TAIKHOAN/DangNhap';
 import TrangChu from './TRANGCHU/TrangChu';
 import DangKy from './TAIKHOAN/DangKy';
+import QuenMatKhau from './TAIKHOAN/QuenMatKhau';
 import Trangchinhcacloaisanpham from './LOAISANPHAM/Trangchinhcacloaisanpham';
 import ThongTin from './TAIKHOAN/ThongTin';
 
@@ -60,6 +61,10 @@ function App() {
           <Route path='/DANGNHAP' element={<DangNhap/>}/>;
           <Route path='/DANGKY' element={<DangKy/>}/>;
           <Route path='/DoiMatKhau' element={<DoiMatKhau/>}/>;
+          <Route path='/quen-mat-khau' element={<QuenMatKhau/>}/>;
+
+
+
           <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;

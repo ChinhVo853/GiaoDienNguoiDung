@@ -26,6 +26,8 @@ function TrangChinhChiTietSanPham() {
   const [khachHang, setKhachHang] = useState('');
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
+  const [danhGia, setDanhGia] = useState();
+
   
   //tao bien luu du lieu vao axios
 
@@ -47,7 +49,10 @@ function TrangChinhChiTietSanPham() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
+          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`,{
+            timeout: 5000, // Thiết lập thời gian timeout là 5 giây
+          });
+          
           setSanPham(response.data.data);
           setSizeMauSP(response.data.data2);
         } catch (error) {
@@ -56,12 +61,28 @@ function TrangChinhChiTietSanPham() {
       };
 
       fetchData();
+
+
+      const DanhSachDanhGia = async () => {
+        try {
+          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`,{
+            timeout: 5000, // Thiết lập thời gian timeout là 5 giây
+          });
+          setDanhGia(response.data.data);
+        } catch (error) {
+          console.error('Lỗi khi tải dữ liệu:', error);
+        }
+      };
+      DanhSachDanhGia();
     }, [spID]);
+
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
+          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`,{
+            timeout: 5000,
+          });
           setDanhSachBinhLuan(response.data.data);
         } catch (error) {
           console.error('Lỗi khi tải dữ liệu:', error);
@@ -183,6 +204,7 @@ function TrangChinhChiTietSanPham() {
       event.preventDefault();
 
       axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+        timeout: 5000,
         san_pham_id: sanPhamb.id,
         khach_hang_id: khachHang,
         noi_dung: binhLuan,
@@ -259,6 +281,22 @@ function TrangChinhChiTietSanPham() {
         alert('Sản phẩm đã có trong danh sách yêu thích');
       }
     };
+    //-------------------------------
+
+    
+    const danhSachDanhGia =  danhGia && Array.isArray(danhGia) ? danhGia.map(function(item){
+      return (<>
+      <div className="single-comment left">
+			  <img src="https://via.placeholder.com/80x80" alt="#" />
+			  <div className="content">
+				<h4>{item.khach_hang.ho_ten}</h4>
+				<p>{item.nhan_xet}</p>
+			  </div>
+			</div>
+      </>)
+    }): () =>{
+      return (<></>)
+    }
     
     return (
       <>
@@ -336,8 +374,21 @@ function TrangChinhChiTietSanPham() {
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
+        <section className="blog-single section">
+        <div className="header-inner">
+					<div className="container">
+          <div className="comments">
+            <h3 className="comment-title">Đánh giá </h3>
+            {danhSachDanhGia}
+          </div>
+            </div>
+            </div>
+           
+        </section>
+       
         <BinhLuan/>
       </section>
 

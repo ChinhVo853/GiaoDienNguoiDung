@@ -11,6 +11,7 @@ function ThongTin() {
     const [hoTen, setHoTen] = useState('');
     const [soDienThoai, setSoDienThoai] = useState('');
     const [diaChi, setDiaChi] = useState('');
+    const [hoaDon, setHoaDon] = useState([]);
     //được dùng để lưu localsotege
     const storedToken = localStorage.getItem('token');
     useEffect(() => {
@@ -21,20 +22,22 @@ function ThongTin() {
                     Authorization: 'bearer ' + storedToken,
                 },
 
-            })
-                .then(function (response) {
+            }).then(function (response) {
                     setKhachHang(response.data);
                     setHoTen(response.data.ho_ten);
                     setSoDienThoai(response.data.so_dien_thoai);
                     setDiaChi(response.data.dia_chi);
-                    
+                     // Gọi yêu cầu lấy hoá đơn ở đây
+                    return axios.post('http://localhost:8000/api/lay-hoa-don-khach-hang', {
+                        KhachHang: response.data.id
+                    });
 
+                }).then(function (response) {
+                    setHoaDon(response.data.data);                
                 })
                 .catch(function (error) {
                     console.error('Error during login request:', error);
-
                 });
-
         }
         else {
             // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
@@ -42,6 +45,13 @@ function ThongTin() {
             // Ví dụ: Chuyển hướng về trang đăng nhập
             // window.location.href = '/dang-nhap';
         }
+     
+            axios.post('http://localhost:8000/api/lay-hoa-don-khach-hang', {
+                KhachHang: khachHang.id
+            }).then(function(response) {
+                console.log(response.data);
+            });
+        
     }, []);
     const capNhatThongTin = (event) => {
         event.preventDefault();
@@ -68,12 +78,34 @@ function ThongTin() {
         }
 
     };
+    console.log(hoaDon);
+ 
+    const DanhSachHoaDon = hoaDon && Array.isArray(hoaDon) ? hoaDon.map(item => (<>
+        <div  className="container-xxl position-relative bg-white d-flex p-0">
+            <div key={item.id}className="col-sm-12 col-xl-10">
+                <div className="bg-light rounded h-100 p-4">
+                    <div className="row">
+                        <div className="col-sm-3">mã: {item.id}</div>
+                        <div className="col-sm-3">Tổng tiền: {item.tong_tien} VNĐ</div>
+                        <div className="col-sm-3">Ngày lập: {new Date(item.created_at).toLocaleDateString('en-VN')}</div>
+                        <div className="col-sm-3"><NavLink to={`/KTDonHang/${item.id}`}  style={{color:'#25c9e6', textDecoration: 'none'}}>xem chi tiết</NavLink></div>
+                   </div>
+                </div>
+            </div>
+        </div>
+        <br></br>
+        </>
+    )): () =>{
+        return (<></>)
+    }
+    
+
     return (
         <>
             <Head />
             <Menu />
             <div className='trangthongtintaikhoan'>
-                <body >
+                
                     <div className="container-xxl position-relative bg-white d-flex p-0">
                         <div className="col-sm-12 col-xl-6">
                             <div className="bg-light rounded h-100 p-4">
@@ -143,9 +175,12 @@ function ThongTin() {
                     </div>
 
 
-                </body>
+                
             </div>
 
+            
+           <h2  className="container-xxl position-relative bg-white d-flex p-0">HOÁ ĐƠN</h2>
+            {DanhSachHoaDon}
             <Footer />
 
         </>

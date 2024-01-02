@@ -1,15 +1,14 @@
 import '../vendor/css/dangnhap.css';
 import axios from 'axios';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-function DangNhap() {
+
+function QuenMatKhau() {
   //---------các state ---------------------
 
   //lưu value nhập vào của email ở input
   const [email, setEmail] = useState('');
   
-  //lưu value nhập vào của password ở input
-  const [password, setPassword] = useState('');
+ 
 
 
   //------------ gọi API--------------------
@@ -22,15 +21,13 @@ function DangNhap() {
 
     //ở đây kiểm tra thông tin đăng nhập
     //nếu thông tin đăng nhập là hợp lệ thì sẽ tạo ra 1 localStorage sẽ thay đổi đường dẫn thành /
-    axios.post('http://127.0.0.1:8000/api/login', {
+    axios.post('http://localhost:8000/api/lay-lai-mat-khau', {
       email: email,
-      password: password,
+    
     })
     .then(function (response) {
-      
-      const token = response.data.access_token;
-      localStorage.setItem('token', token);
-      window.location.href = '/';
+      alert('mật khẩu đã được gửi, vui long kiểm tra lại email');
+      window.location.href = '/DANGNHAP';
     })
     .catch(function (error) {
       console.error('Error during login request:', error);
@@ -44,7 +41,7 @@ function DangNhap() {
     <>
      
         <div className="container1">
-          <div className="heading">ĐĂNG NHẬP</div>
+          <div className="heading">QUÊN MẬT KHẨU</div>
           <form onSubmit={postLogin} className="form">
             <input
               onChange={(e) => setEmail(e.target.value)}
@@ -55,23 +52,12 @@ function DangNhap() {
               id="ten_dang_nhap"
               placeholder="Email"
             />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="input"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-            />
-            <input className="login-button" type="submit" value="Sign In" />
+            <input className="login-button" type="submit" value="Gửi" />
           </form>
-          <NavLink to="/quen-mat-khau" style={{color:'#25c9e6', textDecoration: 'none'}}>quên mật khẩu/</NavLink>
-          <NavLink to="/DANGKY" style={{color:'#25c9e6', textDecoration: 'none'}}>đăng ký</NavLink>
         </div>
      
     </>
   );
 }
 
-export default DangNhap;
+export default QuenMatKhau;

@@ -251,7 +251,7 @@ function TrangChinhChiTietSanPham() {
     }, []);
 
 
-    //------------------------------------------------
+    //----------------------------------------------------------------------------------
     const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
       return (
         <>

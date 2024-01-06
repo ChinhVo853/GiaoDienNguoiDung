@@ -18,7 +18,7 @@ function YeuThich() {
     setFavoriteItems(updatedFavorites);
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
-
+  console.log(favoriteItems)
   return (
     <>
       <Head />
@@ -34,10 +34,13 @@ function YeuThich() {
                   <p>Không có sản phẩm nào trong danh sách yêu thích.</p>
                 ) : (
                   favoriteItems.map((item) => (
+                   
                     <div key={item.id} className="col-xl-3 col-lg-4 col-md-4 col-12">
                       <div className="single-product">
                         <div className="product-img">
-                          <img src={item.hinh} alt={item.ten} />
+                        <NavLink to={`/ChiTiet/${item.id}`} className="Nav-Link active">
+                          <img src={`http://localhost:8000/` + item.hinh} alt={item.ten} />
+                          </NavLink>
                         </div>
                         <div className="product-content">
                           <p>{item.ten}</p>

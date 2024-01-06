@@ -6,6 +6,8 @@ import Head from "../TRANGCHU/Head";
 import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import BinhLuan from "./BinhLuan";
+import Swal from 'sweetalert2';
+
 
 
 function TrangChinhChiTietSanPham() {
@@ -17,12 +19,10 @@ function TrangChinhChiTietSanPham() {
 
   //sản phẩm trong trang chi tiết này
   const [sanPham, setSanPham] = useState([]);
-
   //màu và size của sản phẩm
   const [sizeMauSP, setSizeMauSP] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [sanPhamb, setSanPhamb] = useState([]);
   const [khachHang, setKhachHang] = useState('');
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
@@ -43,14 +43,11 @@ function TrangChinhChiTietSanPham() {
 
 
   //---------------------hàm hiện thông tin------------------
-
- 
-
-    useEffect(() => {
+       useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`,{
-            timeout: 5000, // Thiết lập thời gian timeout là 5 giây
+            timeout: 3000, // Thiết lập thời gian timeout là 3 giây
           });
           
           setSanPham(response.data.data);
@@ -61,7 +58,6 @@ function TrangChinhChiTietSanPham() {
       };
 
       fetchData();
-
 
       const DanhSachDanhGia = async () => {
         try {
@@ -90,9 +86,7 @@ function TrangChinhChiTietSanPham() {
       };
 
       fetchData();
-    }, [spID]);
 
-    useEffect(() => {
       const storedToken = localStorage.getItem('token');
 
       if (storedToken !== null) {
@@ -100,6 +94,8 @@ function TrangChinhChiTietSanPham() {
           headers: {
             Authorization: 'bearer ' + storedToken,
           },
+        }, {
+          timeout: 5000,
         })
           .then(function (response) {
             setKhachHang(response.data.id);
@@ -110,7 +106,60 @@ function TrangChinhChiTietSanPham() {
       } else {
         console.log('Token không tồn tại');
       }
-    }, []);
+
+    }, [spID]);
+
+  
+
+    const luuBinhLuan = (event) => {
+      
+      event.preventDefault();
+      
+      axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+        san_pham_id: spID,
+        khach_hang_id: khachHang,
+        noi_dung: binhLuan,
+      }, {
+        timeout: 5000,
+      })
+        .then(function (response) {
+          Swal.fire({
+            title: "Thành công",
+            text: 'bạn đã bính luận',
+            icon: "success"
+          });
+        })
+        .catch(function (error) {
+          if(error.response.status === 422)
+          {
+            const {noi_dung, khach_hang_id} = error.response.data.errors;
+            if(noi_dung)
+            {
+              Swal.fire({
+                title: "Thất bại",
+                text: Object.values(noi_dung).join('') ,
+                icon: "error"
+              });
+            
+            }
+            if(khach_hang_id)
+            {
+              Swal.fire({
+                title: "Thất bại",
+                text: Object.values(khach_hang_id).join('') ,
+                icon: "error"
+              });
+            }
+        }
+        });
+    };
+
+
+
+
+
+
+    //-------------HÀM XỬ LÝ-------------------------
 
     const handleColorChange = (color) => {
       setSelectedColor(color);
@@ -120,15 +169,25 @@ function TrangChinhChiTietSanPham() {
       setSelectedSize(size);
     };
 
+   
     const ChonMua = () => {
       if (!selectedSize || !selectedColor) {
-        alert('Vui lòng chọn size và màu trước khi thêm vào giỏ hàng.');
+        Swal.fire({
+          title: "Thất bại",
+          text: 'Vui lòng chọn size và màu trước khi thêm vào giỏ hàng.' ,
+          icon: "error"
+        });
+      
         return;
       }
 
       const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
-
+      const hinhAnhUrl = 'https://via.placeholder.com/550x750';
+      if(sanPham.hinh_anh[0])
+      {
+        hinhAnhUrl = sanPham.hinh_anh[0].url;
+      }
       if (existingItem) {
         existingItem.so_luong += 1;
       } else {
@@ -136,6 +195,7 @@ function TrangChinhChiTietSanPham() {
           id: sanPham.id,
           ten: sanPham.ten,
           gia: sanPham.gia_ban,
+          hinh: hinhAnhUrl,
           so_luong: 1,
           selectedSize,
           selectedColor,
@@ -144,7 +204,13 @@ function TrangChinhChiTietSanPham() {
       }
 
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
-      alert('Thêm sản phẩm vào giỏ hàng thành công');
+      Swal.fire({
+
+        text:'Thêm sản phẩm vào giỏ hàng thành công',
+        icon: "success"
+      });
+    
+    
     };
 
     const listSize = () => {
@@ -152,7 +218,6 @@ function TrangChinhChiTietSanPham() {
 
       return sizeMauSP.map((item, index) => {
         const size = item.size.ten;
-
         if (!uniqueSizes.has(size)) {
           uniqueSizes.add(size);
 
@@ -200,73 +265,18 @@ function TrangChinhChiTietSanPham() {
        </React.Fragment>
      ));
    */
-    const luuBinhLuan = (event) => {
-      event.preventDefault();
 
-      axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-        timeout: 5000,
-        san_pham_id: sanPhamb.id,
-        khach_hang_id: khachHang,
-        noi_dung: binhLuan,
-      })
-        .then(function (response) {
-          const token = response.data.access_token;
-          localStorage.setItem('token', token);
-          window.location.href = '/';
-        })
-        .catch(function (error) {
-          console.error('Error during login request:', error);
-        });
-    };
-
-
-
-    useEffect(() => {
-      // Kiểm tra xem token có tồn tại hay không
-
-
-      if (storedToken !== null) {
-        axios.post('http://127.0.0.1:8000/api/me', null, {
-          headers: {
-            Authorization: 'bearer ' + storedToken,
-          },
-
-        })
-          .then(function (response) {
-            setKhachHang(response.data.id);
-
-          })
-          .catch(function (error) {
-            console.error('Error during login request:', error);
-
-          });
-
-      }
-      else {
-        // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
-        console.log('Token không tồn tại');
-        // Ví dụ: Chuyển hướng về trang đăng nhập
-        // window.location.href = '/dang-nhap';
-      }
-    }, []);
 
 
     //------------------------------------------------
-    const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
-      return (
-        <>
-          {item.noi_dung}
-
-        </>
-      );
-    });
-
+    
+//------------------thêm vào yêu thích ----------------------------
     const YeuThich = () => {
       const yeuThichItem = {
         id: sanPham.id,
         ten: sanPham.ten,
         gia: sanPham.gia_ban,
-        hinh: sanPham.hinh, 
+        hinh: sanPham.hinh_anh[0].url, 
       };
     
       const yeuThich = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -276,27 +286,112 @@ function TrangChinhChiTietSanPham() {
       if (!daThemYeuThich) {
         yeuThich.push(yeuThichItem);
         localStorage.setItem('favorites', JSON.stringify(yeuThich));
-        alert('Đã thêm vào danh sách yêu thích');
+        Swal.fire({
+          title: "Yêu thích",
+          text:  'Đã thêm vào danh sách yêu thích',
+          icon: "success"
+        });
+      
+        
       } else {
-        alert('Sản phẩm đã có trong danh sách yêu thích');
+
+        Swal.fire({
+          title: "Thất bại",
+          text:'Sản phẩm đã có trong danh sách yêu thích',
+          icon: "warning"
+        });
+      
+      
       }
     };
     //-------------------------------
 
     
-    const danhSachDanhGia =  danhGia && Array.isArray(danhGia) ? danhGia.map(function(item){
-      return (<>
-      <div className="single-comment left">
-			  <img src="https://via.placeholder.com/80x80" alt="#" />
-			  <div className="content">
-				<h4>{item.khach_hang.ho_ten}</h4>
-				<p>{item.nhan_xet}</p>
-			  </div>
-			</div>
-      </>)
-    }): () =>{
-      return (<></>)
+    const danhSachDanhGia = danhGia && Array.isArray(danhGia) ? (
+      <div>
+        {danhGia.map(function (item) {
+          return (
+            <div key={item.id} className="single-comment left">
+              <img src="https://via.placeholder.com/80x80" alt="#" />
+              <div className="content">
+                <h4>{item.khach_hang.ho_ten}</h4>
+                <p>{item.nhan_xet}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : null;
+
+
+
+    const HienSao = () =>{
+      if(sanPham.so_sao)
+      {
+        if(sanPham.so_sao <=1)
+        {
+          return (<>
+              <i className="fa fa-star text-warning"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+          </>)
+        }
+
+        if(sanPham.so_sao <= 2)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 3)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 4)
+        {
+          
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 5)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+      }
     }
+    
+    
     
     return (
       <>
@@ -317,23 +412,18 @@ function TrangChinhChiTietSanPham() {
                       <h1 className="h2">{sanPham.ten}</h1>
                       <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
                       <p className="py-2">
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-secondary"></i>
-                        <span className="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
+                       {HienSao()}
                       </p>
                       <ul className="list-inline">
                         <li className="list-inline-item">
-                          <h6>Brand:</h6>
+                          <h6>Hãng :</h6>
                         </li>
                         <li className="list-inline-item">
                           <p className="text-muted"><strong>{sanPham.nha_cung_cap?.ten}</strong></p>
                         </li>
                       </ul>
     
-                      <h6>Description:</h6>
+                      <h6>Mô tả:</h6>
                       <p>{sanPham.thong_tin}</p>
                       
     
@@ -392,12 +482,9 @@ function TrangChinhChiTietSanPham() {
         <BinhLuan/>
       </section>
 
-        {dsBinhLuan}
-
         <form onSubmit={luuBinhLuan} className="form">
           <input
             onChange={(e) => setBinhLuan(e.target.value)}
-            required
             className="input"
             type="text"
             name="noi_dung"

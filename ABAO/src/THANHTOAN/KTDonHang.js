@@ -5,6 +5,8 @@ import Menu from "../TRANGCHU/Menu";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useEffect,useState } from 'react';
+import Swal from 'sweetalert2';
+
 function KTDonHang() {
 
   //-------------State-------------------
@@ -20,6 +22,8 @@ function KTDonHang() {
   useEffect(() => {
         axios.post('http://127.0.0.1:8000/api/kiem-tra-don-hang', {
             hdID: hdID,
+          },{
+            timeout: 5000,
           })
           .then(function (response) {
             setSanPham(response.data.dataCTHoaDon);
@@ -38,6 +42,8 @@ function KTDonHang() {
                 Authorization: 'bearer ' + storedToken,
             },
 
+        },{
+          timeout: 7000,
         }).then(function (response) {
                 setKhachHang(response.data);
                
@@ -63,8 +69,51 @@ function KTDonHang() {
       SoSao: danhGia,
       NhanXet: nhanXet,
     }).then(function(response){
-      alert('thanh cong');
-    })
+      Swal.fire({
+        title: 'gửi đánh giá thành công',
+        icon: "success"
+      });
+    
+      
+    }) .catch(function (error) {
+      console.log(error);
+      if(error.response.status === 422)
+      {
+        const {NhanXet, KhachHang, san_pham, SoSao} = error.response.data.errors;
+        if(NhanXet)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(NhanXet).join('') ,
+            icon: "error"
+          });
+        
+        }
+        else if(KhachHang)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(KhachHang).join('') ,
+            icon: "error"
+          });
+        }
+        else if(san_pham)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(san_pham).join('') ,
+            icon: "error"
+          });
+        }
+        else{
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(SoSao).join('') ,
+            icon: "error"
+          });
+        }
+    }
+    });
   }
 
   //thêm dánh giá
@@ -79,7 +128,12 @@ function KTDonHang() {
           })
           .then(function (response)
           {
-            alert('đã xác nhận');
+            Swal.fire({
+              title: "đã xác nhận",
+              icon: "success"
+            });
+          
+            
           })
 
   }
@@ -166,6 +220,19 @@ function KTDonHang() {
     }
   }
 
+  const HuyDonHang = () =>{
+    axios.get(`http://127.0.0.1:8000/api/huy-don-hang/${hdID}`)
+    .then(function (response)
+    {
+      Swal.fire({
+        title: 'đã huỷ',
+        icon: "success"
+      });
+    
+     
+    })
+
+  }
 
 
 
@@ -175,7 +242,7 @@ function KTDonHang() {
     switch (trangThai){
       case 1: 
       case 2: return(<>
-      <button className="btn btn-outline-primary" type="button"> huỷ</button>
+      <button onClick={HuyDonHang} className="btn btn-outline-primary" type="button"> huỷ</button>
       </>)
       break;
       case 3:
@@ -255,7 +322,7 @@ function KTDonHang() {
       <form onSubmit={GuiDanhGia} className="form">
           <input
             onChange={(e) => setNhanXet(e.target.value)}
-            required
+              
             className="input"
             type="text"
             name="noi_dung"

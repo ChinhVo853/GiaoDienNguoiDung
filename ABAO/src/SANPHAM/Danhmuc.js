@@ -1,5 +1,4 @@
 import Danhsach from "./Danhsach";
-import Nutxemthem from "./Nutxemthem";
 import { useState,useEffect } from "react";
 import axios from "axios";
 
@@ -16,14 +15,19 @@ function Danhmuc()
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get('http://127.0.0.1:8000/api/danh-sach-san-pham');
-				setdsSanPham(response.data.data);
+			  const response = await axios.get('http://127.0.0.1:8000/api/danh-sach-san-pham');
+			  setdsSanPham(response.data.data);
 			} catch (error) {
-				console.error('Error fetching data:', error);
+			  console.error('Error fetching data:', error);
 			}
-		};
+		  };
+		const delay = 1000; // Đặt một khoảng thời gian giữa các yêu cầu (1 giây ở đây)
+		const timer = setTimeout(fetchData, delay);
+	  
+		return () => clearTimeout(timer); // Xóa bộ đếm khi component unmount
+	  
 	
-		fetchData();
+		
 	}, []); // Thêm dispatch vào dependency array
 	
 	

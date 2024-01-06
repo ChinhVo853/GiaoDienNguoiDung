@@ -1,6 +1,7 @@
 import '../vendor/css/dangnhap.css';
 import axios from 'axios';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 function DangKy()
 {
    //---------các state ---------------------
@@ -39,11 +40,55 @@ function DangKy()
     })
     .then(function (response) {
       
-      console.log(response);
-      window.location.href = '/DANGNHAP';//được dùng để tahy đổi url
+      Swal.fire({
+        title: "Đã đăng ký thành công",
+        icon: "success"
+      });
+      
     })
-    .catch(function (error) {
-      console.error('Error during login request:', error);
+    .catch(function (error) {console.log(error);
+      if(error.response.status === 422)
+      {
+        
+       
+        const {email, password, hoTen, soDienThoai, diaChi} = error.response.data.errors;
+        if(email || diaChi || hoTen)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: 'Không được để trống',
+            icon: "error"
+          });
+        
+        }
+        else if(soDienThoai) {
+        
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(soDienThoai).join('') ,
+            icon: "error"
+          });
+        }
+        else if(password)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(password).join('') ,
+            icon: "error"
+          });
+        }
+        else{
+          Swal.fire({
+            title: "Thất bại",
+            text: error.response.data.errors ,
+            icon: "error"
+          });
+        
+        }
+      }
+       
+      
+      
      
     });
   }
@@ -83,8 +128,8 @@ function DangKy()
 
               <input
               onChange={(e) => setSoDienThoai(e.target.value)} 
-              required="" 
               className="input" 
+              required
               type="phone" 
               name="phone" 
               id="phone" 

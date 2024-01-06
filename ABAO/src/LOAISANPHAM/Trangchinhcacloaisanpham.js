@@ -51,7 +51,7 @@ useEffect(() => {
     };
 
     fetchData();
-  }, []);
+  }, [loaiID]);
 
 
   const locGia = () => {
@@ -128,9 +128,9 @@ useEffect(() => {
                         <div className="">
                             <h5 className="khoang_gia">XẾP GIÁ</h5>
                         </div>
-                            <button onClick={GiaTang} className="nutgia">CAO </button>
+                            <button onClick={GiaTang} className="nutgia">THẤP </button>
 
-                            <button onClick={GiaGiam} className="nutgia">THẤP</button>
+                            <button onClick={GiaGiam} className="nutgia">CAO</button>
                         </div>
                     </div>
                                 

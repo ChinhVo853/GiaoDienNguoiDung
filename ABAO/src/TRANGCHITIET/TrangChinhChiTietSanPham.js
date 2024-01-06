@@ -268,9 +268,22 @@ function TrangChinhChiTietSanPham() {
 
 
 
+
     //------------------------------------------------
     
 //------------------thêm vào yêu thích ----------------------------
+
+    //----------------------------------------------------------------------------------
+    const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
+      return (
+        <>
+          {item.noi_dung}
+
+        </>
+      );
+    });
+
+
     const YeuThich = () => {
       const yeuThichItem = {
         id: sanPham.id,

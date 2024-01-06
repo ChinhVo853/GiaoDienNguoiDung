@@ -2,6 +2,7 @@ import '../vendor/css/dangnhap.css';
 import axios from 'axios';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2';
 function DangNhap() {
   //---------các state ---------------------
 
@@ -11,6 +12,9 @@ function DangNhap() {
   //lưu value nhập vào của password ở input
   const [password, setPassword] = useState('');
 
+  const [validateErrors, setValidateErrors] = useState({});
+
+  const [authenticationError, setAuthenticationError] = useState();
 
   //------------ gọi API--------------------
 
@@ -27,19 +31,38 @@ function DangNhap() {
       password: password,
     })
     .then(function (response) {
-      
       const token = response.data.access_token;
       localStorage.setItem('token', token);
       window.location.href = '/';
     })
     .catch(function (error) {
-      console.error('Error during login request:', error);
-     
+      if(error.response.status === 422)
+      {
+        const {email, password} = error.response.data.errors;
+        if(email || password)
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(email).join('') ,
+            icon: "error"
+          });
+        
+        }
+      }
+      else{
+        Swal.fire({
+          title: "Thất bại",
+          text: 'Tài khoảng hoặc mật khẩu không đúng' ,
+          icon: "error"
+        });
+      
+      }
+
     });
   }
 
 
-
+console.log( validateErrors.email);
   return (
     <>
      
@@ -48,22 +71,24 @@ function DangNhap() {
           <form onSubmit={postLogin} className="form">
             <input
               onChange={(e) => setEmail(e.target.value)}
-              required
               className="input"
               type="email"
               name="ten_dang_nhap"
               id="ten_dang_nhap"
               placeholder="Email"
             />
+            <div className='invalid-feedback email-error'>{validateErrors?.email}</div>
             <input
               onChange={(e) => setPassword(e.target.value)}
-              required
+              
               className="input"
               type="password"
               name="password"
               id="password"
               placeholder="Password"
             />
+            <div className='invalid-feedback password-error'>{validateErrors?.password}</div>
+
             <input className="login-button" type="submit" value="Sign In" />
           </form>
           <NavLink to="/quen-mat-khau" style={{color:'#25c9e6', textDecoration: 'none'}}>quên mật khẩu/</NavLink>

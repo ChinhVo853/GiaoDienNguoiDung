@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function DoiMatKhau() {
     // //---------các state ---------------------
@@ -48,7 +49,11 @@ function DoiMatKhau() {
         event.preventDefault();
         if (newPassWord === ConfirmNewPassword) {
             if (password.trim() === "") {
-                alert('Vui lòng nhập mật khẩu hiện tại');
+              Swal.fire({
+                title: "Thất bại",
+                text: 'Vui lòng nhập mật khẩu hiện tại' ,
+                icon: "error"
+              });
                 return;
             }
     
@@ -58,14 +63,40 @@ function DoiMatKhau() {
                 newPassWord: newPassWord,
             })
             .then(function (response) {
-                alert('Thành công');
+                
                 window.location.href="/THONGTINTAIKHOAN";
             })
             .catch(function (error) {
-                console.error('Lỗi trong quá trình yêu cầu đổi mật khẩu:', error);
+
+              if(error.response.status === 422)
+              {
+                
+                const { password} = error.response.data.errors;
+                if(password)
+                {
+                  Swal.fire({
+                    title: "Thất bại",
+                    text: Object.values(password).join('') ,
+                    icon: "error"
+                  });
+                
+                }
+                else {
+                  Swal.fire({
+                title: "Thất bại",
+                text: 'Mật khẩu không đúng',
+                icon: "error"
+              });
+                }
+              }
+              
             });
         } else {
-            alert('Xác nhận mật khẩu không đúng');
+          Swal.fire({
+            title: "Thất bại",
+            text: 'Xác nhận mật khẩu không đúng' ,
+            icon: "error"
+          });
         }
     };
   return (

@@ -13,7 +13,6 @@ import {
 
 
 
-const items = [];
 
 function Hinhnhotrangchitiet(args) {
 

@@ -29,6 +29,7 @@ function BinhLuan() {
 	const storedToken = localStorage.getItem('token');
 
 
+	const [fetchCount, setFetchCount] = useState(0);
 
 	//-----------------------------------------------------------------
 
@@ -40,10 +41,11 @@ function BinhLuan() {
 
 	//lấy thông tin khách hàng
 	useEffect(() => {
-        // Kiểm tra xem token có tồn tại hay không
-        
+		//được dùng để hạng chế số lần gọi lại API
+		let chayLai = false;
        
-        if (storedToken !== null) {
+        if (storedToken !== null && chayLai ==false) {
+			chayLai = true;
             axios.post('http://127.0.0.1:8000/api/me',null, {
                 headers: {
                     Authorization: 'bearer ' + storedToken,
@@ -80,26 +82,28 @@ function BinhLuan() {
 		  try {
 			const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
 			setDanhSachBinhLuan(response.data.data);
-	  
-			// Kiểm tra xem 'binh_luan_cap_hai' có tồn tại trong 'response.data.data[0]' không
+	
 			if (response.data.data[0]?.binh_luan_cap_hai && response.data.data[0].binh_luan_cap_hai.length > 0) {
 			  setDanhSachBinhLuanCapHai(response.data.data[0].binh_luan_cap_hai[0].noi_dung);
 			} else {
-			  // Nếu không có, có thể đặt giá trị mặc định hoặc xử lý nó theo cách bạn muốn
 			  setDanhSachBinhLuanCapHai("Không có binh_luan_cap_hai");
 			}
-
+	
 			const delay = 1000; // Đặt một khoảng thời gian giữa các yêu cầu (1 giây ở đây)
-		const timer = setTimeout(fetchData, delay);
-	  
-		return () => clearTimeout(timer); // Xóa bộ đếm khi component unmount
+			const timer = setTimeout(() => setFetchCount(fetchCount + 1), delay);
+			
+			return () => clearTimeout(timer); // Xóa bộ đếm khi component unmount
 		  } catch (error) {
 			console.error('Lỗi khi tải dữ liệu:', error);
 		  }
 		};
-	  
-		fetchData();
-	  }, []);
+	
+		// Kiểm tra số lần fetchCount để kiểm soát số lần chạy lại
+		if (fetchCount < 1) { // Đặt giới hạn số lần chạy lại (ở đây là 5 lần)
+			console.log('a')
+		  fetchData();
+		}
+	  }, [fetchCount, spID]); 
 
 	
 	 
@@ -223,7 +227,7 @@ function BinhLuan() {
 									<div className="row">
 										<div className="col-12">
 											<div className="comments">
-												<h3 className="comment-title">Comments</h3>
+												<h3 className="comment-title">Bình luận	</h3>
 												{/* ------------------------------- */}
 												
 												{listBinhLuan}

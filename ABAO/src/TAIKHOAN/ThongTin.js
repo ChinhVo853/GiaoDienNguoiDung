@@ -26,6 +26,7 @@ function ThongTin() {
             },{
                 timeout: 3000,
               }).then(function (response) {
+                console.log('a')
                     setKhachHang(response.data);
                     setHoTen(response.data.ho_ten);
                     setSoDienThoai(response.data.so_dien_thoai);

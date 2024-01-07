@@ -4,12 +4,17 @@ import Head from "../TRANGCHU/Head";
 import Menu from "../TRANGCHU/Menu";
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { Slice } from '@reduxjs/toolkit';
+
 function ThanhToan() {
     const [cartItems, setCartItems] = useState([]);
   
     const [tenSanPhamArr, setTenSanPhamArr] = useState([]);
 
     const [mauArr, setMauArr] = useState([]);
+
+    const [tienShip , setTienShip] = useState(0);
 
 
     const [sizeArr, setSizeArr] = useState([]);
@@ -24,39 +29,75 @@ function ThanhToan() {
 
 
     //-----------------API------------------------------
-console.log(mauArr);
 
     //hàm thanh toán
     const HamThanhToan = () => {
+           
+            
+
         axios.post('http://127.0.0.1:8000/api/thanh-toan',{
             khach_hang: khachHang.id,
             tong_tien: calculateTotal(),
             mau: mauArr,
+            tien_ship: tienShip,
             size: sizeArr,
             so_luong: soLuong,
             gia: gia,
             ten: tenSanPhamArr,
         }).then(function(response){
-
-            alert('đã đặt hàng thành công');
-            
+            Swal.fire({
+                title: "Thành công",
+                text:'đã đặt hàng thành công' ,
+                icon: "success"
+              });
             window.location.href = `/KTDonHang/${response.data.data}`;
-            console.log(response);
+        }).catch(function(error){
+            if(error.response.status===422)
+            {
+                Swal.fire({
+                    title: "Thất bại",
+                    text: error.response.data.errors ,
+                    icon: "error"
+                  });
+            }
+           
         })
     }
 
 
 
     useEffect(() => {
+
         // Kiểm tra xem token có tồn tại hay không
         
+        let KyTuHoChiMinh = '';
+        
+        if (khachHang.dia_chi) {
+            const diaChi = khachHang.dia_chi;
+            KyTuHoChiMinh = diaChi.slice(-11).toLowerCase();
+        }
+        
+        if (KyTuHoChiMinh) 
+        {
+            if((KyTuHoChiMinh == 'ho chi minh' || KyTuHoChiMinh == 'hồ chí minh'))
+            {
+                setTienShip(30000);
+            } 
+            else
+            {
+                setTienShip(60000);
+            }
+        }
        
+        
         if (storedToken !== null) {
             axios.post('http://127.0.0.1:8000/api/me',null, {
                 headers: {
                     Authorization: 'bearer ' + storedToken,
                 },
               
+              },{
+                timeout: 5000,
               })
               .then(function (response) {
              setKhachHang(response.data);
@@ -74,7 +115,7 @@ console.log(mauArr);
           // Ví dụ: Chuyển hướng về trang đăng nhập
           // window.location.href = '/dang-nhap';
         }
-      }, []); 
+      }, [khachHang]); 
 
 
 
@@ -101,14 +142,21 @@ console.log(mauArr);
         setGia(GiaArr); 
         
     }, []);
+
+    //hàm tính tổng tiền
     const calculateTotal = () => {
-        const total = cartItems.reduce((acc, item) => {
-          return acc + item.gia * Number(item.so_luong);
-        }, 0);
+    let total = cartItems.reduce((acc, item) => {
+        return (acc + item.gia * Number(item.so_luong));
+    }, 0);
 
     return total;
 };
 
+
+
+
+
+//------------ham xu ly------------------
 
 
 
@@ -119,87 +167,83 @@ console.log(mauArr);
     <>
       <Head />
       <Menu />
-      <div class="container">
-        <div class="row">
-            <div class="col-12 mt-4">
-                <div class="card p-3" style={{backgroundColor: '#0193f5' , color :'white'}}>
-                    <p class="mb-0 fw-bold h4">Điền thông tin</p>
+      <div className="container">
+        <div className="row">
+            <div className="col-12 mt-4">
+                <div className="card p-3" style={{backgroundColor: '#0193f5' , color :'white'}}>
+                    <p className="mb-0 fw-bold h4">Điền thông tin</p>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="card p-3">
+            <div className="col-12">
+                <div className="card p-3">
                    
-                    <div class="card-body border p-0">
+                    <div className="card-body border p-0">
                         
-                        <div class="collapse show p-3 pt-0" id="collapseExample">
-                            <div class="row">
-                                <div class="col-lg-5 mb-lg-0 mb-3">
+                        <div className="collapse show p-3 pt-0" id="collapseExample">
+                            <div className="row">
+                                <div className="col-lg-5 mb-lg-0 mb-3">
                                     
                                      {cartItems.map((item) => (
-                    <tr key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}>
-                      
-                        
-                
-                   
-                  
-                                    <p class="mb-0">
-                                        <span class="fw-bold">Sản phẩm:</span>
-                                        <span class="c-green">{item.ten} </span>
-                                        <span class="fw-bold">Màu:</span>
-                                        <span class="c-green">{item.selectedColor} </span>
-                                        <span class="fw-bold">Size:</span>
-                                        <span class="c-green">{item.selectedSize} </span>
-                                    </p>
-                                    <p class="mb-0">
-                                        <span class="fw-bold">Giá: </span>
-                                        <span class="c-green">{item.gia}VND</span>
-                                        <span class="fw-bold"> Số lượng: </span>
-                                        <span class="c-green">{item.so_luong}</span>
-                                    </p>
-                                   
-                                     </tr>
+                                        <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}   >
+                                            <p className="mb-0" style={{margin: '20px 0 0 0'}}>
+                                                <span className="fw-bold">Sản phẩm:</span>
+                                                <span className="c-green">{item.ten} </span>
+                                                <span className="fw-bold">Màu:</span>
+                                                <span className="c-green">{item.selectedColor} </span>
+                                                <span className="fw-bold">Size:</span>
+                                                <span className="c-green">{item.selectedSize} </span>
+                                            </p>
+                                            <p className="mb-0">
+                                                <span className="fw-bold">Giá: </span>
+                                                <span className="c-green">{item.gia}VND</span>
+                                                <span className="fw-bold"> Số lượng: </span>
+                                                <span className="c-green">{item.so_luong}</span>
+                                            </p>
+                                        
+                                        </div>
                                     ))}
-                                     <p class="mb-0">
-                                        <h3 class="fw-bold">Thành tiền:
-                                        <span class="c-green">{calculateTotal()} VNĐ</span> </h3>
-                                    </p>
+                                   
+                                    
+                                        <div className="mb-0" style={{margin: '20px 0 0 0'}}>
+                                            <h4>tiền ship: 
+                                            <span className="c-green">{tienShip} VNĐ</span>
+                                            </h4> 
+                                        </div>
+                                        
+                                        <div className="mb-0" style={{margin: '20px 0 0 0'}}>
+                                            <h3 className="fw-bold">Tổng tiền:
+                                            <span className="c-green">{calculateTotal()+tienShip} VNĐ</span> </h3>
+                                        </div>
                                 </div>
-                                <div class="col-lg-7">
-                                    <form action="" class="form">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" placeholder=" " value={khachHang?.ho_ten}/>
-                                                    <label for="" class="form__label">Tên khách hàng</label>
+                                <div className="col-lg-7">
+                                    <form action="" className="form">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="form__div">
+                                                    <input type="text" className="form-control" placeholder=" " value={khachHang?.ho_ten}/>
+                                                    <label htmlFor="" className="form__label">Tên khách hàng</label>
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" placeholder=" " value={khachHang?.dia_chi}/>
-                                                    <label for="" class="form__label">Địa chỉ</label>
+                                            <div className="col-12">
+                                                <div className="form__div">
+                                                    <input type="text" className="form-control" placeholder=" " value={khachHang?.dia_chi}/>
+                                                    <label htmlFor="" className="form__label">Địa chỉ</label>
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" placeholder=" " value={khachHang?.so_dien_thoai}/>
-                                                    <label for="" class="form__label">Số điện thoại</label>
+                                            <div className="col-12">
+                                                <div className="form__div">
+                                                    <input type="text" className="form-control" placeholder=" " value={khachHang?.so_dien_thoai}/>
+                                                    <label htmlFor="" className="form__label">Số điện thoại</label>
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-6">
-                                                <div class="btn btn-primary w-100" onClick={HamThanhToan}>Đặt hàng</div>
+                                           
+                                                <div className="btn btn-primary w-100" onClick={HamThanhToan}>Đặt hàng</div>
                                                 
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="btn btn-primary w-100" >
-                                                    <NavLink to='/KTDonHang' >Kiểm tra đơn hàng</NavLink>
-                                                    
-
-                                                    </div>
-                                                
-                                            </div>
+                                            
+                                           
                                            
                                         </div>
                                     </form>
@@ -209,8 +253,8 @@ console.log(mauArr);
                     </div>
                 </div>
             </div>
-            {/* <div class="col-12">
-                <div class="btn btn-primary payment">
+            {/* <div className="col-12">
+                <div className="btn btn-primary payment">
                     Make Payment
                 </div>
             </div> */}

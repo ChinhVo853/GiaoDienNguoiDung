@@ -1,6 +1,7 @@
 import '../vendor/css/dangnhap.css';
 import axios from 'axios';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 function QuenMatKhau() {
   //---------các state ---------------------
@@ -26,12 +27,25 @@ function QuenMatKhau() {
     
     })
     .then(function (response) {
-      alert('mật khẩu đã được gửi, vui long kiểm tra lại email');
-      window.location.href = '/DANGNHAP';
+      Swal.fire({
+        title: 'Mật khẩu đã được gửi, vui lòng kiểm tra lại email',
+        icon: "success"
+      });
     })
     .catch(function (error) {
-      console.error('Error during login request:', error);
-     
+      if(error.response.status === 422)
+      {
+      const {email} = error.response.data.errors;
+      if(email )
+        {
+          Swal.fire({
+            title: "Thất bại",
+            text: Object.values(email).join('') ,
+            icon: "error"
+          });
+        
+        }
+      }
     });
   }
 

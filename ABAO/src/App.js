@@ -1,11 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
-import './bootstrap-5.2.3-dist/css/bootstrap-grid.min.css';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Route, Routes } from 'react-router-dom';
-import './vendor/css/bootstrap.css';
 import './vendor/css/magnific-popup.min.css';
 import './vendor/css/font-awesome.css';
 import './vendor/css/jquery.fancybox.min.css'
@@ -39,7 +35,6 @@ import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 import YeuThich from './TRANGCHITIET/YeuThich';
 
 import GioHang from './TRANGCHITIET/GioHang';
-import { Provider } from 'react-redux';
 
 //-----------------TIMKIEM------------------------
 import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';

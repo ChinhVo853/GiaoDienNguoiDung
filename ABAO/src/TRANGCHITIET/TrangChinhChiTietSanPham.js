@@ -7,6 +7,7 @@ import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import BinhLuan from "./BinhLuan";
 import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -43,74 +44,102 @@ function TrangChinhChiTietSanPham() {
 
 
   //---------------------hàm hiện thông tin------------------
-       useEffect(() => {
-      const fetchData = async () => {
+  useEffect(() => {
+    
+  
+    // Biến đếm để kiểm soát số lần gửi yêu cầu
+    let requestCount = 0;
+  
+    // Hàm để thực hiện yêu cầu dữ liệu
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`, {
+          timeout: 3000,
+        });
+  
+        setSanPham(response.data.data);
+        setSizeMauSP(response.data.data2);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu:', error);
+      }
+    };
+  
+    // Hàm để thực hiện yêu cầu danh sách đánh giá
+    const danhSachDanhGia = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`, {
+          timeout: 5000,
+        });
+  
+        setDanhGia(response.data.data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu danh sách đánh giá:', error);
+      }
+    };
+  
+    // Kiểm tra số lần gửi yêu cầu trước khi thực hiện
+    if (requestCount < 2) {
+      fetchData(); // Thực hiện yêu cầu dữ liệu
+      danhSachDanhGia(); // Thực hiện yêu cầu danh sách đánh giá
+      requestCount++; // Tăng số lần gửi yêu cầu
+    }
+  
+  }, [spID]); // Chỉ gửi lại yêu cầu khi giá trị của spID thay đổi
+  
+
+
+  useEffect(() => {
+    // Biến cờ để kiểm tra xem đã thực hiện yêu cầu hay chưa
+    let isDataFetched = false;
+  
+    // Hàm để thực hiện yêu cầu danh sách bình luận cấp 1
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`, {
+          timeout: 5000,
+        });
+        setDanhSachBinhLuan(response.data.data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu danh sách bình luận:', error);
+      }
+    };
+  
+    // Hàm để thực hiện yêu cầu thông tin người dùng
+    const fetchUserInfo = async () => {
+      const storedToken = localStorage.getItem('token');
+  
+      if (storedToken !== null) {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`,{
-            timeout: 3000, // Thiết lập thời gian timeout là 3 giây
-          });
-          
-          setSanPham(response.data.data);
-          setSizeMauSP(response.data.data2);
-        } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
-        }
-      };
-
-      fetchData();
-
-      const DanhSachDanhGia = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`,{
-            timeout: 5000, // Thiết lập thời gian timeout là 5 giây
-          });
-          setDanhGia(response.data.data);
-        } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
-        }
-      };
-      DanhSachDanhGia();
-    }, [spID]);
-
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`,{
+          const response = await axios.post('http://127.0.0.1:8000/api/me', null, {
+            headers: {
+              Authorization: 'bearer ' + storedToken,
+            },
+          }, {
             timeout: 5000,
           });
-          setDanhSachBinhLuan(response.data.data);
+          setKhachHang(response.data.id);
         } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
+          console.error('Lỗi khi tải thông tin người dùng:', error);
         }
-      };
-
-      fetchData();
-
-      const storedToken = localStorage.getItem('token');
-
-      if (storedToken !== null) {
-        axios.post('http://127.0.0.1:8000/api/me', null, {
-          headers: {
-            Authorization: 'bearer ' + storedToken,
-          },
-        }, {
-          timeout: 5000,
-        })
-          .then(function (response) {
-            setKhachHang(response.data.id);
-          })
-          .catch(function (error) {
-            console.error('Error during login request:', error);
-          });
       } else {
         console.log('Token không tồn tại');
       }
-
-    }, [spID]);
+    };
+  
+    // Kiểm tra xem đã thực hiện yêu cầu hay chưa
+    if (isDataFetched == false) {
+      fetchData(); // Thực hiện yêu cầu danh sách bình luận
+      fetchUserInfo(); // Thực hiện yêu cầu thông tin người dùng
+      isDataFetched = true; // Đặt cờ là đã thực hiện yêu cầu
+    }
+  
+  }, [spID]);
+  
 
   
 
+    //hàm có tác dụng lưu bình luận cấp 1 
+    //còn bình luận cấp 2 thì được viết ở file khác
     const luuBinhLuan = (event) => {
       
       event.preventDefault();
@@ -161,16 +190,30 @@ function TrangChinhChiTietSanPham() {
 
     //-------------HÀM XỬ LÝ-------------------------
 
+    //có tác dụng lưu màu mà khách hàng chọn vào trong selectedColor
     const handleColorChange = (color) => {
       setSelectedColor(color);
     };
 
+
+    //có tác dụng lưu size mà khách hàng chọn vào trong selectedSize
     const handleSizeChange = (size) => {
       setSelectedSize(size);
     };
 
-   
+  
+    //đây là hàm lưu sản phẩm vào trong giỏ hàng
     const ChonMua = () => {
+      if(storedToken===null)
+      {
+        Swal.fire({
+        title: "Thất bại",
+        text: 'Vui lòng đăng nhập.' ,
+        icon: "error"
+      });
+      return;
+
+      }
       if (!selectedSize || !selectedColor) {
         Swal.fire({
           title: "Thất bại",
@@ -181,16 +224,27 @@ function TrangChinhChiTietSanPham() {
         return;
       }
 
+      //có tác dụng tạo 1 biến là mảng lấy thông tin là mảng rổng hoặc localStorege có tên là cartItems nếu đã tồn tại
       const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+      //kiểm tra xem trong giở hàng đã có sản phẩm mà khách hàng đã chọn chưa kiểm tra bao gồm:
+      //id, màu, size
       const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
+      //biến được gán mặc định
       const hinhAnhUrl = 'https://via.placeholder.com/550x750';
+      //kiểm tra xem trong sản phẩm mà mình lấy được từ server có tồn tại chưa
+      //nếu có thì hinhAnhUrl sẽ được gán lại
       if(sanPham.hinh_anh[0])
       {
         hinhAnhUrl = sanPham.hinh_anh[0].url;
       }
+
+      //kiểm tra xem existingItem mà mình đã kiểm tra trước đó nếu có tồn tịa thì số lượng sản phẩm trong đó tăng 1
+      //nếu ko tồn tại thì sẽ tạo ra thêm 1 sản phẩm đucowj lưu trong localStore
       if (existingItem) {
         existingItem.so_luong += 1;
       } else {
+        //biến này là sản phẩm mới
         const newCartItem = {
           id: sanPham.id,
           ten: sanPham.ten,
@@ -200,9 +254,10 @@ function TrangChinhChiTietSanPham() {
           selectedSize,
           selectedColor,
         };
+        //thêm sản phẩm mới vào mảng existingCartItems
         existingCartItems.push(newCartItem);
       }
-
+      // lưu existingCartItems vào trong localStore
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
       Swal.fire({
 
@@ -213,6 +268,7 @@ function TrangChinhChiTietSanPham() {
     
     };
 
+    //đây là nơi hiển thị các size trên trang để người dùng có thể chọn
     const listSize = () => {
       const uniqueSizes = new Set();
 
@@ -235,6 +291,8 @@ function TrangChinhChiTietSanPham() {
         return null;
       });
     };
+
+        //đây là nơi hiển thị các màu trên trang để người dùng có thể chọn
 
     const listMau = () => {
       const uniqueColors = new Set();
@@ -274,6 +332,8 @@ function TrangChinhChiTietSanPham() {
 //------------------thêm vào yêu thích ----------------------------
 
     //----------------------------------------------------------------------------------
+
+    
     const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
       return (
         <>
@@ -318,9 +378,8 @@ function TrangChinhChiTietSanPham() {
       }
     };
     //-------------------------------
-
-    
-    const danhSachDanhGia = danhGia && Array.isArray(danhGia) ? (
+    //hiển thị danh sách đánh giá cho người dúng xem
+    const danhSachDanhGia = danhGia && Array.isArray(danhGia) && danhGia.length > 0? (
       <div>
         {danhGia.map(function (item) {
           return (
@@ -334,10 +393,13 @@ function TrangChinhChiTietSanPham() {
           );
         })}
       </div>
-    ) : null;
+    ) : (
+      <h3>Không có đánh giá</h3>
+    );
 
 
 
+    //đây là noi hiển thị số sao cảu sản phẩm
     const HienSao = () =>{
       if(sanPham.so_sao)
       {

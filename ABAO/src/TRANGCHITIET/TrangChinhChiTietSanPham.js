@@ -6,6 +6,9 @@ import Head from "../TRANGCHU/Head";
 import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import BinhLuan from "./BinhLuan";
+import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
+
 
 
 function TrangChinhChiTietSanPham() {
@@ -17,15 +20,15 @@ function TrangChinhChiTietSanPham() {
 
   //sản phẩm trong trang chi tiết này
   const [sanPham, setSanPham] = useState([]);
-
   //màu và size của sản phẩm
   const [sizeMauSP, setSizeMauSP] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [sanPhamb, setSanPhamb] = useState([]);
   const [khachHang, setKhachHang] = useState('');
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
+  const [danhGia, setDanhGia] = useState();
+
   
   //tao bien luu du lieu vao axios
 
@@ -41,97 +44,236 @@ function TrangChinhChiTietSanPham() {
 
 
   //---------------------hàm hiện thông tin------------------
+  useEffect(() => {
+    
+  
+    // Biến đếm để kiểm soát số lần gửi yêu cầu
+    let requestCount = 0;
+  
+    // Hàm để thực hiện yêu cầu dữ liệu
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`, {
+          timeout: 3000,
+        });
+  
+        setSanPham(response.data.data);
+        setSizeMauSP(response.data.data2);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu:', error);
+      }
+    };
+  
+    // Hàm để thực hiện yêu cầu danh sách đánh giá
+    const danhSachDanhGia = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`, {
+          timeout: 5000,
+        });
+  
+        setDanhGia(response.data.data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu danh sách đánh giá:', error);
+      }
+    };
+  
+    // Kiểm tra số lần gửi yêu cầu trước khi thực hiện
+    if (requestCount < 2) {
+      fetchData(); // Thực hiện yêu cầu dữ liệu
+      danhSachDanhGia(); // Thực hiện yêu cầu danh sách đánh giá
+      requestCount++; // Tăng số lần gửi yêu cầu
+    }
+  
+  }, [spID]); // Chỉ gửi lại yêu cầu khi giá trị của spID thay đổi
+  
 
- 
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/chi-tiet-san-pham/${spID}`);
-          setSanPham(response.data.data);
-          setSizeMauSP(response.data.data2);
-        } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
-        }
-      };
-
-      fetchData();
-    }, [spID]);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
-          setDanhSachBinhLuan(response.data.data);
-        } catch (error) {
-          console.error('Lỗi khi tải dữ liệu:', error);
-        }
-      };
-
-      fetchData();
-    }, [spID]);
-
-    useEffect(() => {
+  useEffect(() => {
+    // Biến cờ để kiểm tra xem đã thực hiện yêu cầu hay chưa
+    let isDataFetched = false;
+  
+    // Hàm để thực hiện yêu cầu danh sách bình luận cấp 1
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`, {
+          timeout: 5000,
+        });
+        setDanhSachBinhLuan(response.data.data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu danh sách bình luận:', error);
+      }
+    };
+  
+    // Hàm để thực hiện yêu cầu thông tin người dùng
+    const fetchUserInfo = async () => {
       const storedToken = localStorage.getItem('token');
-
+  
       if (storedToken !== null) {
-        axios.post('http://127.0.0.1:8000/api/me', null, {
-          headers: {
-            Authorization: 'bearer ' + storedToken,
-          },
-        })
-          .then(function (response) {
-            setKhachHang(response.data.id);
-          })
-          .catch(function (error) {
-            console.error('Error during login request:', error);
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/me', null, {
+            headers: {
+              Authorization: 'bearer ' + storedToken,
+            },
+          }, {
+            timeout: 5000,
           });
+          setKhachHang(response.data.id);
+        } catch (error) {
+          console.error('Lỗi khi tải thông tin người dùng:', error);
+        }
       } else {
         console.log('Token không tồn tại');
       }
-    }, []);
+    };
+  
+    // Kiểm tra xem đã thực hiện yêu cầu hay chưa
+    if (isDataFetched == false) {
+      fetchData(); // Thực hiện yêu cầu danh sách bình luận
+      fetchUserInfo(); // Thực hiện yêu cầu thông tin người dùng
+      isDataFetched = true; // Đặt cờ là đã thực hiện yêu cầu
+    }
+  
+  }, [spID]);
+  
 
+  
+
+    //hàm có tác dụng lưu bình luận cấp 1 
+    //còn bình luận cấp 2 thì được viết ở file khác
+    const luuBinhLuan = (event) => {
+      
+      event.preventDefault();
+      
+      axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
+        san_pham_id: spID,
+        khach_hang_id: khachHang,
+        noi_dung: binhLuan,
+      }, {
+        timeout: 5000,
+      })
+        .then(function (response) {
+          Swal.fire({
+            title: "Thành công",
+            text: 'bạn đã bính luận',
+            icon: "success"
+          });
+        })
+        .catch(function (error) {
+          if(error.response.status === 422)
+          {
+            const {noi_dung, khach_hang_id} = error.response.data.errors;
+            if(noi_dung)
+            {
+              Swal.fire({
+                title: "Thất bại",
+                text: Object.values(noi_dung).join('') ,
+                icon: "error"
+              });
+            
+            }
+            if(khach_hang_id)
+            {
+              Swal.fire({
+                title: "Thất bại",
+                text: Object.values(khach_hang_id).join('') ,
+                icon: "error"
+              });
+            }
+        }
+        });
+    };
+
+
+
+
+
+
+    //-------------HÀM XỬ LÝ-------------------------
+
+    //có tác dụng lưu màu mà khách hàng chọn vào trong selectedColor
     const handleColorChange = (color) => {
       setSelectedColor(color);
     };
 
+
+    //có tác dụng lưu size mà khách hàng chọn vào trong selectedSize
     const handleSizeChange = (size) => {
       setSelectedSize(size);
     };
 
+  
+    //đây là hàm lưu sản phẩm vào trong giỏ hàng
     const ChonMua = () => {
+      if(storedToken===null)
+      {
+        Swal.fire({
+        title: "Thất bại",
+        text: 'Vui lòng đăng nhập.' ,
+        icon: "error"
+      });
+      return;
+
+      }
       if (!selectedSize || !selectedColor) {
-        alert('Vui lòng chọn size và màu trước khi thêm vào giỏ hàng.');
+        Swal.fire({
+          title: "Thất bại",
+          text: 'Vui lòng chọn size và màu trước khi thêm vào giỏ hàng.' ,
+          icon: "error"
+        });
+      
         return;
       }
 
+      //có tác dụng tạo 1 biến là mảng lấy thông tin là mảng rổng hoặc localStorege có tên là cartItems nếu đã tồn tại
       const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
 
+      //kiểm tra xem trong giở hàng đã có sản phẩm mà khách hàng đã chọn chưa kiểm tra bao gồm:
+      //id, màu, size
+      const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
+      //biến được gán mặc định
+      const hinhAnhUrl = 'https://via.placeholder.com/550x750';
+      //kiểm tra xem trong sản phẩm mà mình lấy được từ server có tồn tại chưa
+      //nếu có thì hinhAnhUrl sẽ được gán lại
+      if(sanPham.hinh_anh[0])
+      {
+        hinhAnhUrl = sanPham.hinh_anh[0].url;
+      }
+
+      //kiểm tra xem existingItem mà mình đã kiểm tra trước đó nếu có tồn tịa thì số lượng sản phẩm trong đó tăng 1
+      //nếu ko tồn tại thì sẽ tạo ra thêm 1 sản phẩm đucowj lưu trong localStore
       if (existingItem) {
         existingItem.so_luong += 1;
       } else {
+        //biến này là sản phẩm mới
         const newCartItem = {
           id: sanPham.id,
           ten: sanPham.ten,
           gia: sanPham.gia_ban,
+          hinh: hinhAnhUrl,
           so_luong: 1,
           selectedSize,
           selectedColor,
         };
+        //thêm sản phẩm mới vào mảng existingCartItems
         existingCartItems.push(newCartItem);
       }
-
+      // lưu existingCartItems vào trong localStore
       localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
-      alert('Thêm sản phẩm vào giỏ hàng thành công');
+      Swal.fire({
+
+        text:'Thêm sản phẩm vào giỏ hàng thành công',
+        icon: "success"
+      });
+    
+    
     };
 
+    //đây là nơi hiển thị các size trên trang để người dùng có thể chọn
     const listSize = () => {
       const uniqueSizes = new Set();
 
       return sizeMauSP.map((item, index) => {
         const size = item.size.ten;
-
         if (!uniqueSizes.has(size)) {
           uniqueSizes.add(size);
 
@@ -149,6 +291,8 @@ function TrangChinhChiTietSanPham() {
         return null;
       });
     };
+
+        //đây là nơi hiển thị các màu trên trang để người dùng có thể chọn
 
     const listMau = () => {
       const uniqueColors = new Set();
@@ -179,57 +323,17 @@ function TrangChinhChiTietSanPham() {
        </React.Fragment>
      ));
    */
-    const luuBinhLuan = (event) => {
-      event.preventDefault();
-
-      axios.post('http://127.0.0.1:8000/api/luu-binh-luan', {
-        san_pham_id: sanPhamb.id,
-        khach_hang_id: khachHang,
-        noi_dung: binhLuan,
-      })
-        .then(function (response) {
-          const token = response.data.access_token;
-          localStorage.setItem('token', token);
-          window.location.href = '/';
-        })
-        .catch(function (error) {
-          console.error('Error during login request:', error);
-        });
-    };
 
 
-
-    useEffect(() => {
-      // Kiểm tra xem token có tồn tại hay không
-
-
-      if (storedToken !== null) {
-        axios.post('http://127.0.0.1:8000/api/me', null, {
-          headers: {
-            Authorization: 'bearer ' + storedToken,
-          },
-
-        })
-          .then(function (response) {
-            setKhachHang(response.data.id);
-
-          })
-          .catch(function (error) {
-            console.error('Error during login request:', error);
-
-          });
-
-      }
-      else {
-        // Token không tồn tại, có thể chuyển hướng hoặc thực hiện hành động khác
-        console.log('Token không tồn tại');
-        // Ví dụ: Chuyển hướng về trang đăng nhập
-        // window.location.href = '/dang-nhap';
-      }
-    }, []);
 
 
     //------------------------------------------------
+    
+//------------------thêm vào yêu thích ----------------------------
+
+    //----------------------------------------------------------------------------------
+
+    
     const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
       return (
         <>
@@ -239,12 +343,13 @@ function TrangChinhChiTietSanPham() {
       );
     });
 
+
     const YeuThich = () => {
       const yeuThichItem = {
         id: sanPham.id,
         ten: sanPham.ten,
         gia: sanPham.gia_ban,
-        hinh: sanPham.hinh, 
+        hinh: sanPham.hinh_anh[0].url, 
       };
     
       const yeuThich = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -254,11 +359,114 @@ function TrangChinhChiTietSanPham() {
       if (!daThemYeuThich) {
         yeuThich.push(yeuThichItem);
         localStorage.setItem('favorites', JSON.stringify(yeuThich));
-        alert('Đã thêm vào danh sách yêu thích');
+        Swal.fire({
+          title: "Yêu thích",
+          text:  'Đã thêm vào danh sách yêu thích',
+          icon: "success"
+        });
+      
+        
       } else {
-        alert('Sản phẩm đã có trong danh sách yêu thích');
+
+        Swal.fire({
+          title: "Thất bại",
+          text:'Sản phẩm đã có trong danh sách yêu thích',
+          icon: "warning"
+        });
+      
+      
       }
     };
+    //-------------------------------
+    //hiển thị danh sách đánh giá cho người dúng xem
+    const danhSachDanhGia = danhGia && Array.isArray(danhGia) && danhGia.length > 0? (
+      <div>
+        {danhGia.map(function (item) {
+          return (
+            <div key={item.id} className="single-comment left">
+              <img src="https://via.placeholder.com/80x80" alt="#" />
+              <div className="content">
+                <h4>{item.khach_hang.ho_ten}</h4>
+                <p>{item.nhan_xet}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <h3>Không có đánh giá</h3>
+    );
+
+
+
+    //đây là noi hiển thị số sao cảu sản phẩm
+    const HienSao = () =>{
+      if(sanPham.so_sao)
+      {
+        if(sanPham.so_sao <=1)
+        {
+          return (<>
+              <i className="fa fa-star text-warning"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <i className="fa fa-star text-secondary"></i>
+              <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+          </>)
+        }
+
+        if(sanPham.so_sao <= 2)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 3)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 4)
+        {
+          
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-secondary"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+
+        if(sanPham.so_sao <= 5)
+        {
+          return (<>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <i className="fa fa-star text-warning"></i>
+            <span className="list-inline-item text-dark">Rating {sanPham.so_sao}</span>
+        </>)
+        }
+      }
+    }
+    
+    
     
     return (
       <>
@@ -279,23 +487,18 @@ function TrangChinhChiTietSanPham() {
                       <h1 className="h2">{sanPham.ten}</h1>
                       <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
                       <p className="py-2">
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-warning"></i>
-                        <i className="fa fa-star text-secondary"></i>
-                        <span className="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
+                       {HienSao()}
                       </p>
                       <ul className="list-inline">
                         <li className="list-inline-item">
-                          <h6>Brand:</h6>
+                          <h6>Hãng :</h6>
                         </li>
                         <li className="list-inline-item">
                           <p className="text-muted"><strong>{sanPham.nha_cung_cap?.ten}</strong></p>
                         </li>
                       </ul>
     
-                      <h6>Description:</h6>
+                      <h6>Mô tả:</h6>
                       <p>{sanPham.thong_tin}</p>
                       
     
@@ -336,17 +539,27 @@ function TrangChinhChiTietSanPham() {
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
+        <section className="blog-single section">
+        <div className="header-inner">
+					<div className="container">
+          <div className="comments">
+            <h3 className="comment-title">Đánh giá </h3>
+            {danhSachDanhGia}
+          </div>
+            </div>
+            </div>
+           
+        </section>
+       
         <BinhLuan/>
       </section>
-
-        {dsBinhLuan}
 
         <form onSubmit={luuBinhLuan} className="form">
           <input
             onChange={(e) => setBinhLuan(e.target.value)}
-            required
             className="input"
             type="text"
             name="noi_dung"

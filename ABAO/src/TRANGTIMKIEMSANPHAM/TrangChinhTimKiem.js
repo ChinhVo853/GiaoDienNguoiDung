@@ -43,7 +43,7 @@ function TrangChinhTimKiem()
         };
 
         fetchData();
-    }, []);
+    }, [tenSanPham]);
 
     const locGia = () => {
         axios.post(`http://127.0.0.1:8000/api/tim-kiem/${tenSanPham}`, {

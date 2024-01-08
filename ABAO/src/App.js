@@ -1,11 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
-import './bootstrap-5.2.3-dist/css/bootstrap-grid.min.css';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Route, Routes } from 'react-router-dom';
-import './vendor/css/bootstrap.css';
 import './vendor/css/magnific-popup.min.css';
 import './vendor/css/font-awesome.css';
 import './vendor/css/jquery.fancybox.min.css'
@@ -29,6 +25,7 @@ import './vendor/css/font-awesome.min.css';
 import DangNhap from './TAIKHOAN/DangNhap';
 import TrangChu from './TRANGCHU/TrangChu';
 import DangKy from './TAIKHOAN/DangKy';
+import QuenMatKhau from './TAIKHOAN/QuenMatKhau';
 import Trangchinhcacloaisanpham from './LOAISANPHAM/Trangchinhcacloaisanpham';
 import ThongTin from './TAIKHOAN/ThongTin';
 
@@ -38,7 +35,6 @@ import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 import YeuThich from './TRANGCHITIET/YeuThich';
 
 import GioHang from './TRANGCHITIET/GioHang';
-import { Provider } from 'react-redux';
 
 //-----------------TIMKIEM------------------------
 import TrangChinhTimKiem from './TRANGTIMKIEMSANPHAM/TrangChinhTimKiem';
@@ -60,6 +56,10 @@ function App() {
           <Route path='/DANGNHAP' element={<DangNhap/>}/>;
           <Route path='/DANGKY' element={<DangKy/>}/>;
           <Route path='/DoiMatKhau' element={<DoiMatKhau/>}/>;
+          <Route path='/quen-mat-khau' element={<QuenMatKhau/>}/>;
+
+
+
           <Route path='/Trang-chinh-cac-loai-san-pham' element={<TrangChinhChiTietSanPham/>}/>;
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;

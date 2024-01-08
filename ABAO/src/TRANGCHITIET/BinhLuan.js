@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 function BinhLuan() {
@@ -28,6 +29,7 @@ function BinhLuan() {
 	const storedToken = localStorage.getItem('token');
 
 
+	const [fetchCount, setFetchCount] = useState(0);
 
 	//-----------------------------------------------------------------
 
@@ -39,16 +41,19 @@ function BinhLuan() {
 
 	//lấy thông tin khách hàng
 	useEffect(() => {
-        // Kiểm tra xem token có tồn tại hay không
-        
+		//được dùng để hạng chế số lần gọi lại API
+		let chayLai = false;
        
-        if (storedToken !== null) {
+        if (storedToken !== null && chayLai ==false) {
+			chayLai = true;
             axios.post('http://127.0.0.1:8000/api/me',null, {
                 headers: {
                     Authorization: 'bearer ' + storedToken,
                 },
               
-              })
+              }, {
+				timeout: 1000,
+			  })
               .then(function (response) {
               setKhachHang(response.data.id);
               
@@ -73,31 +78,74 @@ function BinhLuan() {
 	//---------------------hàm hiện thông tin blc1------------------
 
 	useEffect(() => {
-
 		const fetchData = async () => {
-			try {
-				const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
-				setDanhSachBinhLuan(response.data.data);
-				setDanhSachBinhLuanCapHai(response.data.data[0].binh_luan_cap_hai[0].noi_dung);
-
-			} catch (error) {
-				console.error('Lỗi khi tải dữ liệu:', error);
+		  try {
+			const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-binh-luan-cap-mot/${spID}`);
+			setDanhSachBinhLuan(response.data.data);
+	
+			if (response.data.data[0]?.binh_luan_cap_hai && response.data.data[0].binh_luan_cap_hai.length > 0) {
+			  setDanhSachBinhLuanCapHai(response.data.data[0].binh_luan_cap_hai[0].noi_dung);
+			} else {
+			  setDanhSachBinhLuanCapHai("Không có binh_luan_cap_hai");
 			}
+	
+			const delay = 1000; // Đặt một khoảng thời gian giữa các yêu cầu (1 giây ở đây)
+			const timer = setTimeout(() => setFetchCount(fetchCount + 1), delay);
+			
+			return () => clearTimeout(timer); // Xóa bộ đếm khi component unmount
+		  } catch (error) {
+			console.error('Lỗi khi tải dữ liệu:', error);
+		  }
 		};
+	
+		// Kiểm tra số lần fetchCount để kiểm soát số lần chạy lại
+		if (fetchCount < 1) { // Đặt giới hạn số lần chạy lại (ở đây là 5 lần)
+			console.log('a')
+		  fetchData();
+		}
+	  }, [fetchCount, spID]); 
 
-		fetchData();
-	}, []);
-
-
+	
+	 
+	 
+	  
 	const luuBinhLuanCapHai = () => {
 		axios.post('http://127.0.0.1:8000/api/luu-binh-luan-cap-hai',{
 			binh_luan_cap_mot_id: traLoiBinhLuan,
 			san_pham_id: spID,
 			khach_hang_id: khachHang,
 			noi_dung: noiDungBinhLuan,
-		}).then(function(response){
-			alert('bạn đã gửi bình luận')
-		})
+		}, {
+			timeout: 3000,
+		  }).then(function(response){
+			Swal.fire({
+				title: "Thành công",
+				text: 'bạn đã bính luận',
+				icon: "success"
+			  });
+		}).catch(function (error) {
+			if(error.response.status === 422)
+			{
+			  const {noi_dung, khach_hang_id} = error.response.data.errors;
+			  if(noi_dung)
+			  {
+				Swal.fire({
+				  title: "Thất bại",
+				  text: Object.values(noi_dung).join('') ,
+				  icon: "error"
+				});
+			  
+			  }
+			  if(khach_hang_id)
+			  {
+				Swal.fire({
+				  title: "Thất bại",
+				  text: Object.values(khach_hang_id).join('') ,
+				  icon: "error"
+				});
+			  }
+		  }
+		  });
 	}
 	
 
@@ -106,34 +154,31 @@ function BinhLuan() {
 
 	//----------------------ham xu ly----------------
 
-	const listBinhLuan = danhSachBinhLuan.map(function (item) {
-		
-
-		const listBinhLuanCapHai = item.binh_luan_cap_hai.map((item2, index) => (
-			<div key={index} className="single-comment left">
-			  <img src="https://via.placeholder.com/80x80" alt="#" />
-			  <div className="content">
-				<h4>{item2.khach_hang?.ho_ten}</h4>
-				<p>{item2.noi_dung}</p>
+	const listBinhLuan = danhSachBinhLuan.map(function (item ,index) {
+		const listBinhLuanCapHai = item.binh_luan_cap_hai ? (
+			item.binh_luan_cap_hai.map((item2, index) => (
+			  <div key={index} className="single-comment left">
+				<img src="https://via.placeholder.com/80x80" alt="#" />
+				<div className="content">
+				  <h4>{item2.khach_hang?.ho_ten}</h4>
+				  <p>{item2.noi_dung}</p>
+				</div>
 			  </div>
-			</div>
-		  ));
+			))
+		  ) : null;
 		  
 
 
 		//hàm update lại TraLoiBinhLuan
 		const xuLyBinhLuan = (item) => {
-			
 			setTraLoiBinhLuan(item);
-			
-		
 		};
 
 		//hiện form trả lời bình luận
 		const hienTraLoiBinhLuan = (id) => {
 		
 			return traLoiBinhLuan === id ? (<>
-			 <form className="form" action="#">
+			 <form className="form" action="#" key={index}>
 			<div className="row">
 
 				<div className="col-12">
@@ -143,7 +188,7 @@ function BinhLuan() {
 					</div>
 				</div>
 				<div className="col-12">
-					<button onClick={luuBinhLuanCapHai}type="butotn" className="btn">Trả lời</button>
+					<button onClick={luuBinhLuanCapHai}type="button" className="btn">Trả lời</button>
 				</div>
 			</div>
 		</form>
@@ -182,7 +227,7 @@ function BinhLuan() {
 									<div className="row">
 										<div className="col-12">
 											<div className="comments">
-												<h3 className="comment-title">Comments (3)</h3>
+												<h3 className="comment-title">Bình luận	</h3>
 												{/* ------------------------------- */}
 												
 												{listBinhLuan}

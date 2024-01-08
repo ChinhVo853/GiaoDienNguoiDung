@@ -68,7 +68,8 @@ function GioHang() {
                     {cartItems.map((item) => (
                       <tr key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}>
                         <td className="image" data-title="No">
-                          <img src="https://via.placeholder.com/100x100" alt="#" />
+
+                         <img src={`http://localhost:8000/` + item.hinh} alt={item.ten} />
                         </td>
                         <td className="product-des" data-title="Description">
                           <p className="product-name">
@@ -88,10 +89,10 @@ function GioHang() {
                         <td className="price" data-title="Price">
                           <span>{item.gia} </span>
                         </td>
-                        <td className="qty" data-title="Qty">
+                        <td className="qty" data-title="Qty" style={{textAlign: 'center'}}>
                           <div className="input-group">
                             <button onClick={() => updateCart(item.id, item.selectedSize, item.selectedColor, item.so_luong - 1)}>-</button>
-                            <a>{item.so_luong}</a>
+                            <a style={{margin: '0 10px'}}>{item.so_luong}</a>
                             <button onClick={() => updateCart(item.id, item.selectedSize, item.selectedColor, item.so_luong + 1)}>+</button>
                           </div>
                         </td>

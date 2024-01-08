@@ -115,11 +115,27 @@ function ThanhToan() {
           // Ví dụ: Chuyển hướng về trang đăng nhập
           // window.location.href = '/dang-nhap';
         }
-      }, [khachHang]); 
+      }, []); 
 
+
+    
 
 
     useEffect(() => {
+      
+        let KyTuHoChiMinh = '';
+        if (khachHang.dia_chi) {
+          const diaChi = khachHang.dia_chi;
+          KyTuHoChiMinh = diaChi.slice(-11).toLowerCase();
+        }
+      
+        if (KyTuHoChiMinh) {
+          if (KyTuHoChiMinh === 'ho chi minh' || KyTuHoChiMinh === 'hồ chí minh') {
+            setTienShip(30000);
+          } else {
+            setTienShip(60000);
+          }
+        }
       const items = JSON.parse(localStorage.getItem('cartItems')) || [];
       setCartItems(items);
 
@@ -141,7 +157,7 @@ function ThanhToan() {
         const GiaArr = items.map((item) => item.gia);
         setGia(GiaArr); 
         
-    }, []);
+    }, [khachHang]);
 
     //hàm tính tổng tiền
     const calculateTotal = () => {

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Head from '../TRANGCHU/Head';
 import Menu from '../TRANGCHU/Menu';
 import Footer from '../TRANGCHU/Footer';
+import Avatar from "./Avatar";
 import { NavLink } from "react-router-dom";
 import Swal from 'sweetalert2';
 
@@ -195,6 +196,9 @@ function ThongTin() {
                                 </div>
 
                             </div>
+                        </div>
+                        <div className="col-sm-12 col-xl-6">
+                            <Avatar khachHang = {khachHang}/>
                         </div>
                     </div>
 

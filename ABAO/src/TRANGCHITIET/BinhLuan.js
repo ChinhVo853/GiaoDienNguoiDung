@@ -39,6 +39,7 @@ function BinhLuan() {
 	//-----------------------API---------------------------
 
 
+	
 	//lấy thông tin khách hàng
 	useEffect(() => {
 		//được dùng để hạng chế số lần gọi lại API
@@ -100,7 +101,6 @@ function BinhLuan() {
 	
 		// Kiểm tra số lần fetchCount để kiểm soát số lần chạy lại
 		if (fetchCount < 1) { // Đặt giới hạn số lần chạy lại (ở đây là 5 lần)
-			console.log('a')
 		  fetchData();
 		}
 	  }, [fetchCount, spID]); 
@@ -158,7 +158,11 @@ function BinhLuan() {
 		const listBinhLuanCapHai = item.binh_luan_cap_hai ? (
 			item.binh_luan_cap_hai.map((item2, index) => (
 			  <div key={index} className="single-comment left">
-				<img src="https://via.placeholder.com/80x80" alt="#" />
+				{item.khach_hang && item.khach_hang.avatar ? (
+						<img src={`http://localhost:8000/avatar/` + item.khach_hang.avatar} alt="#" />
+					) : (
+						<img src="https://via.placeholder.com/80x80" alt="#" />
+					)}
 				<div className="content">
 				  <h4>{item2.khach_hang?.ho_ten}</h4>
 				  <p>{item2.noi_dung}</p>
@@ -166,7 +170,6 @@ function BinhLuan() {
 			  </div>
 			))
 		  ) : null;
-		  
 
 
 		//hàm update lại TraLoiBinhLuan
@@ -196,26 +199,37 @@ function BinhLuan() {
 				</>
 			) : null;
 		  };
-		  
-		return (
+
+
+		  return (
 			<>
 				<div className="single-comment">
-					<img src="https://via.placeholder.com/80x80" alt="#" />
+					{item.khach_hang && item.khach_hang.avatar ? (
+						<img src={`http://localhost:8000/avatar/` + item.khach_hang.avatar} alt="#" />
+					) : (
+						<img src="https://via.placeholder.com/80x80" alt="#" />
+					)}
 					<div className="content">
-						<h4>{item.khach_hang.ho_ten} </h4>
+						<h4>{item.khachHang ? item.khachHang.ho_ten : 'Khách hàng không xác định'} </h4>
 						<p>{item.noi_dung}</p>
 						<div className="button">
-							<a onClick={() => xuLyBinhLuan(item.id)} className="btn"><i className="fa fa-reply" aria-hidden="true"></i>Trả lời</a>
+							<a onClick={() => xuLyBinhLuan(item.id)} className="btn">
+								<i className="fa fa-reply" aria-hidden="true"></i>Trả lời
+							</a>
 						</div>
 						{hienTraLoiBinhLuan(item.id)}
 					</div>
 				</div>
-				<div className="traloibinhluan">
-				</div>
+				<div className="traloibinhluan"></div>
 				{listBinhLuanCapHai}
 			</>
 		);
+		
 	});
+
+
+
+	
 	return (
 		<>
 			<section className="blog-single section">

@@ -78,7 +78,7 @@ function TrangChinhChiTietSanPham() {
     };
   
     // Kiểm tra số lần gửi yêu cầu trước khi thực hiện
-    if (requestCount < 2) {
+    if (requestCount < 1) {
       fetchData(); // Thực hiện yêu cầu dữ liệu
       danhSachDanhGia(); // Thực hiện yêu cầu danh sách đánh giá
       requestCount++; // Tăng số lần gửi yêu cầu
@@ -382,11 +382,17 @@ function TrangChinhChiTietSanPham() {
     const danhSachDanhGia = danhGia && Array.isArray(danhGia) && danhGia.length > 0? (
       <div>
         {danhGia.map(function (item) {
+          console.log(item);
           return (
             <div key={item.id} className="single-comment left">
-              <img src="https://via.placeholder.com/80x80" alt="#" />
+              {item.khach_hang && item.khach_hang.avatar ? (
+						<img src={`http://localhost:8000/avatar/` + item.khach_hang.avatar} alt="#" />
+					) : (
+						<img src="https://via.placeholder.com/80x80" alt="#" />
+					)}
               <div className="content">
                 <h4>{item.khach_hang.ho_ten}</h4>
+                <p>{item.so_sao}  <i className="fa fa-star text-warning"></i></p>
                 <p>{item.nhan_xet}</p>
               </div>
             </div>

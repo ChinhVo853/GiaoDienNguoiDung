@@ -158,8 +158,8 @@ function BinhLuan() {
 		const listBinhLuanCapHai = item.binh_luan_cap_hai ? (
 			item.binh_luan_cap_hai.map((item2, index) => (
 			  <div key={index} className="single-comment left">
-				{item.khach_hang && item.khach_hang.avatar ? (
-						<img src={`http://localhost:8000/avatar/` + item.khach_hang.avatar} alt="#" />
+				{item2.khach_hang && item2.khach_hang.avatar ? (
+						<img src={`http://localhost:8000/avatar/` + item2.khach_hang.avatar} alt="#" />
 					) : (
 						<img src="https://via.placeholder.com/80x80" alt="#" />
 					)}
@@ -199,7 +199,7 @@ function BinhLuan() {
 				</>
 			) : null;
 		  };
-
+		  console.log(item)
 
 		  return (
 			<>
@@ -210,7 +210,7 @@ function BinhLuan() {
 						<img src="https://via.placeholder.com/80x80" alt="#" />
 					)}
 					<div className="content">
-						<h4>{item.khachHang ? item.khachHang.ho_ten : 'Khách hàng không xác định'} </h4>
+						<h4>{item.khach_hang?.ho_ten} </h4>
 						<p>{item.noi_dung}</p>
 						<div className="button">
 							<a onClick={() => xuLyBinhLuan(item.id)} className="btn">

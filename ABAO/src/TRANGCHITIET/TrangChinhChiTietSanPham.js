@@ -225,13 +225,13 @@ function TrangChinhChiTietSanPham() {
       }
 
       //có tác dụng tạo 1 biến là mảng lấy thông tin là mảng rổng hoặc localStorege có tên là cartItems nếu đã tồn tại
-      const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      let existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
       //kiểm tra xem trong giở hàng đã có sản phẩm mà khách hàng đã chọn chưa kiểm tra bao gồm:
       //id, màu, size
-      const existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
+      let existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
       //biến được gán mặc định
-      const hinhAnhUrl = 'https://via.placeholder.com/550x750';
+      let hinhAnhUrl = 'https://via.placeholder.com/550x750';
       //kiểm tra xem trong sản phẩm mà mình lấy được từ server có tồn tại chưa
       //nếu có thì hinhAnhUrl sẽ được gán lại
       if(sanPham.hinh_anh[0])

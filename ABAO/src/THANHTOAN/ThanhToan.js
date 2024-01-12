@@ -215,7 +215,7 @@ function ThanhToan() {
                                                 <span className="fw-bold"> Số lượng: </span>
                                                 <span className="c-green">{item.so_luong}</span>
                                             </p>
-                                        
+                                            
                                         </div>
                                     ))}
                                    
@@ -254,7 +254,15 @@ function ThanhToan() {
                                                     <label htmlFor="" className="form__label">Số điện thoại</label>
                                                 </div>
                                             </div>
-                                            
+                                            <div className="col-12">
+                                                <div className="form__div" placeholder=" " >
+                                                
+                                                    <select  className="form-control">
+                                                        <option>Thanh toán khi nhận hàng</option>
+                                                    </select>
+                                                    <label htmlFor="" className="form__label">Phương thức thanh toán</label>
+                                                </div>
+                                            </div>
                                            
                                                 <div className="btn btn-primary w-100" onClick={HamThanhToan}>Đặt hàng</div>
                                                 

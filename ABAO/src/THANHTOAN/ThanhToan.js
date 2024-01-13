@@ -6,8 +6,21 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Slice } from '@reduxjs/toolkit';
+import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function ThanhToan() {
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+  
+    // Truy cập các tham số query cụ thể
+    const vnp_Amount = searchParams.get('vnp_Amount');
+    const vnp_BankCode = searchParams.get('vnp_BankCode');
+    const vnp_OrderInfo = searchParams.get('vnp_OrderInfo');
+
+    
     const [cartItems, setCartItems] = useState([]);
   
     const [tenSanPhamArr, setTenSanPhamArr] = useState([]);
@@ -16,6 +29,7 @@ function ThanhToan() {
 
     const [tienShip , setTienShip] = useState(0);
 
+    const [phuongThucThanhToan, setPhuongThucThanhToan] = useState(1);
 
     const [sizeArr, setSizeArr] = useState([]);
 
@@ -31,43 +45,87 @@ function ThanhToan() {
     //-----------------API------------------------------
 
     //hàm thanh toán
-    const HamThanhToan = () => {
-           
+    const HamThanhToan = () => { 
+        if(phuongThucThanhToan == 1)
+        {
+            axios.post('http://127.0.0.1:8000/api/thanh-toan',{
+                khach_hang: khachHang.id,
+                tong_tien: calculateTotal(),
+                mau: mauArr,
+                tien_ship: tienShip,
+                size: sizeArr,
+                so_luong: soLuong,
+                gia: gia,
+                ten: tenSanPhamArr,
+                PhuongThucThanhToan: phuongThucThanhToan,
+            }).then(function(response){
+                window.location.href = `KTDONHANG/${response.data.data}`;
+            }).catch(function(error){
+                if(error.response.status===422)
+                {
+                    Swal.fire({
+                        title: "Thất bại",
+                        text: error.response.data.errors ,
+                        icon: "error"
+                    });
+                }
             
-
-        axios.post('http://127.0.0.1:8000/api/thanh-toan',{
-            khach_hang: khachHang.id,
-            tong_tien: calculateTotal(),
-            mau: mauArr,
-            tien_ship: tienShip,
-            size: sizeArr,
-            so_luong: soLuong,
-            gia: gia,
-            ten: tenSanPhamArr,
-        }).then(function(response){
-            Swal.fire({
-                title: "Thành công",
-                text:'đã đặt hàng thành công' ,
-                icon: "success"
-              });
-            window.location.href = `/KTDonHang/${response.data.data}`;
-        }).catch(function(error){
-            if(error.response.status===422)
-            {
-                Swal.fire({
-                    title: "Thất bại",
-                    text: error.response.data.errors ,
-                    icon: "error"
-                  });
-            }
-           
-        })
+            })
+        }
+        else
+        {
+            axios.post('http://127.0.0.1:8000/api/thanh-toan-ngan-hang',{
+            }).then(function(response){
+                window.location.href = response.data.url;
+                
+            }).catch(function(error){
+                if(error.response.status===422)
+                {
+                    Swal.fire({
+                        title: "Thất bại",
+                        text: error.response.data.errors ,
+                        icon: "error"
+                    });
+                }
+            
+            })
+        }
     }
 
 
+    useEffect(() => {
+        if(vnp_BankCode=="NCB")
+        {
+            if (vnp_Amount != null && khachHang.id && calculateTotal() && mauArr && tienShip && sizeArr && soLuong && gia && tenSanPhamArr) {
+                axios.post('http://127.0.0.1:8000/api/thanh-toan',{
+                    khach_hang: khachHang.id,
+                    tong_tien: calculateTotal(),
+                    mau: mauArr,
+                    tien_ship: tienShip,
+                    size: sizeArr,
+                    so_luong: soLuong,
+                    gia: gia,
+                    ten: tenSanPhamArr,
+                    PhuongThucThanhToan: 2,
+                }).then(function(response){
+                    window.location.href = `KTDONHANG/${response.data.data}`;
+                }).catch(function(error){
+                    if(error.response.status===422)
+                    {
+                        Swal.fire({
+                            title: "Thất bại",
+                            text: error.response.data.errors ,
+                            icon: "error"
+                        });
+                    }
+                
+                })
+            }
+        }
+      }, [vnp_Amount, khachHang.id, mauArr, tienShip, sizeArr, soLuong, gia, tenSanPhamArr, phuongThucThanhToan]);
+
 
     useEffect(() => {
-
         // Kiểm tra xem token có tồn tại hay không
         
         let KyTuHoChiMinh = '';
@@ -177,8 +235,6 @@ function ThanhToan() {
 
 
 
-
-
   return (
     <>
       <Head />
@@ -257,8 +313,9 @@ function ThanhToan() {
                                             <div className="col-12">
                                                 <div className="form__div" placeholder=" " >
                                                 
-                                                    <select  className="form-control">
-                                                        <option>Thanh toán khi nhận hàng</option>
+                                                    <select onChange={(e) => setPhuongThucThanhToan(e.target.value)} className="form-control">
+                                                        <option value="1">Thanh toán khi nhận hàng</option>
+                                                        <option value="2">Thanh toán qua Ngân hàng NCB </option>
                                                     </select>
                                                     <label htmlFor="" className="form__label">Phương thức thanh toán</label>
                                                 </div>

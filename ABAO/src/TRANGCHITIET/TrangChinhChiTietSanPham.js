@@ -491,7 +491,7 @@ function TrangChinhChiTietSanPham() {
                   <div className="card">
                     <div className="card-body">
                       <h1 className="h2">{sanPham.ten}</h1>
-                      <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
+                      <p className="h3 py-2">{sanPham.gia_ban.toLocaleString()} VNĐ</p>
                       <p className="py-2">
                        {HienSao()}
                       </p>

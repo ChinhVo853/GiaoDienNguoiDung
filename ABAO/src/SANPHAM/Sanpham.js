@@ -21,7 +21,7 @@ function Sanpham(item) {
                     </div>
                     <div className="product-content">
                         <TenSP ten = { item.data.ten}/>
-                        <GiaSP gia = { item.data.gia_ban }/>
+                        <GiaSP gia = { item.data.gia_ban.toLocaleString() }/>
 
                     </div>
                 </div>

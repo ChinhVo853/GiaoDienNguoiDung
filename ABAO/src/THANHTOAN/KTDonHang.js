@@ -133,7 +133,7 @@ function KTDonHang() {
               icon: "success"
             });
           
-            
+            window.location.href = 'http://localhost:3000/THONGTINTAIKHOAN';
           })
 
   }

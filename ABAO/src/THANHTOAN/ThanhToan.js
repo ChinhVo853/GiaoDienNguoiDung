@@ -67,7 +67,7 @@ function ThanhToan() {
                 })
             }
         }
-      }, [vnp_Amount, khachHang.id, mauArr, tienShip, sizeArr, soLuong, gia, tenSanPhamArr, phuongThucThanhToan]);
+      }, [ tienShip]);
 
 
 

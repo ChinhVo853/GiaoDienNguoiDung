@@ -27,7 +27,6 @@ function ThongTin() {
             },{
                 timeout: 3000,
               }).then(function (response) {
-                console.log('a')
                     setKhachHang(response.data);
                     setHoTen(response.data.ho_ten);
                     setSoDienThoai(response.data.so_dien_thoai);
@@ -56,7 +55,6 @@ function ThongTin() {
             },{
                 timeout: 4000,
               }).then(function(response) {
-                console.log(response.data);
             });
         
     }, []);
@@ -102,22 +100,33 @@ function ThongTin() {
         }
 
     };
-   
- 
-    const DanhSachHoaDon = hoaDon && Array.isArray(hoaDon) ? hoaDon.map(item => (<>
+
+    const ThanhToanNganHang = (item) =>
+    {
+        if(item.phuong_thuc_thanh_toan == "Thanh toán qua Ngân hàng NCB" && item.trang_thai_thanh_toan == 0)
+        {
+            return(<></>);
+        }
+        return(<>
         <div  className="container-xxl position-relative bg-white d-flex p-0">
-            <div key={item.id}className="col-sm-12 col-xl-10">
+            <div key={item.id}className="col-sm-12 col-xl-12">
                 <div className="bg-light rounded h-100 p-4">
                     <div className="row">
-                        <div className="col-sm-3">mã: {item.id}</div>
-                        <div className="col-sm-3">Tổng tiền: {item.tong_tien} VNĐ</div>
-                        <div className="col-sm-3">Ngày lập: {new Date(item.created_at).toLocaleDateString('en-VN')}</div>
-                        <div className="col-sm-3"><NavLink to={`/KTDonHang/${item.id}`}  style={{color:'#25c9e6', textDecoration: 'none'}}>xem chi tiết</NavLink></div>
+                        <div className="col-sm-2">Tổng tiền: {item.tong_tien} VNĐ</div>
+                        <div className="col-sm-3">phương thức: {item.phuong_thuc_thanh_toan}</div>
+                        <div className="col-sm-3">thanh toán: {item.trang_thai_thanh_toan == 0 ? "chưa thanh toán" : "đã thanh toán"} </div>
+                        <div className="col-sm-2">Ngày lập: {new Date(item.created_at).toLocaleDateString('en-VN')}</div>
+                        <div className="col-sm-2"><NavLink to={`/KTDonHang/${item.id}`}  style={{color:'#25c9e6', textDecoration: 'none'}}>xem chi tiết</NavLink></div>
                    </div>
                 </div>
             </div>
         </div>
         <br></br>
+        </>)
+    }
+   
+    const DanhSachHoaDon = hoaDon && Array.isArray(hoaDon) ? hoaDon.map(item => (<>
+        {ThanhToanNganHang(item)}
         </>
     )): () =>{
         return (<></>)

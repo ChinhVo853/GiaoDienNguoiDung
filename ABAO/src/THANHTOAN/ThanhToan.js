@@ -45,68 +45,13 @@ function ThanhToan() {
     //-----------------API------------------------------
 
     //hàm thanh toán
-    const HamThanhToan = () => { 
-        if(phuongThucThanhToan == 1)
-        {
-            axios.post('http://127.0.0.1:8000/api/thanh-toan',{
-                khach_hang: khachHang.id,
-                tong_tien: calculateTotal(),
-                mau: mauArr,
-                tien_ship: tienShip,
-                size: sizeArr,
-                so_luong: soLuong,
-                gia: gia,
-                ten: tenSanPhamArr,
-                PhuongThucThanhToan: phuongThucThanhToan,
-            }).then(function(response){
-                window.location.href = `KTDONHANG/${response.data.data}`;
-            }).catch(function(error){
-                if(error.response.status===422)
-                {
-                    Swal.fire({
-                        title: "Thất bại",
-                        text: error.response.data.errors ,
-                        icon: "error"
-                    });
-                }
-            
-            })
-        }
-        else
-        {
-            axios.post('http://127.0.0.1:8000/api/thanh-toan-ngan-hang',{
-            }).then(function(response){
-                window.location.href = response.data.url;
-                
-            }).catch(function(error){
-                if(error.response.status===422)
-                {
-                    Swal.fire({
-                        title: "Thất bại",
-                        text: error.response.data.errors ,
-                        icon: "error"
-                    });
-                }
-            
-            })
-        }
-    }
-
 
     useEffect(() => {
         if(vnp_BankCode=="NCB")
         {
             if (vnp_Amount != null && khachHang.id && calculateTotal() && mauArr && tienShip && sizeArr && soLuong && gia && tenSanPhamArr) {
-                axios.post('http://127.0.0.1:8000/api/thanh-toan',{
-                    khach_hang: khachHang.id,
-                    tong_tien: calculateTotal(),
-                    mau: mauArr,
-                    tien_ship: tienShip,
-                    size: sizeArr,
-                    so_luong: soLuong,
-                    gia: gia,
-                    ten: tenSanPhamArr,
-                    PhuongThucThanhToan: 2,
+                axios.post('http://127.0.0.1:8000/api/trang-thai-thanh-toan',{
+    
                 }).then(function(response){
                     window.location.href = `KTDONHANG/${response.data.data}`;
                 }).catch(function(error){
@@ -122,8 +67,49 @@ function ThanhToan() {
                 })
             }
         }
-      }, [vnp_Amount, khachHang.id, mauArr, tienShip, sizeArr, soLuong, gia, tenSanPhamArr, phuongThucThanhToan]);
+      }, [ tienShip]);
 
+
+
+
+
+    const HamThanhToan = () => { 
+        
+            axios.post('http://127.0.0.1:8000/api/thanh-toan',{
+                khach_hang: khachHang.id,
+                tong_tien: calculateTotal(),
+                mau: mauArr,
+                tien_ship: tienShip,
+                size: sizeArr,
+                so_luong: soLuong,
+                gia: gia,
+                ten: tenSanPhamArr,
+                PhuongThucThanhToan: phuongThucThanhToan,
+            }).then(function(response){
+                console.log(response);
+                if(response.data.url)
+                {
+                    window.location.href = response.data.url;
+                }
+               else{
+                 window.location.href = `KTDONHANG/${response.data.data}`;
+               }
+               
+            }).catch(function(error){
+                if(error.response.status===422)
+                {
+                    Swal.fire({
+                        title: "Thất bại",
+                        text: error.response.data.errors ,
+                        icon: "error"
+                    });
+                }
+            
+            })
+        }
+       
+
+    
 
     useEffect(() => {
         // Kiểm tra xem token có tồn tại hay không
@@ -267,7 +253,7 @@ function ThanhToan() {
                                             </p>
                                             <p className="mb-0">
                                                 <span className="fw-bold">Giá: </span>
-                                                <span className="c-green">{item.gia}VND</span>
+                                                <span className="c-green">{item.gia.toLocaleString()}VND</span>
                                                 <span className="fw-bold"> Số lượng: </span>
                                                 <span className="c-green">{item.so_luong}</span>
                                             </p>
@@ -278,13 +264,13 @@ function ThanhToan() {
                                     
                                         <div className="mb-0" style={{margin: '20px 0 0 0'}}>
                                             <h4>tiền ship: 
-                                            <span className="c-green">{tienShip} VNĐ</span>
+                                            <span className="c-green">{tienShip.toLocaleString()} VNĐ</span>
                                             </h4> 
                                         </div>
                                         
                                         <div className="mb-0" style={{margin: '20px 0 0 0'}}>
                                             <h3 className="fw-bold">Tổng tiền:
-                                            <span className="c-green">{calculateTotal()+tienShip} VNĐ</span> </h3>
+                                            <span className="c-green">{(calculateTotal()+tienShip).toLocaleString()} VNĐ</span> </h3>
                                         </div>
                                 </div>
                                 <div className="col-lg-7">

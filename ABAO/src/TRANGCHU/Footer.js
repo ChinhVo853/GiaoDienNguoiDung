@@ -14,36 +14,36 @@ const Footer = () => {
 								<h3 style={{color: "#fe980f",fontFamily: "monospace" }}>HACHIBA.</h3>
 							</div>
 							<p className="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-							<span className="call">Got Question? Call us 24/7<a href="tel:114">+0123 456 789</a></span>
+							<span className="call"><p>Có câu hỏi? Hãy gọi cho chúng tôi 24/7</p><a href="tel:114">+0123 456 789</a></span>
 						</div>
 					</div>
 					<div className="col-lg-2 col-md-6 col-12">
 						<div className="single-footer links">
-							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Information</h4>
+							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Thông Tin</h4>
 							<ul>
-								<li><a >About Us</a></li>
-								<li><a >Faq</a></li>
-								<li><a >Terms &amp; Conditions</a></li>
-								<li><a >Contact Us</a></li>
-								<li><a >Help</a></li>
+								<li><a >Về chúng tôi</a></li>
+								<li><a >Câu hỏi thường gặp</a></li>
+								<li><a >Điều khoản &amp; điều kiện</a></li>
+								<li><a >Liên hệ chúng tôi</a></li>
+								<li><a >Giúp đỡ</a></li>
 							</ul>
 						</div>
 					</div>
 					<div className="col-lg-2 col-md-6 col-12">
 						<div className="single-footer links">
-							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Customer Service</h4>
+							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Dịch Vụ Khách Hàng</h4>
 							<ul>
-								<li><a >Payment Methods</a></li>
-								<li><a >Money-back</a></li>
-								<li><a >Returns</a></li>
-								<li><a >Shipping</a></li>
-								<li><a >Privacy Policy</a></li>
+								<li><a >Phương thức thanh toán</a></li>
+								<li><a >Hoàn tiền</a></li>
+								<li><a >Trả lại</a></li>
+								<li><a >Đang chuyển hàng</a></li>
+								<li><a >Chính sách bảo mật</a></li>
 							</ul>
 						</div>
 					</div>
 					<div className="col-lg-3 col-md-6 col-12">
 						<div className="single-footer social">
-							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Get In Tuch</h4>
+							<h4 style={{color: "#fe980f",fontFamily: "sans-serif" }}>Nhận Trong Tuch</h4>
 							<div className="contact">
 								<ul>
 									<li>NO. 342 - London Oxford Street.</li>

@@ -32,6 +32,7 @@ import ThongTin from './TAIKHOAN/ThongTin';
 //--------------------CHITIET-----------------------
 import TrangChinhChiTietSanPham from './TRANGCHITIET/TrangChinhChiTietSanPham';
 
+import DaXem from './TRANGCHITIET/DaXem';
 import YeuThich from './TRANGCHITIET/YeuThich';
 
 import GioHang from './TRANGCHITIET/GioHang';
@@ -64,6 +65,8 @@ function App() {
           <Route path='/ChiTiet/:spID' element={<TrangChinhChiTietSanPham/>}/>
           <Route path='/GioHang' element={<GioHang/>}/>;
           <Route path='/YeuThich' element={<YeuThich/>}/>;
+          <Route path='/DaXem' element={<DaXem/>}/>;
+
 
           <Route path='/ThanhToan' element={<ThanhToan/>}/>;
           <Route path='/KTDonHang/:hdID' element={<KTDonHang/>}/>;

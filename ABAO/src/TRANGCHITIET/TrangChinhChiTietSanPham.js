@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Footer from "../TRANGCHU/Footer";
@@ -7,8 +7,6 @@ import Menu from "../TRANGCHU/Menu";
 import Hinhnhotrangchitiet from "./Hinhnhotrangchitiet";
 import BinhLuan from "./BinhLuan";
 import Swal from 'sweetalert2';
-import { useLocation } from 'react-router-dom';
-
 
 
 function TrangChinhChiTietSanPham() {
@@ -374,6 +372,9 @@ function TrangChinhChiTietSanPham() {
       
       }
     };
+    
+    
+    
     //-------------------------------
     //hiển thị danh sách đánh giá cho người dúng xem
     const danhSachDanhGia = danhGia && Array.isArray(danhGia) && danhGia.length > 0? (
@@ -472,7 +473,7 @@ function TrangChinhChiTietSanPham() {
     }
     
     
-    
+  
     return (
       <>
         <Head />
@@ -538,6 +539,7 @@ function TrangChinhChiTietSanPham() {
                         <div className="col d-grid">
                           <button type="button" onClick={ChonMua} className="btn">Thêm vào giỏ hàng</button>
                         </div>
+             
                       </div>
                     </div>
                   </form>

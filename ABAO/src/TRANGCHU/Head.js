@@ -59,6 +59,10 @@ const KiemTraDangNhap =() =>
 	}
 	return (<>
 	<div className="sinlge-bar">
+		<NavLink  to="/DaXem"  className="single-icon" ><i class="fa fa-eye" aria-hidden="true"></i>
+</NavLink>
+	</div>
+	<div className="sinlge-bar">
 		<NavLink  to="/YeuThich"  className="single-icon" ><i className="fa fa-heart-o" ></i> </NavLink>
 	</div>
 	<div className="sinlge-bar">

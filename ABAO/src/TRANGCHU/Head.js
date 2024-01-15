@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import Timkiemsanpham from "../REDUCER/Timkiemsanpham";
 
 function Head(){
 	//---------các state và biến ---------------------
@@ -139,7 +138,7 @@ const KiemTraDangNhap =() =>
 						<div className="search-bar-top">
 							<div className="search-bar">
 								<form>
-									<input onChange={(e) => setThanhTimKiem(e.target.value)} name="search" placeholder="Search Products Here....." type="search"/>
+									<input onChange={(e) => setThanhTimKiem(e.target.value)} name="search" placeholder="tìm kiếm sản phẩm" type="search"/>
 
 									<NavLink to={`/TimKiem/${thanhTimKiem}`}><button className="btnn"><i className="ti-search"></i></button></NavLink>
 									

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Carousel,
   CarouselItem,
@@ -6,10 +6,8 @@ import {
   CarouselIndicators,
   CarouselCaption,
 } from 'reactstrap';
-const items = [];
 function SlideShow(args) {
   
- console.log(args.hinh)
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 

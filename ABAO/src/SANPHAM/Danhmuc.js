@@ -1,35 +1,11 @@
 import Danhsach from "./Danhsach";
-import { useState,useEffect } from "react";
-import axios from "axios";
+
 
 function Danhmuc()
 {
 	//---------các state ---------------------
 
-	//lưu danh sách các sản phẩm
-	const [dsSanPham,setdsSanPham]= useState([]);
-
-
-	//-------------------------đây là gọi API dsSanPham sẽ được thay đổi ở đây--------------------------
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-			  const response = await axios.get('http://127.0.0.1:8000/api/danh-sach-san-pham');
-			 
-			  setdsSanPham(response.data.data);
-			} catch (error) {
-			  console.error('Error fetching data:', error);
-			}
-		  };
-		const delay = 2000; // Đặt một khoảng thời gian giữa các yêu cầu (2 giây ở đây)
-		const timer = setTimeout(fetchData, delay);
-	  
-		return () => clearTimeout(timer); // Xóa bộ đếm khi component unmount
-	  
 	
-		
-	}, []); // Thêm dispatch vào dependency array
 	
 	
 
@@ -50,7 +26,7 @@ function Danhmuc()
 							<div className="nav-main">
 								
 								<div className="tab-content" id="myTabContent">
-								<Danhsach data={dsSanPham}/>
+								<Danhsach/>
 								</div>
 								
 							</div>

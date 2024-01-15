@@ -12,10 +12,6 @@ function DangNhap() {
   //lưu value nhập vào của password ở input
   const [password, setPassword] = useState('');
 
-  const [validateErrors, setValidateErrors] = useState({});
-
-  const [authenticationError, setAuthenticationError] = useState();
-
   //------------ gọi API--------------------
 
 
@@ -62,7 +58,6 @@ function DangNhap() {
   }
 
 
-console.log( validateErrors.email);
   return (
     <>
      
@@ -77,7 +72,7 @@ console.log( validateErrors.email);
               id="ten_dang_nhap"
               placeholder="Email"
             />
-            <div className='invalid-feedback email-error'>{validateErrors?.email}</div>
+            <div className='invalid-feedback email-error'></div>
             <input
               onChange={(e) => setPassword(e.target.value)}
               
@@ -87,7 +82,7 @@ console.log( validateErrors.email);
               id="password"
               placeholder="Password"
             />
-            <div className='invalid-feedback password-error'>{validateErrors?.password}</div>
+            <div className='invalid-feedback password-error'></div>
 
             <input className="login-button" type="submit" value="Sign In" />
           </form>

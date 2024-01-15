@@ -133,7 +133,7 @@ function KTDonHang() {
               icon: "success"
             });
           
-            
+            window.location.href = 'http://localhost:3000/THONGTINTAIKHOAN';
           })
 
   }
@@ -275,8 +275,9 @@ function KTDonHang() {
   const DanhSachSanPham = sanPham && Array.isArray(sanPham) ? sanPham.map(function(item){
     return(<>
     <div className='row'>
-      <div className='col-sm-6'>TÊN: {item.chi_tiet_san_pham.san_pham.ten}</div>
-      <div className='col-sm-6'>GIÁ: {item.chi_tiet_san_pham.san_pham.gia_ban}</div>
+      <div className='col-sm-4'>TÊN: {item.chi_tiet_san_pham.san_pham.ten}</div>
+      <div className='col-sm-4'>GIÁ: {item.chi_tiet_san_pham.san_pham.gia_ban.toLocaleString() }VNĐ</div>
+      <div className='col-sm-4'>SỐ LƯỢNG: {item.so_luong}</div>
     </div>
     </>);
   }): () =>{

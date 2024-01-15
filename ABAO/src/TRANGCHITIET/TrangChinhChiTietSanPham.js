@@ -26,7 +26,9 @@ function TrangChinhChiTietSanPham() {
   const [danhSachBinhLuan, setDanhSachBinhLuan] = useState([]);
   const [binhLuan, setBinhLuan] = useState('');
   const [danhGia, setDanhGia] = useState();
+  const [loading, setLoading] = useState(true);
 
+  
   
   //tao bien luu du lieu vao axios
 
@@ -65,11 +67,12 @@ function TrangChinhChiTietSanPham() {
     // Hàm để thực hiện yêu cầu danh sách đánh giá
     const danhSachDanhGia = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`, {
-          timeout: 5000,
-        });
-  
+        const response = await axios.get(`http://127.0.0.1:8000/api/danh-sach-danh-gia/${spID}`);
+        
         setDanhGia(response.data.data);
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Giả sử việc tải mất 2 giây
+        setLoading(false);
+
       } catch (error) {
         console.error('Lỗi khi tải dữ liệu danh sách đánh giá:', error);
       }
@@ -332,22 +335,16 @@ function TrangChinhChiTietSanPham() {
     //----------------------------------------------------------------------------------
 
     
-    const dsBinhLuan = danhSachBinhLuan.map(function (item, index) {
-      return (
-        <>
-          {item.noi_dung}
-
-        </>
-      );
-    });
+  
 
 
     const YeuThich = () => {
+      const HinhAnh = sanPham.hinh_anh.length > 0 ? sanPham.hinh_anh[0].url : null;
       const yeuThichItem = {
         id: sanPham.id,
         ten: sanPham.ten,
         gia: sanPham.gia_ban,
-        hinh: sanPham.hinh_anh[0].url, 
+        hinh: HinhAnh, 
       };
     
       const yeuThich = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -381,9 +378,11 @@ function TrangChinhChiTietSanPham() {
     //-------------------------------
     //hiển thị danh sách đánh giá cho người dúng xem
     const danhSachDanhGia = danhGia && Array.isArray(danhGia) && danhGia.length > 0? (
+      
       <div>
+        
         {danhGia.map(function (item) {
-          console.log(item);
+        
           return (
             <div key={item.id} className="single-comment left">
               {item.khach_hang && item.khach_hang.avatar ? (
@@ -492,7 +491,7 @@ function TrangChinhChiTietSanPham() {
                   <div className="card">
                     <div className="card-body">
                       <h1 className="h2">{sanPham.ten}</h1>
-                      <p className="h3 py-2">{sanPham.gia_ban} VNĐ</p>
+                      <p className="h3 py-2">{sanPham.gia_ban ? sanPham.gia_ban.toLocaleString() : sanPham.gia_ban} VNĐ</p>
                       <p className="py-2">
                        {HienSao()}
                       </p>
@@ -535,8 +534,8 @@ function TrangChinhChiTietSanPham() {
                     <div className="col-12">
                         <div className="row pb-3">
                         <div className="col d-grid">
-        <button type="button" className="btn" onClick={YeuThich}>Yêu Thích</button>
-      </div>
+                          <button type="button" className="btn" onClick={YeuThich}>Yêu Thích</button>
+                        </div>
                         <div className="col d-grid">
                           <button type="button" onClick={ChonMua} className="btn">Thêm vào giỏ hàng</button>
                         </div>
@@ -555,7 +554,174 @@ function TrangChinhChiTietSanPham() {
 					<div className="container">
           <div className="comments">
             <h3 className="comment-title">Đánh giá </h3>
-            {danhSachDanhGia}
+            {loading ? (
+                     <div className="loader">
+                     <div className="wrapper">
+                       <div className="catContainer">
+                         <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 733 673"
+                           className="catbody"
+                         >
+                           <path
+                             fill="#212121"
+                             d="M111.002 139.5C270.502 -24.5001 471.503 2.4997 621.002 139.5C770.501 276.5 768.504 627.5 621.002 649.5C473.5 671.5 246 687.5 111.002 649.5C-23.9964 611.5 -48.4982 303.5 111.002 139.5Z"
+                           ></path>
+                           <path fill="#212121" d="M184 9L270.603 159H97.3975L184 9Z"></path>
+                           <path fill="#212121" d="M541 0L627.603 150H454.397L541 0Z"></path>
+                         </svg>
+                         <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 158 564"
+                           className="tail"
+                         >
+                           <path
+                             fill="#191919"
+                             d="M5.97602 76.066C-11.1099 41.6747 12.9018 0 51.3036 0V0C71.5336 0 89.8636 12.2558 97.2565 31.0866C173.697 225.792 180.478 345.852 97.0691 536.666C89.7636 553.378 73.0672 564 54.8273 564V564C16.9427 564 -5.4224 521.149 13.0712 488.085C90.2225 350.15 87.9612 241.089 5.97602 76.066Z"
+                           ></path>
+                         </svg>
+                         <div className="textcat">
+                           <span className="bigzzz">Z</span>
+                           <span className="zzz">Z</span>
+                         </div>
+                       </div>
+                       <div className="wallContainer">
+                         <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 500 126"
+                           className="wall"
+                         >
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="3"
+                             x2="450"
+                             y1="3"
+                             x1="50"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="85"
+                             x2="400"
+                             y1="85"
+                             x1="100"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="122"
+                             x2="375"
+                             y1="122"
+                             x1="125"
+                           ></line>
+                           <line strokeWidth="6" stroke="#7C7C7C" y2="43" x2="500" y1="43"></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="1.99391"
+                             x2="115.5"
+                             y1="43.0061"
+                             x1="115.5"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="2.00002"
+                             x2="189"
+                             y1="43.0122"
+                             x1="189"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="2.00612"
+                             x2="262.5"
+                             y1="43.0183"
+                             x1="262.5"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="2.01222"
+                             x2="336"
+                             y1="43.0244"
+                             x1="336"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="2.01833"
+                             x2="409.5"
+                             y1="43.0305"
+                             x1="409.5"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="43"
+                             x2="153"
+                             y1="84.0122"
+                             x1="153"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="43"
+                             x2="228"
+                             y1="84.0122"
+                             x1="228"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="43"
+                             x2="303"
+                             y1="84.0122"
+                             x1="303"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="43"
+                             x2="378"
+                             y1="84.0122"
+                             x1="378"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="84"
+                             x2="192"
+                             y1="125.012"
+                             x1="192"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="84"
+                             x2="267"
+                             y1="125.012"
+                             x1="267"
+                           ></line>
+                           <line
+                             strokeWidth="6"
+                             stroke="#7C7C7C"
+                             y2="84"
+                             x2="342"
+                             y1="125.012"
+                             x1="342"
+                           ></line>
+                         </svg>
+                       </div>
+                     </div>
+                   </div>
+                ) : (
+            danhSachDanhGia
+                )}
           </div>
             </div>
             </div>
@@ -565,7 +731,7 @@ function TrangChinhChiTietSanPham() {
         <BinhLuan/>
       </section>
 
-        <form onSubmit={luuBinhLuan} className="form">
+        <form onSubmit={luuBinhLuan} className="form" style={{ margin: "0px 100px"}}>
           <input
             onChange={(e) => setBinhLuan(e.target.value)}
             className="input"

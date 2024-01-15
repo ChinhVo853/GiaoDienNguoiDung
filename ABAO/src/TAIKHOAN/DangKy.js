@@ -46,11 +46,9 @@ function DangKy()
       });
       
     })
-    .catch(function (error) {console.log(error);
+    .catch(function (error) {
       if(error.response.status === 422)
       {
-        
-       
         const {email, password, hoTen, soDienThoai, diaChi} = error.response.data.errors;
         if(email || diaChi || hoTen)
         {

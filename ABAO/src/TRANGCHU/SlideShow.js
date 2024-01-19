@@ -40,7 +40,7 @@ function SlideShow(args) {
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={`http://localhost:8000/` + item} alt={item.altText} />
+        <img src={ args.hinh[0].image_path + item} alt={item.altText} />
         <CarouselCaption
           captionText={item.caption}
           captionHeader={item.caption}

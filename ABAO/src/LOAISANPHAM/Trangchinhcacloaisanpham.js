@@ -74,12 +74,12 @@ useEffect(() => {
     };
 
     const GiaTang = async () => {
-        const response = await axios('http://127.0.0.1:8000/api/gia-tang');
+        const response = await axios(`http://127.0.0.1:8000/api/gia-tang/${loaiID}`);
         setDSSanPham(response.data.data);
     }
 
     const GiaGiam = async () => {
-        const response = await axios('http://127.0.0.1:8000/api/gia-giam');
+        const response = await axios(`http://127.0.0.1:8000/api/gia-giam/${loaiID}`);
         setDSSanPham(response.data.data);
     }
 //--------------------hàm xử lý ------------------------
@@ -125,7 +125,7 @@ useEffect(() => {
                                 </label>
                                 <input  onChange={(e) => setGiaDen(e.target.value)} autoComplete="off" type="text"  name="text" className="nhap_gia" placeholder=""/>
                                 <button onClick={locGia} className="nutgia">
-                                    Click
+                                    Lọc
                                 </button>
                         </div>
                         

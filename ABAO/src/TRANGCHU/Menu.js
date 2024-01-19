@@ -68,10 +68,7 @@ function Menu() {
                                 </li>
                               </ul>
                             </li> */}
-                            
-                            <li>
-                              <a>GIỚI THIỆU</a>
-                            </li>
+                        
                           </ul>
                         </div>
                       </div>

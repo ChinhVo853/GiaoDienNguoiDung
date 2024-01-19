@@ -5406,3 +5406,7 @@ body {
     color: transparent;
   }
 }
+.footer .links ul
+{
+	padding-left: 0;
+}

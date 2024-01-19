@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
 import { Table } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import Footer from "../TRANGCHU/Footer";
@@ -13,14 +16,33 @@ function GioHang() {
   }, []);
 
   const updateCart = (itemId, selectedSize, selectedColor, newQuantity) => {
-    const updatedCart = cartItems.map((item) =>
-      item.id === itemId && item.selectedSize === selectedSize && item.selectedColor === selectedColor
-        ? { ...item, so_luong: newQuantity >= 0 ? newQuantity : 0 }
-        : item
-    );
+    axios.post('http://127.0.0.1:8000/api/kiem-tra-so-luong', {
+          mau: selectedColor,
+          size: selectedSize,
+          soLuong: newQuantity,
+          sanPhamID: itemId,
+        }).then(function(request){
+          if(request.data.trangThai===1)
+          {
+            const updatedCart = cartItems.map((item) =>
+            item.id === itemId && item.selectedSize === selectedSize && item.selectedColor === selectedColor
+              ? { ...item, so_luong: newQuantity >= 0 ? newQuantity : 0 }
+              : item
+            );
 
-    setCartItems(updatedCart);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            setCartItems(updatedCart);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+          }
+          else
+          {
+            Swal.fire({
+              title: "Thất bại",
+              text: 'Không đủ sản phẩm' ,
+              icon: "error"
+            }); 
+          }
+        });
+    
   };
 
   const removeItemFromCart = (itemId, selectedSize, selectedColor) => {
@@ -123,7 +145,7 @@ function GioHang() {
                       <div className="right">
                         <ul>
                           <li>
-                            Thành tiền<span>{calculateTotal()} VNĐ</span>
+                            Thành tiền<span>{calculateTotal().toLocaleString()} VNĐ</span>
                           </li>
                         </ul>
                         <div className="button5">

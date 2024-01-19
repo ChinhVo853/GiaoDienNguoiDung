@@ -225,9 +225,11 @@ function TrangChinhChiTietSanPham() {
         return;
       }
 
+      
       //có tác dụng tạo 1 biến là mảng lấy thông tin là mảng rổng hoặc localStorege có tên là cartItems nếu đã tồn tại
       let existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
+      
       //kiểm tra xem trong giở hàng đã có sản phẩm mà khách hàng đã chọn chưa kiểm tra bao gồm:
       //id, màu, size
       let existingItem = existingCartItems.find((item) => item.id === sanPham.id && item.selectedSize === selectedSize && item.selectedColor === selectedColor);
@@ -243,7 +245,36 @@ function TrangChinhChiTietSanPham() {
       //kiểm tra xem existingItem mà mình đã kiểm tra trước đó nếu có tồn tịa thì số lượng sản phẩm trong đó tăng 1
       //nếu ko tồn tại thì sẽ tạo ra thêm 1 sản phẩm đucowj lưu trong localStore
       if (existingItem) {
-        existingItem.so_luong += 1;
+        axios.post('http://127.0.0.1:8000/api/kiem-tra-so-luong', {
+          mau: existingItem.selectedColor,
+          size: existingItem.selectedSize,
+          sanPham: existingItem.ten,
+          soLuong: existingItem.so_luong+1
+        }).then(function(request){
+          if(request.data.trangThai===1)
+          {
+            existingItem.so_luong += 1;
+            localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
+            Swal.fire({
+              text:'Thêm sản phẩm vào giỏ hàng thành công',
+              icon: "success"
+            });
+          }
+          else
+          {
+            Swal.fire({
+              title: "Thất bại",
+              text: 'Không đủ sản phẩm' ,
+              icon: "error"
+            }); 
+          }
+        })
+
+
+
+        
+        
+       
       } else {
         //biến này là sản phẩm mới
         const newCartItem = {
@@ -257,14 +288,15 @@ function TrangChinhChiTietSanPham() {
         };
         //thêm sản phẩm mới vào mảng existingCartItems
         existingCartItems.push(newCartItem);
+        // lưu existingCartItems vào trong localStore
+        localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
+        Swal.fire({
+          text:'Thêm mới sản phẩm vào giỏ hàng thành công',
+          icon: "success"
+        });
       }
-      // lưu existingCartItems vào trong localStore
-      localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
-      Swal.fire({
-
-        text:'Thêm sản phẩm vào giỏ hàng thành công',
-        icon: "success"
-      });
+      
+      
     
     
     };
@@ -343,7 +375,7 @@ function TrangChinhChiTietSanPham() {
       const yeuThichItem = {
         id: sanPham.id,
         ten: sanPham.ten,
-        gia: sanPham.gia_ban,
+        gia: sanPham.gia_ban+1,
         hinh: HinhAnh, 
       };
     

@@ -382,11 +382,10 @@ function TrangChinhChiTietSanPham() {
       <div>
         
         {danhGia.map(function (item) {
-        
           return (
             <div key={item.id} className="single-comment left">
               {item.khach_hang && item.khach_hang.avatar ? (
-						<img src={`http://localhost:8000/avatar/` + item.khach_hang.avatar} alt="#" />
+						<img src={item.khach_hang.image_path+ item.khach_hang.avatar} alt="#" />
 					) : (
 						<img src="https://via.placeholder.com/80x80" alt="#" />
 					)}

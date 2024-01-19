@@ -23,6 +23,7 @@ function Hinhnhotrangchitiet(args) {
 
 
  const items = args.hinh.hinh_anh ? args.hinh.hinh_anh.map(image => image.url) : [];
+ 
 
 
   const next = () => {
@@ -49,7 +50,7 @@ function Hinhnhotrangchitiet(args) {
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={`http://localhost:8000/` + item} alt={item.altText} />
+        <img src={args.hinh.hinh_anh[0]?.image_path + item} alt={item.altText} />
         <CarouselCaption
           captionText={item.caption}
           captionHeader={item.caption}

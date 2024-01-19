@@ -40,12 +40,12 @@ function Avatar(props)
         }
     };
 
-
+    console.log(props)
     const hienAnh = () =>
     {
         if(props.khachHang)
         {
-            return(<img className="default-img"src={`http://localhost:8000/avatar/` + props.khachHang.avatar} alt="#" />
+            return(<img className="default-img" src={props.khachHang.image_path + props.khachHang.avatar} alt="#" />
             )
         }
         return(<img style={{textAlign: 'center'}} className="default-img" src="https://via.placeholder.com/550x750" alt="#" />)

@@ -92,7 +92,6 @@ function ThanhToan() {
                 ten: tenSanPhamArr,
                 PhuongThucThanhToan: phuongThucThanhToan,
             }).then(function(response){
-                console.log(response);
                 if(response.data.url)
                 {
                     window.location.href = response.data.url;

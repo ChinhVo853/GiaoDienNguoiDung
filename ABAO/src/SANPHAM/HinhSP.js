@@ -1,10 +1,9 @@
 function HinhSP(item) {
-    
     if(item.anh){
-        
+       console.log(item);
     return (
         <> 
-            <img className="default-img" style={{ width: "300px", height: "500px" }} src={`http://localhost:8000/` + item.anh} alt="#" />
+            <img className="default-img" style={{ width: "300px", height: "500px" }} src={item.anh.image_path + item.anh.url} alt="#" />
         </>
     );
     }

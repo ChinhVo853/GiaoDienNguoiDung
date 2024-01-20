@@ -34,12 +34,12 @@ function Sanpham({ data }) {
     <div className="col-xl-3 col-lg-4 col-md-4 col-12">
       <div className="single-product">
         <div className="product-img" onClick={DaXem}>
-          <HinhSP anh={data?.hinh_anh[0]?.url} />
+          <HinhSP anh={data?.hinh_anh[0]} />
           <ClickSP />
         </div>
         <div className="product-content">
           <TenSP ten={data.ten} />
-          <GiaSP gia={data.gia_ban} />
+          <GiaSP gia={data.gia_ban.toLocaleString()} />
         </div>
       </div>
     </div>

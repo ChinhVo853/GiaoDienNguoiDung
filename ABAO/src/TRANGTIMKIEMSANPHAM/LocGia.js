@@ -5,7 +5,7 @@ function LocGia(){
         <hr></hr>
             <div className="row">
                 <div className="khunggia col-sm-3">
-                    <h5 className="khoang_gia">KHOẢN GIÁ</h5>
+                    <h5 className="khoang_gia">KHOẢNG GIÁ</h5>
                 </div>
                 <div className="col-sm-9"></div>
             </div>

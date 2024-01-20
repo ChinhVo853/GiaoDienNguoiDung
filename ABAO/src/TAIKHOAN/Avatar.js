@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 function Avatar(props)
 {
-    console.log(props.khachHang);
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleImageChange = (event) => {
@@ -40,7 +39,6 @@ function Avatar(props)
         }
     };
 
-    console.log(props)
     const hienAnh = () =>
     {
         if(props.khachHang)
